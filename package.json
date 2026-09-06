@@ -1,0 +1,17 @@
+{
+  "name": "starfall-pub",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Starfall — a fantasy RPG setting for D&D 5e. Public site and CMS.",
+  "engines": {
+    "node": ">=20.0.0 <=26.x.x"
+  },
+  "packageManager": "pnpm@12.3.4",
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "build": "pnpm --filter web build",
+    "start": "pnpm --filter web start",
+    "lint": "pnpm --filter web lint",
+    "cms": "pnpm --filter cms develop"
+  }
+}

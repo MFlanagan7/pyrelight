@@ -1,0 +1,34 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# build output
+.next/
+out/
+build/
+dist/
+.strapi/
+
+# env — never commit; see .env.example files for the required keys
+.env
+.env.*
+!.env.example
+
+# logs
+*.log
+npm-debug.log*
+.pnpm-debug.log*
+
+# editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# deploy
+.vercel

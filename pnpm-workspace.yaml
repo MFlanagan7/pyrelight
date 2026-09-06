@@ -1,0 +1,8 @@
+packages:
+  - apps/*
+
+# Native build scripts are opt-in under pnpm. Next pulls these in but does not
+# need them built for our use (no sharp-based image optimization on Vercel).
+allowBuilds:
+  sharp: false
+  unrs-resolver: false
