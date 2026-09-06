@@ -1,0 +1,35 @@
+.frame {
+  padding: 1px;
+  border-radius: calc(var(--radius, var(--sf-radius-frame)) + 1px);
+  background: var(--sf-border-gradient);
+}
+
+.float {
+  box-shadow: var(--sf-shadow-float);
+}
+
+.well {
+  position: relative;
+  border-radius: var(--radius, var(--sf-radius-frame));
+  overflow: hidden;
+  background: var(--surface-well);
+  aspect-ratio: var(--ratio, 16 / 9);
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.card {
+  background: var(--sf-scrim-card);
+}
+
+.caption {
+  background: var(--sf-scrim-caption);
+}
+
+.full {
+  background: linear-gradient(180deg, rgba(13, 12, 27, 0.2), rgba(13, 12, 27, 0.75));
+}

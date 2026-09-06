@@ -1,0 +1,36 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.25rem;
+  justify-content: flex-start;
+}
+
+.center {
+  justify-content: center;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  align-items: flex-start;
+}
+
+.center .item {
+  align-items: center;
+}
+
+.value {
+  font-family: var(--sf-font-display);
+  font-size: var(--sf-text-xl);
+  line-height: 1;
+  color: var(--text-accent);
+}
+
+.label {
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-xs);
+  letter-spacing: var(--sf-track-caps);
+  text-transform: uppercase;
+  color: var(--text-body-card);
+}

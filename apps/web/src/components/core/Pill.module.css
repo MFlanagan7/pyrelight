@@ -1,0 +1,50 @@
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-xs);
+  letter-spacing: var(--sf-track-caps);
+  text-transform: uppercase;
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--sf-radius-pill);
+  text-decoration: none;
+  border: 1px solid;
+  transition:
+    border-color var(--sf-dur-hover) var(--sf-ease),
+    color var(--sf-dur-hover) var(--sf-ease);
+}
+
+.neutral {
+  color: var(--sf-ink-300);
+  border-color: var(--sf-line-strong);
+  background: var(--tint-violet);
+}
+
+.outline {
+  color: var(--text-label);
+  border-color: var(--sf-line-strong);
+  background: rgba(13, 12, 27, 0.55);
+}
+
+.gold {
+  color: var(--action-primary-ink);
+  border-color: var(--sf-gold-400);
+  background: var(--sf-gold-400);
+}
+
+/* Hover only applies to the link form — a static chip has no hover state. */
+a.pill:hover {
+  border-color: rgba(235, 203, 110, 0.45);
+  color: var(--text-link-hover);
+}
+
+a.gold:hover {
+  color: var(--action-primary-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill {
+    transition: none;
+  }
+}

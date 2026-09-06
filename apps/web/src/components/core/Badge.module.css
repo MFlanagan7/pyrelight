@@ -1,0 +1,21 @@
+.badge {
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-2xs);
+  letter-spacing: var(--sf-track-caps);
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--sf-radius-pill);
+  border: 1px solid;
+}
+
+.premium {
+  color: var(--action-primary-ink);
+  background: rgba(235, 203, 110, 0.92);
+  border-color: var(--sf-gold-400);
+}
+
+.free {
+  color: var(--sf-status-free);
+  background: rgba(13, 12, 27, 0.7);
+  border-color: rgba(155, 211, 168, 0.6);
+}

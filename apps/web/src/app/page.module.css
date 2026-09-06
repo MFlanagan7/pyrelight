@@ -37,3 +37,11 @@
   color: var(--sf-ink-500);
   font-size: var(--sf-text-sm);
 }
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sf-space-4);
+  margin-top: var(--sf-space-8);
+}
