@@ -1,27 +1,39 @@
 .main {
-  max-width: var(--content-width);
+  max-width: var(--sf-container);
   margin-inline: auto;
-  padding: var(--space-16) var(--space-6);
+  padding: var(--sf-section-pad-y) var(--sf-section-pad-x);
+}
+
+.eyebrow {
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-sm);
+  letter-spacing: var(--sf-track-label);
+  text-transform: uppercase;
+  color: var(--sf-gold-400);
 }
 
 .title {
-  font-size: var(--text-2xl);
-  letter-spacing: -0.02em;
+  margin-top: var(--sf-space-4);
+  font-family: var(--sf-font-display);
+  font-size: var(--sf-text-3xl);
+  line-height: var(--sf-leading-tight);
+  letter-spacing: var(--sf-track-wordmark);
+  color: var(--sf-ink-100);
 }
 
 .lede {
-  margin-top: var(--space-4);
-  color: var(--color-text-muted);
-  font-size: var(--text-lg);
-  max-width: 42ch;
+  margin-top: var(--sf-space-5);
+  max-width: var(--sf-measure-body);
+  color: var(--sf-ink-400);
 }
 
 .note {
-  margin-top: var(--space-12);
-  padding: var(--space-4);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  background: var(--color-surface);
-  color: var(--color-text-muted);
-  font-size: var(--text-sm);
+  margin-top: var(--sf-space-10);
+  max-width: var(--sf-measure-reading);
+  padding: var(--sf-card-pad);
+  border: 1px solid var(--sf-line);
+  border-radius: var(--sf-radius-card);
+  background: var(--sf-navy-700);
+  color: var(--sf-ink-500);
+  font-size: var(--sf-text-sm);
 }

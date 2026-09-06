@@ -1,17 +1,36 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Cormorant_Garamond, Alegreya_Sans_SC, Spectral } from "next/font/google";
 import "./globals.css";
 
-// Placeholder faces — swap for the Starfall design system's typefaces once the
-// design system lands. Self-host any licensed fonts under src/app/fonts/.
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// The three Starfall families, no substitutes. Loaded here rather than through
+// the design system's Google Fonts @import so they are self-hosted at build
+// time. Weights match what the design system actually uses — adding more costs
+// bytes for faces nothing renders.
+
+/** Display: H1, section headings, card titles, quotes, numerals. */
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
   subsets: ["latin"],
+  weight: ["300", "400", "600"],
+  style: ["normal", "italic"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+/** Heading: nav, buttons, eyebrows, meta, badges. Always uppercase, letterspaced. */
+const alegreya = Alegreya_Sans_SC({
+  variable: "--font-alegreya",
   subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  display: "swap",
+});
+
+/** Body: all running copy. */
+const spectral = Spectral({
+  variable: "--font-spectral",
+  subsets: ["latin"],
+  weight: ["300", "400"],
+  style: ["normal", "italic"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -20,12 +39,15 @@ export const metadata: Metadata = {
     template: "%s · Starfall",
   },
   description:
-    "Starfall — a fantasy RPG setting for D&D 5e. Built in public.",
+    "Starfall — a fifth-edition compatible fantasy setting from Pyrelight Press.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html
+      lang="en"
+      className={`${cormorant.variable} ${alegreya.variable} ${spectral.variable}`}
+    >
       <body>{children}</body>
     </html>
   );

@@ -1,0 +1,40 @@
+:root {
+  /* Families — three, no substitutes */
+  --sf-font-display: "Cormorant Garamond", "Georgia", serif;   /* H1, card titles, quotes, numerals */
+  --sf-font-heading: "Alegreya Sans SC", system-ui, sans-serif; /* nav, labels, buttons, small-caps H3 */
+  --sf-font-body: "Spectral", "Georgia", serif;                 /* all running copy */
+
+  /* Scale — 1.25 ratio on a 16px base */
+  --sf-text-2xs: 0.64rem;   /* 10.24px — badges only */
+  --sf-text-xs: 0.8rem;     /* 12.8px  — labels, legal, meta */
+  --sf-text-sm: 0.9rem;     /* 14.4px  — nav, links, dense copy */
+  --sf-text-base: 1rem;     /* 16px    — body */
+  --sf-text-md: 1.25rem;    /* 20px    — lead-in, logotype */
+  --sf-text-lg: 1.5625rem;  /* 25px    — card titles (display) */
+  --sf-text-xl: 1.953rem;   /* 31.2px  — sub-section headings */
+  --sf-text-2xl: 2.441rem;  /* 39px    — section headings */
+  --sf-text-3xl: 3.052rem;  /* 48.8px  — H1 / wordmark */
+
+  /* Line heights */
+  --sf-leading-tight: 1.05;   /* H1 */
+  --sf-leading-heading: 1.15; /* H2/H3 */
+  --sf-leading-body: 1.65;    /* body */
+  --sf-leading-reading: 1.75; /* long-form reading panel */
+
+  /* Tracking — Alegreya Sans SC always gets letterspacing */
+  --sf-track-wordmark: .08em;
+  --sf-track-tagline: .24em;  /* hero tagline */
+  --sf-track-label: .22em;    /* eyebrow labels */
+  --sf-track-caps: .14em;     /* small-caps H3, badges */
+  --sf-track-nav: .10em;      /* nav, buttons, links */
+
+  /* Weights — display and body stay at 400; only Alegreya goes to 500 */
+  --sf-weight-display: 400;
+  --sf-weight-heading: 500;
+  --sf-weight-body: 400;
+
+  /* Measure */
+  --sf-measure-reading: 72ch;
+  --sf-measure-body: 52ch;
+  --sf-measure-card: 46ch;
+}

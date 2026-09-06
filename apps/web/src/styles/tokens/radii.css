@@ -1,0 +1,9 @@
+:root {
+  --sf-radius-pill: 999px;   /* every button, chip, badge, input */
+  --sf-radius-panel: 14px;   /* reading panel, gradient-bordered frames */
+  --sf-radius-card: 12px;    /* cards, wells, lists */
+  --sf-radius-frame: 11px;   /* image inside a 1px gradient border */
+  --sf-radius-cover: 10px;   /* 2:3 product cover outer */
+  --sf-radius-thumb: 6px;    /* sigils, small tiles */
+  --sf-radius-chip: 4px;     /* cover thumbs in list rows */
+}

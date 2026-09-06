@@ -1,24 +1,39 @@
 /*
- * Global styles. Keep this file thin — anything component-scoped belongs in a
- * co-located *.module.css file instead.
+ * Global styles. Keep thin — anything component-scoped belongs in a co-located
+ * *.module.css file.
+ *
+ * Import order matters. The reset goes first so the design system's base.css
+ * wins any conflict, and the font bridge goes last so it overrides the family
+ * declarations in typography.css.
+ *
+ * The token files under styles/tokens/ are copied verbatim from
+ * /design-system/tokens/. Do not hand-edit them — change the design system and
+ * re-copy, so the two never drift.
  */
 
-@import "../styles/tokens.css";
 @import "../styles/reset.css";
 
-body {
-  background: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-sans);
-  font-size: var(--text-base);
-}
+@import "../styles/tokens/colors.css";
+@import "../styles/tokens/typography.css";
+@import "../styles/tokens/spacing.css";
+@import "../styles/tokens/radii.css";
+@import "../styles/tokens/elevation.css";
+@import "../styles/tokens/motion.css";
+@import "../styles/tokens/base.css";
 
-a {
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.2em;
-}
+/*
+ * Font bridge. The design system ships tokens/fonts.css, which pulls the three
+ * families from Google Fonts over @import — a render-blocking request plus a
+ * layout shift. We load them through next/font instead (self-hosted at build
+ * time, preloaded, no shift) and point the design system's family tokens at the
+ * variables next/font generates. The families and fallbacks are unchanged.
+ */
+:root {
+  --sf-font-display: var(--font-cormorant), "Georgia", serif;
+  --sf-font-heading: var(--font-alegreya), system-ui, sans-serif;
+  --sf-font-body: var(--font-spectral), "Georgia", serif;
 
-:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
+  /* Dark-only by policy: "never a light section." Stops the browser from
+     rendering form controls and scrollbars in a light scheme. */
+  color-scheme: dark;
 }

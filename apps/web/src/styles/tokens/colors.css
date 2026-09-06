@@ -1,0 +1,89 @@
+:root {
+  /* ---- Grounds: navy, darkest to lightest ---- */
+  --sf-navy-900: #0A0917;   /* footer floor */
+  --sf-navy-850: #0D0C1B;   /* page base */
+  --sf-navy-800: #100F21;   /* hero ground, image wells */
+  --sf-navy-750: #141328;   /* brand navy (per brand guide) */
+  --sf-navy-700: #15142A;   /* surface, cards */
+  --sf-navy-650: #171630;   /* raised reading panel */
+  --sf-navy-600: #1B1934;   /* surface hover */
+  --sf-navy-550: #1D1B3A;   /* inset wells */
+
+  /* ---- Brand accents ---- */
+  --sf-gold-300: #F3DC98;   /* gold, light — hover, gradient top */
+  --sf-gold-400: #EBCB6E;   /* ESSENCE GOLD — primary accent */
+  --sf-gold-500: #E3BE55;   /* gold, deep — gradient bottom */
+  --sf-violet-600: #3A2E5C; /* dusk violet — ambient, tints */
+  --sf-violet-400: #6A5A9C; /* violet, lifted */
+  --sf-lilac-400: #A29CC4;  /* muted lilac — labels, meta */
+  --sf-teal-600: #2C6E7F;   /* deep teal — the sea, links on parchment */
+  --sf-teal-300: #7FD3E4;   /* teal, light — sea-band labels */
+  --sf-oxblood-600: #6B2B2B;/* oxblood — warnings, sacred red */
+
+  /* ---- Sea band (only non-navy ground) ---- */
+  --sf-sea-900: #0A151C;
+  --sf-sea-850: #0B1A22;
+
+  /* ---- Ink ---- */
+  --sf-ink-100: #EFECF6;    /* headings */
+  --sf-ink-200: #DDD8EC;    /* emphasis body, body over imagery */
+  --sf-ink-300: #C8C2DC;    /* body */
+  --sf-ink-400: #ADA6C8;    /* secondary body, card copy */
+  --sf-ink-500: #8F88AF;    /* meta, counts */
+  --sf-ink-600: #7C7599;    /* legal, copyright */
+  --sf-ink-sea-100: #EAF6F8;
+  --sf-ink-sea-300: #C9E2E8;
+
+  /* ---- Status ---- */
+  --sf-status-free: #9BD3A8;
+  --sf-status-dead: #C98A8A;
+  --sf-status-stranded: var(--sf-gold-400);
+
+  /* ---- Hairlines ---- */
+  --sf-line-faint: rgba(162, 156, 196, .12);
+  --sf-line: rgba(162, 156, 196, .18);
+  --sf-line-strong: rgba(162, 156, 196, .28);
+  --sf-line-gold: rgba(235, 203, 110, .45);
+  --sf-line-sea: rgba(44, 110, 127, .35);
+
+  /* ---- Parchment (print + PDF only — NOT used on the site) ---- */
+  --sf-parchment-100: #F5F0E4;
+  --sf-parchment-line: #C9B98F;
+  --sf-parchment-ink: #2A2636;
+
+  /* ================= Semantic aliases ================= */
+  --surface-page: var(--sf-navy-850);
+  --surface-hero: var(--sf-navy-800);
+  --surface-card: var(--sf-navy-700);
+  --surface-card-hover: var(--sf-navy-600);
+  --surface-raised: var(--sf-navy-650);
+  --surface-well: var(--sf-navy-800);
+  --surface-footer: var(--sf-navy-900);
+  --surface-sea: var(--sf-sea-850);
+
+  --text-heading: var(--sf-ink-100);
+  --text-body: var(--sf-ink-300);
+  --text-body-card: var(--sf-ink-400);
+  --text-over-image: var(--sf-ink-200);
+  --text-label: var(--sf-lilac-400);
+  --text-meta: var(--sf-ink-500);
+  --text-legal: var(--sf-ink-600);
+  --text-accent: var(--sf-gold-400);
+  --text-link: var(--sf-gold-400);
+  --text-link-hover: var(--sf-gold-300);
+
+  --border-card: var(--sf-line);
+  --border-card-hover: var(--sf-line-gold);
+  --border-section: var(--sf-line-faint);
+
+  --action-primary-bg: linear-gradient(180deg, var(--sf-gold-300), var(--sf-gold-500));
+  --action-primary-ink: var(--sf-navy-750);
+  --action-ghost-border: rgba(239, 236, 246, .32);
+  --action-ghost-bg: rgba(239, 236, 246, .06);
+  --action-ghost-bg-hover: rgba(239, 236, 246, .13);
+
+  --tint-violet: rgba(58, 46, 92, .3);
+  --tint-violet-strong: rgba(58, 46, 92, .5);
+  --tint-teal: rgba(44, 110, 127, .26);
+  --tint-gold: rgba(235, 203, 110, .12);
+}

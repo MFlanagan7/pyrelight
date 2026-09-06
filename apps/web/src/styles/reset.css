@@ -1,14 +1,9 @@
-/* Minimal reset. Kept short on purpose — no normalize.css dependency. */
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-* {
-  margin: 0;
-}
+/*
+ * Minimal reset. Deliberately narrow: the design system's tokens/base.css
+ * already handles box-sizing, body, links, focus rings, and heading/paragraph
+ * margins. Only the gaps it does not cover belong here, and this file is
+ * imported BEFORE base.css so the design system always wins a conflict.
+ */
 
 html {
   -webkit-text-size-adjust: 100%;
@@ -16,8 +11,6 @@ html {
 
 body {
   min-height: 100dvh;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
 }
 
 img,
@@ -41,14 +34,5 @@ h1,
 h2,
 h3,
 h4 {
-  line-height: 1.2;
   text-wrap: balance;
-}
-
-p {
-  text-wrap: pretty;
-}
-
-a {
-  color: inherit;
 }

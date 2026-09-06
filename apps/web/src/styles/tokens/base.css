@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  background: var(--surface-page);
+  color: var(--text-body);
+  font-family: var(--sf-font-body);
+  font-size: var(--sf-text-base);
+  line-height: var(--sf-leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+* { box-sizing: border-box; }
+a { color: var(--text-link); text-decoration: none; }
+a:hover { color: var(--text-link-hover); text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--sf-gold-400); outline-offset: 3px; }
+h1, h2, h3, h4 { margin: 0; font-weight: var(--sf-weight-display); }
+p { margin: 0; text-wrap: pretty; }

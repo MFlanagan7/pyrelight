@@ -1,0 +1,33 @@
+:root {
+  /* Shadows read as depth in a dark room: black, generous, never colored */
+  --sf-shadow-card: 0 18px 40px rgba(0, 0, 0, .5);
+  --sf-shadow-cover: 0 22px 50px rgba(0, 0, 0, .55);
+  --sf-shadow-float: 0 28px 70px rgba(0, 0, 0, .55);
+  --sf-shadow-panel: 0 24px 60px rgba(0, 0, 0, .45);
+  --sf-shadow-strip: 0 24px 60px rgba(0, 0, 0, .55);
+
+  /* Glow — gold only, always additive, never on text-bearing surfaces */
+  --sf-glow-mark: drop-shadow(0 0 6px rgba(235, 203, 110, .55)); /* @kind other */
+  --sf-glow-button: 0 0 34px rgba(235, 203, 110, .32), inset 0 1px 0 rgba(255, 255, 255, .5);
+  --sf-glow-button-hover: 0 0 46px rgba(235, 203, 110, .55), inset 0 1px 0 rgba(255, 255, 255, .6);
+  --sf-glow-card-hover: 0 0 34px rgba(235, 203, 110, .16);
+  --sf-glow-h1: 0 0 70px rgba(235, 203, 110, .35), 0 2px 34px rgba(13, 12, 27, .95);
+
+  /* Gradient hairline borders — used as a 1px padding wrapper */
+  --sf-border-gradient: linear-gradient(160deg, rgba(235,203,110,.5), rgba(162,156,196,.18) 45%, rgba(44,110,127,.35)); /* @kind other */
+  --sf-border-gradient-card: linear-gradient(170deg, rgba(235,203,110,.34), rgba(162,156,196,.14) 45%, rgba(162,156,196,.06)); /* @kind other */
+
+  /* Hero scrim stack — apply in this order over art */
+  --sf-scrim-top: linear-gradient(180deg, rgba(13,12,27,.6) 0%, rgba(13,12,27,0) 26%); /* @kind other */
+  --sf-scrim-bottom: linear-gradient(0deg, #0D0C1B 0%, rgba(13,12,27,.92) 12%, rgba(13,12,27,0) 52%); /* @kind other */
+  --sf-scrim-vignette: radial-gradient(120% 88% at 50% 42%, rgba(13,12,27,0) 34%, rgba(13,12,27,.69) 100%); /* @kind other */
+  --sf-scrim-glow: radial-gradient(30% 24% at 50% 34%, rgba(235,203,110,.2) 0%, rgba(58,46,92,.32) 46%, rgba(13,12,27,0) 78%); /* @kind other */
+  --sf-scrim-card: linear-gradient(180deg, rgba(13,12,27,.1) 40%, rgba(21,20,42,.96) 100%); /* @kind other */
+  --sf-scrim-caption: linear-gradient(0deg, rgba(13,12,27,.9), rgba(13,12,27,0)); /* @kind other */
+
+  /* Ambient hue zones — one per section, at most one hue per band */
+  --sf-ambient-violet: radial-gradient(46% 44% at 84% 14%, rgba(58,46,92,.5), rgba(13,12,27,0) 74%); /* @kind other */
+  --sf-ambient-teal: radial-gradient(40% 40% at 4% 82%, rgba(44,110,127,.22), rgba(13,12,27,0) 74%); /* @kind other */
+  --sf-ambient-gold-top: radial-gradient(48% 32% at 50% 0%, rgba(235,203,110,.18), rgba(13,12,27,0) 72%); /* @kind other */
+  --sf-ambient-gold-bottom: radial-gradient(54% 74% at 50% 108%, rgba(235,203,110,.24), rgba(13,12,27,0) 70%); /* @kind other */
+}
