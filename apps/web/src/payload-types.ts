@@ -972,7 +972,7 @@ export interface WikiGod {
    * The name mortals use. 'The Drowned Lantern'.
    */
   epithet?: string | null;
-  status: 'ascendant' | 'stranded' | 'dead' | 'unknown';
+  divineStatus: 'ascendant' | 'stranded' | 'dead' | 'unknown';
   domains?:
     | {
         domain: string;
@@ -1634,7 +1634,7 @@ export interface WikiGodsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   epithet?: T;
-  status?: T;
+  divineStatus?: T;
   domains?:
     | T
     | {

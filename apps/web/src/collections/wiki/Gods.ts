@@ -9,7 +9,7 @@ export const WikiGods: CollectionConfig = {
   labels: { singular: "God", plural: "Gods" },
   admin: {
     useAsTitle: "title",
-    defaultColumns: ["title", "epithet", "status", "_status"],
+    defaultColumns: ["title", "epithet", "divineStatus", "_status"],
     group: "Wiki",
     livePreview: { url: ({ data }) => `/wiki/gods/${data?.slug ?? ""}` },
   },
@@ -20,7 +20,12 @@ export const WikiGods: CollectionConfig = {
     slugField(),
     { name: "epithet", type: "text", admin: { description: "The name mortals use. 'The Drowned Lantern'." } },
     {
-      name: "status",
+      // NOT "status": Payload's drafts feature adds a _status column whose enum is
+      // named enum_<collection>_status. A field called "status" collides with it,
+      // and the generated _status column inherits these values instead of
+      // draft/published, which fails at CREATE TABLE.
+      name: "divineStatus",
+      label: "Status",
       type: "select",
       required: true,
       defaultValue: "stranded",
