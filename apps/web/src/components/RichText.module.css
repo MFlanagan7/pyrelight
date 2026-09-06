@@ -1,0 +1,75 @@
+/* Long-form prose. Measure and rhythm come from the design system: 72ch for
+   reading, 1.75 line-height, no light grounds. */
+.prose {
+  max-width: var(--sf-measure-reading);
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  font-size: 1.05rem;
+  line-height: var(--sf-leading-reading);
+  color: var(--text-body);
+}
+
+.prose :global(h2),
+.prose :global(h3),
+.prose :global(h4) {
+  font-family: var(--sf-font-display);
+  line-height: var(--sf-leading-heading);
+  color: var(--text-heading);
+  margin-top: var(--sf-space-6);
+}
+
+.prose :global(h2) {
+  font-size: var(--sf-text-2xl);
+}
+
+.prose :global(h3) {
+  font-size: var(--sf-text-xl);
+}
+
+.prose :global(h4) {
+  font-size: var(--sf-text-lg);
+}
+
+.prose :global(a) {
+  color: var(--text-link);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.prose :global(a:hover) {
+  color: var(--text-link-hover);
+}
+
+.prose :global(ul),
+.prose :global(ol) {
+  padding-left: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.prose :global(blockquote) {
+  margin: 0;
+  padding-left: 1.25rem;
+  border-left: 2px solid rgba(235, 203, 110, 0.5);
+  font-family: var(--sf-font-display);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--text-heading);
+}
+
+.prose :global(hr) {
+  border: 0;
+  height: 1px;
+  background: var(--sf-border-gradient);
+}
+
+.prose :global(img) {
+  border-radius: var(--sf-radius-frame);
+}
+
+.prose :global(code) {
+  font-family: var(--sf-font-mono, ui-monospace, monospace);
+  font-size: 0.92em;
+}

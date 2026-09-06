@@ -1,0 +1,24 @@
+.main {
+  max-width: var(--sf-container);
+  margin-inline: auto;
+  /* Extra top padding clears the fixed nav. */
+  padding: calc(var(--sf-section-pad-y) + 3rem) var(--sf-section-pad-x)
+    var(--sf-section-pad-y);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--sf-col-min-card), 1fr));
+  gap: var(--sf-gap-card);
+  margin-top: var(--sf-space-10);
+}
+
+.empty {
+  margin-top: var(--sf-space-10);
+  padding: var(--sf-panel-pad);
+  border: 1px solid var(--sf-line);
+  border-radius: var(--sf-radius-panel);
+  background: var(--surface-card);
+  color: var(--text-body-card);
+  max-width: var(--sf-measure-body);
+}

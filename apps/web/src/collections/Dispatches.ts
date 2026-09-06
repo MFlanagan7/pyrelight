@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { revalidateCollection } from "../hooks/revalidate";
 import { seoField } from "../fields/seo";
 import { slugField } from "../fields/slug";
 
@@ -16,6 +17,7 @@ export const Dispatches: CollectionConfig = {
   },
   access: { read: () => true },
   versions: { drafts: true },
+  hooks: revalidateCollection("/dispatches", "/dispatches"),
   fields: [
     { name: "title", type: "text", required: true },
     slugField(),

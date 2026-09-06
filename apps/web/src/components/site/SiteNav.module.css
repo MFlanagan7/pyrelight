@@ -1,0 +1,59 @@
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sf-space-8);
+  padding: 0.8rem 1.75rem;
+  background: rgba(13, 12, 27, 0);
+  border-bottom: 1px solid rgba(162, 156, 196, 0);
+  /* One of only two places blur is permitted; the other is pills over art. */
+  backdrop-filter: blur(16px) saturate(140%);
+  transition:
+    background var(--sf-dur-chrome) var(--sf-ease),
+    border-color var(--sf-dur-chrome) var(--sf-ease);
+}
+
+.scrolled {
+  background: rgba(13, 12, 27, 0.9);
+  border-bottom-color: var(--sf-line);
+}
+
+.brand {
+  font-family: var(--sf-font-display);
+  font-size: var(--sf-text-lg);
+  letter-spacing: var(--sf-track-wordmark);
+  color: var(--sf-gold-400);
+  text-decoration: none;
+  text-shadow: var(--sf-glow-mark);
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 1.35rem;
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-sm);
+  letter-spacing: var(--sf-track-nav);
+  text-transform: uppercase;
+}
+
+.link {
+  color: var(--sf-ink-300);
+  text-decoration: none;
+  transition: color var(--sf-dur-hover) var(--sf-ease);
+}
+
+.link:hover,
+.link[aria-current="page"] {
+  color: var(--sf-gold-400);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav,
+  .link {
+    transition: none;
+  }
+}

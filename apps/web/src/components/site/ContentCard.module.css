@@ -1,0 +1,96 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--sf-radius-card);
+  background: var(--surface-card);
+  border: 1px solid var(--sf-line);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    border-color var(--sf-dur-hover) var(--sf-ease),
+    transform var(--sf-dur-lift) var(--sf-ease),
+    box-shadow var(--sf-dur-lift) var(--sf-ease);
+}
+
+/* The hover the design system specifies: cards lift 4px and warm their border.
+   The inline-styled original declared these transitions but had no rule to
+   trigger them. */
+a.card:hover {
+  transform: var(--sf-lift-card);
+  border-color: rgba(235, 203, 110, 0.45);
+  background: var(--surface-card-hover);
+  box-shadow: var(--sf-glow-card-hover);
+}
+
+.well {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--surface-well);
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--sf-scrim-card);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.15rem 1.25rem 1.35rem;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sf-space-4);
+}
+
+/* Small-caps title, because a grid of cards reads as an index. A single
+   feature uses a Cormorant title instead. */
+.title {
+  font-family: var(--sf-font-heading);
+  font-weight: var(--sf-weight-heading);
+  font-size: 1.05rem;
+  letter-spacing: var(--sf-track-caps);
+  text-transform: uppercase;
+  color: var(--text-heading);
+  min-width: 0;
+}
+
+.count {
+  flex: none;
+  white-space: nowrap;
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-xs);
+  letter-spacing: var(--sf-track-nav);
+  text-transform: uppercase;
+  color: var(--text-meta);
+}
+
+.text {
+  font-size: 0.93rem;
+  line-height: 1.55;
+  color: var(--text-body-card);
+}
+
+.tag {
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-xs);
+  letter-spacing: var(--sf-track-caps);
+  text-transform: uppercase;
+  color: var(--text-meta);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+  a.card:hover {
+    transform: none;
+  }
+}
