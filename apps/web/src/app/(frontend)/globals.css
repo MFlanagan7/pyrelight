@@ -11,15 +11,15 @@
  * re-copy, so the two never drift.
  */
 
-@import "../styles/reset.css";
+@import "../../styles/reset.css";
 
-@import "../styles/tokens/colors.css";
-@import "../styles/tokens/typography.css";
-@import "../styles/tokens/spacing.css";
-@import "../styles/tokens/radii.css";
-@import "../styles/tokens/elevation.css";
-@import "../styles/tokens/motion.css";
-@import "../styles/tokens/base.css";
+@import "../../styles/tokens/colors.css";
+@import "../../styles/tokens/typography.css";
+@import "../../styles/tokens/spacing.css";
+@import "../../styles/tokens/radii.css";
+@import "../../styles/tokens/elevation.css";
+@import "../../styles/tokens/motion.css";
+@import "../../styles/tokens/base.css";
 
 /*
  * Font bridge. The design system ships tokens/fonts.css, which pulls the three

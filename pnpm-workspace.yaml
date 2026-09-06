@@ -1,8 +1,9 @@
 packages:
   - apps/*
 
-# Native build scripts are opt-in under pnpm. Next pulls these in but does not
-# need them built for our use (no sharp-based image optimization on Vercel).
+# Native build scripts are opt-in under pnpm. Payload uses sharp for media
+# resizing, so it must actually build — Next alone did not need it.
 allowBuilds:
-  sharp: false
+  esbuild: true
+  sharp: true
   unrs-resolver: false

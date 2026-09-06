@@ -1,0 +1,45 @@
+import type { CollectionConfig } from "payload";
+import { licensingFields, validateLicensing } from "../../fields/licensing";
+import { seoField } from "../../fields/seo";
+import { slugField } from "../../fields/slug";
+
+/** The pantheon. Status matters to the setting: divinity fell and got stranded. */
+export const WikiGods: CollectionConfig = {
+  slug: "wiki-gods",
+  labels: { singular: "God", plural: "Gods" },
+  admin: {
+    useAsTitle: "title",
+    defaultColumns: ["title", "epithet", "status", "_status"],
+    group: "Wiki",
+    livePreview: { url: ({ data }) => `/wiki/gods/${data?.slug ?? ""}` },
+  },
+  access: { read: () => true },
+  versions: { drafts: true },
+  fields: [
+    { name: "title", type: "text", required: true, label: "Name" },
+    slugField(),
+    { name: "epithet", type: "text", admin: { description: "The name mortals use. 'The Drowned Lantern'." } },
+    {
+      name: "status",
+      type: "select",
+      required: true,
+      defaultValue: "stranded",
+      options: [
+        { label: "Ascendant", value: "ascendant" },
+        { label: "Stranded", value: "stranded" },
+        { label: "Dead", value: "dead" },
+        { label: "Unknown", value: "unknown" },
+      ],
+      admin: { position: "sidebar" },
+    },
+    { name: "domains", type: "array", fields: [{ name: "domain", type: "text", required: true }] },
+    { name: "symbol", type: "upload", relationTo: "media", admin: { description: "Flat single-colour sigil on transparent PNG." } },
+    { name: "summary", type: "textarea" },
+    { name: "body", type: "richText" },
+    { name: "worshippedIn", type: "relationship", relationTo: "wiki-regions", hasMany: true, admin: { position: "sidebar" } },
+    { name: "related", type: "relationship", relationTo: ["wiki-articles", "wiki-factions", "wiki-gods", "wiki-regions"], hasMany: true, admin: { position: "sidebar" } },
+    ...licensingFields,
+    seoField,
+  ],
+  hooks: { beforeValidate: [({ data }) => { const r = validateLicensing(data ?? {}); if (r !== true) throw new Error(r); return data; }] },
+};
