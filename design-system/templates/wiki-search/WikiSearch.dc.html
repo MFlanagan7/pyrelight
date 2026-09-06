@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Wiki search results" description="Search results with category filter tabs, result rows and pager — plus the no-results empty state." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}mark{background:rgba(235,203,110,.24);color:var(--text-heading);border-radius:2px;padding:0 .12em}@media (max-width:900px){#search-grid{grid-template-columns:minmax(0,1fr)!important}#search-rail{display:none!important}}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--text-accent);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Tools</a>
+    <a href="#" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25);text-decoration:none">Newsletter</a>
+  </div>
+</nav>
+
+<div id="search-grid" style="max-width:var(--sf-container);margin:0 auto;padding:2.5rem 1.75rem 5rem;display:grid;grid-template-columns:minmax(0,1fr) 18rem;gap:3.5rem;align-items:start">
+
+  <main style="display:flex;flex-direction:column;gap:2rem;min-width:0">
+    <div style="display:flex;flex-direction:column;gap:1.35rem">
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.SearchField" size="lg" value="{{ query }}" on-change="{{ onQuery }}" placeholder="Search the wiki" scope="412 articles" hint-size="100%,64px"></x-import>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1.5rem;flex-wrap:wrap">
+        <p style="font-size:1.02rem;line-height:1.6;color:var(--text-body)">{{ resultLine }}</p>
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-meta)">Sorted by relevance</span>
+      </div>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Tabs" items="{{ scopeTabs }}" value="{{ scope }}" on-change="{{ onScope }}" hint-size="100%,44px"></x-import>
+    </div>
+
+    <sc-if value="{{ hasResults }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:1.75rem">
+        <sc-for list="{{ results }}" as="r" hint-placeholder-count="5">
+          <article style="display:flex;flex-direction:column;gap:.5rem;padding-bottom:1.6rem;border-bottom:1px solid var(--border-section)">
+            <div style="display:flex;align-items:center;gap:.7rem">
+              <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-accent)">{{ r.category }}</span>
+              <span style="color:var(--sf-line-strong)">·</span>
+              <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">{{ r.updated }}</span>
+            </div>
+            <a href="#" style="font-family:var(--sf-font-display);font-size:var(--sf-text-lg);line-height:1.2;color:var(--text-heading);text-decoration:none">{{ r.title }}</a>
+            <p style="font-size:1rem;line-height:1.6;color:var(--text-body)">{{ r.snippet }}</p>
+            <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">{{ r.path }}</span>
+          </article>
+        </sc-for>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pagination" page="{{ page }}" pages="4" on-change="{{ onPage }}" hint-size="100%,60px"></x-import>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:1.75rem">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.EmptyState" title="Nothing matches that yet" body="The wiki covers the published setting only, so unreleased regions and adventures will not appear. Check the spelling, try a broader term, or browse the categories." hint-size="100%,240px"></x-import>
+        <div style="display:flex;flex-direction:column;gap:.9rem">
+          <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Try one of these</span>
+          <div style="display:flex;flex-wrap:wrap;gap:.5rem">
+            <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" href="#" hint-size="auto,28px">Marrow Bay</x-import>
+            <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" href="#" hint-size="auto,28px">Essence</x-import>
+            <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" href="#" hint-size="auto,28px">The Synod</x-import>
+            <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" href="#" hint-size="auto,28px">House Marrow</x-import>
+            <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" href="#" hint-size="auto,28px">Tides</x-import>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+  </main>
+
+  <aside id="search-rail" style="position:sticky;top:5rem;display:flex;flex-direction:column;gap:1.5rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.WikiSidebar" groups="{{ sidebarGroups }}" hint-size="100%,340px"></x-import>
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="note" label="Search tips" hint-size="100%,170px">
+      Quote a phrase to match it exactly. Prefix a term with a category — <em style="font-style:italic">houses: calder</em> — to search inside one index.
+    </x-import>
+  </aside>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { query: "toll", scope: "all", page: 1 };
+
+  allResults() {
+    return [
+      { title: "Marrow Bay", category: "Regions", updated: "14 Fallmoon", path: "Wiki · Regions · The Drowned Coast", scope: "regions",
+        snippet: "Every vessel entering the bay pays a toll assessed on displacement, not cargo. House Marrow set it this way deliberately: an empty hull pays the same as a full one." },
+      { title: "House Marrow", category: "Houses & factions", updated: "14 Fallmoon", path: "Wiki · Houses & factions", scope: "houses",
+        snippet: "Holds the bay, the chain and the weighing house. The toll captains are house officers rather than customs officials, and the distinction matters when something goes wrong." },
+      { title: "The chain", category: "Regions", updated: "12 Fallmoon", path: "Wiki · Regions · The Drowned Coast", scope: "regions",
+        snippet: "A boom across the headlands, raised at the toll captain's word. Ships that have paid cannot be attacked by cartel crews inside it — an arrangement, not a law." },
+      { title: "Essence, assay and price", category: "Essence", updated: "4 Fallmoon", path: "Wiki · Essence", scope: "essence",
+        snippet: "Weighed in grains at the weighing house before it can be carried inland. The toll on essence itself is levied separately and collected in kind." },
+      { title: "Sailing the Drowned Coast", category: "The Sea", updated: "2 Fallmoon", path: "Wiki · The Sea", scope: "sea",
+        snippet: "Passage is priced by risk rather than distance. Add the toll at every port and a coastal run stops being profitable below about forty tons." }
+    ];
+  }
+
+  renderVals() {
+    const { query, scope, page } = this.state;
+    const all = this.allResults();
+    const filtered = scope === "all" ? all : all.filter(r => r.scope === scope);
+    const hasResults = query.trim().length > 0 && filtered.length > 0;
+    const counts = { all: all.length };
+    for (const r of all) counts[r.scope] = (counts[r.scope] || 0) + 1;
+    return {
+      query,
+      scope,
+      page,
+      results: filtered,
+      hasResults,
+      noResults: !hasResults,
+      resultLine: hasResults
+        ? filtered.length + " results for \u201c" + query + "\u201d"
+        : "No results for \u201c" + query + "\u201d",
+      resultCount: filtered.length,
+      scopeTabs: [
+        { value: "all", label: "All", count: counts.all },
+        { value: "regions", label: "Regions", count: counts.regions },
+        { value: "houses", label: "Houses", count: counts.houses },
+        { value: "essence", label: "Essence", count: counts.essence },
+        { value: "sea", label: "The Sea", count: counts.sea }
+      ],
+      sidebarGroups: [
+        { title: "Categories", links: [
+          { label: "Regions", href: "#regions", count: 4 },
+          { label: "Races", href: "#races", count: 9 },
+          { label: "Gods", href: "#gods", count: 7 },
+          { label: "The Sea", href: "#sea", count: 11 },
+          { label: "Houses & factions", href: "#houses", count: 18 },
+          { label: "Essence", href: "#essence", count: 6 }
+        ]}
+      ],
+      onQuery: (e) => this.setState({ query: e.target.value, page: 1 }),
+      onScope: (v) => this.setState({ scope: v, page: 1 }),
+      onPage: (n) => this.setState({ page: Math.min(Math.max(1, n), 4) })
+    };
+  }
+}
+
+</script>
+</body>
+</html>

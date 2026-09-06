@@ -1,0 +1,17 @@
+<!-- @dsCard group="Spacing" viewport="700x170" subtitle="auto-fit + minmax, never fixed column counts" name="Grid minimums" -->
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; background: var(--surface-page); padding: 18px 20px; font-family: var(--sf-font-body); }
+  .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; }
+  .lbl { font-family: var(--sf-font-heading); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-meta); }
+  .mono { font-family: ui-monospace, Menlo, monospace; font-size: 9.5px; color: var(--text-meta); }
+  .sw { display: flex; flex-direction: column; gap: 5px; }
+  .chip { width: 92px; height: 46px; border-radius: 6px; border: 1px solid var(--sf-line); }
+</style></head><body>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px">
+<div style="padding:14px;border:1px solid var(--sf-line);border-radius:12px;background:var(--surface-card);font-family:var(--sf-font-heading);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-body-card)">15rem cards</div><div style="padding:14px;border:1px solid var(--sf-line);border-radius:12px;background:var(--surface-card);font-family:var(--sf-font-heading);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-body-card)">14rem covers</div><div style="padding:14px;border:1px solid var(--sf-line);border-radius:12px;background:var(--surface-card);font-family:var(--sf-font-heading);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-body-card)">20rem wide</div><div style="padding:14px;border:1px solid var(--sf-line);border-radius:12px;background:var(--surface-card);font-family:var(--sf-font-heading);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-body-card)">12rem tiles</div>
+</div>
+<p class="mono" style="margin-top:12px">repeat(auto-fit, minmax(var(--sf-col-min-card), 1fr)) — every grid on the site</p>
+</body></html>

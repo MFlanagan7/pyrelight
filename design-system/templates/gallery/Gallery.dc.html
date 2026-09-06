@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Art gallery" description="Filterable masonry-ish art grid with artist credit on every tile, region and medium filters, and a pager." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--text-accent);text-decoration:none">Gallery</a>
+    <a href="#" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25);text-decoration:none">Newsletter</a>
+  </div>
+</nav>
+
+<header style="position:relative;padding:4rem 1.75rem 3.25rem;overflow:hidden;background:var(--surface-hero);border-bottom:1px solid var(--sf-line)">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-top)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-vignette)"></div>
+  <div style="position:relative;max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:1.15rem">
+    <p style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">Commissioned work</p>
+    <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-3xl);line-height:var(--sf-leading-tight);color:var(--text-heading)">Gallery</h1>
+    <p style="max-width:60ch;font-size:1.12rem;line-height:1.65;color:var(--text-over-image)">Every piece commissioned for Starfall, credited to the artist who made it. Click through for the full image, the brief it answered, and where to find more of their work.</p>
+  </div>
+</header>
+
+<section style="padding:2.5rem 1.75rem 5rem;background:var(--surface-page)">
+  <div style="max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:2rem">
+
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.25rem">
+      <div style="display:flex;flex-wrap:wrap;gap:1.25rem;align-items:center">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Tabs" items="{{ subjectTabs }}" value="{{ subject }}" on-change="{{ onSubject }}" hint-size="auto,44px"></x-import>
+      </div>
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-meta)">{{ countLabel }}</span>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta);margin-right:.35rem">By artist</span>
+      <sc-for list="{{ artistChips }}" as="a" hint-placeholder-count="5">
+        <sc-if value="{{ a.on }}" hint-placeholder-val="{{ false }}">
+          <button type="button" onClick="{{ a.onPick }}" style="border:1px solid var(--sf-gold-400);background:rgba(235,203,110,.14);padding:.35rem .85rem;border-radius:999px;cursor:pointer;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-accent)">{{ a.label }}</button>
+        </sc-if>
+        <sc-if value="{{ a.off }}" hint-placeholder-val="{{ true }}">
+          <button type="button" onClick="{{ a.onPick }}" style="border:1px solid var(--action-ghost-border);background:transparent;padding:.35rem .85rem;border-radius:999px;cursor:pointer;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--sf-ink-300)">{{ a.label }}</button>
+        </sc-if>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ hasResults }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(17rem,1fr));gap:var(--sf-gap-card)">
+        <sc-for list="{{ pieces }}" as="p" hint-placeholder-count="9">
+          <figure style="display:flex;flex-direction:column;gap:.75rem;margin:0">
+            <a href="#" style="display:block;text-decoration:none">
+              <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ImageFrame" ratio="{{ p.ratio }}" scrim="card" hint-size="100%,220px">
+                <div aria-hidden="true" style="width:100%;height:100%;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+              </x-import>
+            </a>
+            <figcaption style="display:flex;flex-direction:column;gap:.25rem">
+              <a href="#" style="font-family:var(--sf-font-display);font-size:1.12rem;line-height:1.2;color:var(--text-heading);text-decoration:none">{{ p.title }}</a>
+              <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-accent)">{{ p.artist }}</span>
+              <span style="font-size:.85rem;color:var(--text-meta)">{{ p.meta }}</span>
+            </figcaption>
+          </figure>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.EmptyState" title="No pieces match those filters" body="Try a different subject, or clear the artist filter to see the whole commissioned set." action="{{ clearAction }}" hint-size="100%,240px"></x-import>
+    </sc-if>
+
+    <sc-if value="{{ showPager }}" hint-placeholder-val="{{ true }}">
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pagination" page="{{ page }}" pages="{{ pages }}" on-change="{{ onPage }}" hint-size="100%,60px"></x-import>
+    </sc-if>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="note" label="Using this art" hint-size="100%,190px">
+      These pieces are licensed to Pyrelight Press for use in Starfall products. They are not covered by the fan content licence — please do not use them in your own material, paid or free. Press and reviewers can find cleared images in the press kit.
+    </x-import>
+  </div>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { subject: "all", artist: "all", page: 1 };
+
+  static PAGE_SIZE = 9;
+
+  // Artist names are placeholders. Replace [ARTIST n] with real credits before this ships —
+  // never publish a fabricated attribution.
+  static PIECES = [
+    { title: "Marrow Bay at low tide", artist: "[ARTIST 1]", meta: "Digital · 2024 · cover", subject: "places", who: "a1", ratio: "4 / 3" },
+    { title: "The chain, raised", artist: "[ARTIST 1]", meta: "Digital · 2024 · interior", subject: "places", who: "a1", ratio: "4 / 3" },
+    { title: "A toll captain", artist: "[ARTIST 2]", meta: "Oil on board · 2024 · interior", subject: "people", who: "a2", ratio: "3 / 4" },
+    { title: "The Synod reliquary", artist: "[ARTIST 2]", meta: "Oil on board · 2025 · interior", subject: "objects", who: "a2", ratio: "1 / 1" },
+    { title: "The Drowned Coast chart", artist: "[ARTIST 3]", meta: "Ink and wash · 2024 · map", subject: "maps", who: "a3", ratio: "4 / 3" },
+    { title: "Nine fathoms down", artist: "[ARTIST 4]", meta: "Digital · 2025 · interior", subject: "places", who: "a4", ratio: "16 / 9" },
+    { title: "Mudlark, thirteen", artist: "[ARTIST 2]", meta: "Oil on board · 2025 · interior", subject: "people", who: "a2", ratio: "3 / 4" },
+    { title: "Essence vials, assayed", artist: "[ARTIST 4]", meta: "Digital · 2024 · interior", subject: "objects", who: "a4", ratio: "1 / 1" },
+    { title: "The tide stair", artist: "[ARTIST 1]", meta: "Digital · 2025 · chapter plate", subject: "places", who: "a1", ratio: "3 / 4" },
+    { title: "Thin Harbour, no chain", artist: "[ARTIST 3]", meta: "Ink and wash · 2025 · map", subject: "maps", who: "a3", ratio: "4 / 3" },
+    { title: "The weighing house floor", artist: "[ARTIST 4]", meta: "Digital · 2025 · interior", subject: "places", who: "a4", ratio: "16 / 9" },
+    { title: "Council of seven", artist: "[ARTIST 2]", meta: "Oil on board · 2026 · interior", subject: "people", who: "a2", ratio: "4 / 3" }
+  ];
+
+  static ARTISTS = [
+    { key: "all", label: "All artists" },
+    { key: "a1", label: "[ARTIST 1]" },
+    { key: "a2", label: "[ARTIST 2]" },
+    { key: "a3", label: "[ARTIST 3]" },
+    { key: "a4", label: "[ARTIST 4]" }
+  ];
+
+  renderVals() {
+    const { subject, artist } = this.state;
+    const all = Component.PIECES;
+    const filtered = all.filter(p =>
+      (subject === "all" || p.subject === subject) &&
+      (artist === "all" || p.who === artist)
+    );
+    const size = Component.PAGE_SIZE;
+    const pages = Math.max(1, Math.ceil(filtered.length / size));
+    const page = Math.min(Math.max(1, this.state.page), pages);
+    const pieces = filtered.slice((page - 1) * size, page * size);
+    return {
+      subject,
+      pieces,
+      page,
+      pages,
+      showPager: pages > 1,
+      onPage: (n) => this.setState({ page: Math.min(Math.max(1, n), pages) }),
+      hasResults: filtered.length > 0,
+      isEmpty: filtered.length === 0,
+      countLabel: filtered.length + (filtered.length === 1 ? " piece" : " pieces"),
+      subjectTabs: [
+        { value: "all", label: "Everything", count: all.length },
+        { value: "places", label: "Places", count: all.filter(p => p.subject === "places").length },
+        { value: "people", label: "People", count: all.filter(p => p.subject === "people").length },
+        { value: "objects", label: "Objects", count: all.filter(p => p.subject === "objects").length },
+        { value: "maps", label: "Maps", count: all.filter(p => p.subject === "maps").length }
+      ],
+      onSubject: (v) => this.setState({ subject: v, page: 1 }),
+      artistChips: Component.ARTISTS.map(a => ({
+        label: a.label,
+        on: a.key === artist,
+        off: a.key !== artist,
+        onPick: () => this.setState({ artist: a.key, page: 1 })
+      })),
+      clearAction: React.createElement("button", {
+        type: "button",
+        onClick: () => this.setState({ subject: "all", artist: "all", page: 1 }),
+        style: {
+          border: "1px solid var(--action-ghost-border)",
+          background: "var(--action-ghost-bg)",
+          padding: ".6rem 1.3rem", borderRadius: "999px", cursor: "pointer",
+          fontFamily: "var(--sf-font-heading)", fontSize: "var(--sf-text-xs)",
+          letterSpacing: "var(--sf-track-nav)", textTransform: "uppercase",
+          color: "var(--sf-ink-100)"
+        }
+      }, "Clear filters")
+    };
+  }
+}
+
+</script>
+</body>
+</html>

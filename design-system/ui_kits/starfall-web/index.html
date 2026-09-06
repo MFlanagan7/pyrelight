@@ -1,0 +1,230 @@
+<!-- @dsCard group="Starfall site" viewport="1280x900" subtitle="Home page — hero, entry strip, wiki grid, shop" name="Starfall home" -->
+<!-- @startingPoint section="Starfall site" subtitle="Dark world-site home page" viewport="1280x900" -->
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Starfall — home</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  .container { max-width: var(--sf-container); margin: 0 auto; }
+  .nav a { text-decoration: none; }
+  .grid-card { display: grid; grid-template-columns: repeat(auto-fit, minmax(var(--sf-col-min-card), 1fr)); gap: var(--sf-gap-card); }
+  .grid-cover { display: grid; grid-template-columns: repeat(auto-fit, minmax(var(--sf-col-min-cover), 1fr)); gap: var(--sf-gap-cover); }
+</style></head>
+<body>
+
+<nav class="nav" style="position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#top" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent)">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"/></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300)">World</a><a href="#" style="color:var(--sf-ink-300)">Wiki</a><a href="#" style="color:var(--sf-ink-300)">Adventures</a><a href="#" style="color:var(--sf-ink-300)">Shop</a><a href="#" style="color:var(--sf-ink-300)">Tools</a><a href="#" style="color:var(--sf-ink-300)">Gallery</a>
+    <a href="#signup" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25)">Newsletter</a>
+  </div>
+</nav>
+
+<header id="top" style="position:relative;min-height:92vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:11rem 1.5rem 6rem;overflow:hidden;background:var(--surface-hero)">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-top)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-bottom)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-vignette)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-glow)"></div>
+  <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:1.5rem;max-width:48rem">
+    <p style="display:flex;align-items:center;gap:.55rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-label);padding:.4rem 1rem;border:1px solid var(--sf-line-strong);border-radius:999px;background:rgba(13,12,27,.55)">
+      <svg viewBox="0 0 24 24" width="10" height="10" aria-hidden="true" style="color:var(--sf-gold-400)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"/></svg>A Pyrelight Press world · 5e compatible</p>
+    <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-3xl);line-height:var(--sf-leading-tight);letter-spacing:var(--sf-track-wordmark);color:var(--sf-gold-400);text-shadow:var(--sf-glow-h1)">Starfall</h1>
+    <p style="font-family:var(--sf-font-heading);font-size:1.12rem;letter-spacing:var(--sf-track-tagline);text-transform:uppercase;color:var(--text-label)">a world remade by a god&rsquo;s death</p>
+    <p style="max-width:36rem;font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-over-image)">Divinity falls from the sky as light and lands as currency. Read the world, run the adventures, or just wander the wiki.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:.875rem;justify-content:center;padding-top:.35rem">
+      <a href="#wiki" style="font-family:var(--sf-font-heading);font-size:1rem;letter-spacing:.13em;text-transform:uppercase;color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.9rem 2.3rem;border-radius:999px;text-decoration:none;box-shadow:var(--sf-glow-button)">Enter the World</a>
+      <a href="#shop" style="font-family:var(--sf-font-heading);font-size:1rem;letter-spacing:.13em;text-transform:uppercase;color:var(--sf-ink-100);border:1px solid var(--action-ghost-border);background:var(--action-ghost-bg);padding:.9rem 1.8rem;border-radius:999px;text-decoration:none">Free downloads</a>
+    </div>
+  </div>
+</header>
+
+<section style="padding:0 var(--sf-section-pad-x);background:var(--surface-page)">
+  <div style="max-width:var(--sf-container);margin:-3.25rem auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1px;background:var(--sf-line);border:1px solid var(--sf-line);border-radius:var(--sf-radius-card);overflow:hidden;box-shadow:var(--sf-shadow-strip)">
+    <a href="#" style="display:flex;flex-direction:column;gap:.4rem;padding:1.35rem 1.4rem;background:var(--surface-card);text-decoration:none">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">New here</span>
+      <span style="font-family:var(--sf-font-display);font-size:1.35rem;line-height:1.2;color:var(--text-heading)">What is Starfall</span>
+      <span style="font-size:var(--sf-text-sm);line-height:1.5;color:var(--text-body-card)">The premise in three minutes.</span></a><a href="#" style="display:flex;flex-direction:column;gap:.4rem;padding:1.35rem 1.4rem;background:var(--surface-card);text-decoration:none">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">Readers</span>
+      <span style="font-family:var(--sf-font-display);font-size:1.35rem;line-height:1.2;color:var(--text-heading)">Browse the wiki</span>
+      <span style="font-size:var(--sf-text-sm);line-height:1.5;color:var(--text-body-card)">Regions, gods, houses, the sea.</span></a><a href="#" style="display:flex;flex-direction:column;gap:.4rem;padding:1.35rem 1.4rem;background:var(--surface-card);text-decoration:none">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">Free</span>
+      <span style="font-family:var(--sf-font-display);font-size:1.35rem;line-height:1.2;color:var(--text-heading)">Downloads</span>
+      <span style="font-size:var(--sf-text-sm);line-height:1.5;color:var(--text-body-card)">Map, quickstart, GM screens.</span></a><a href="#" style="display:flex;flex-direction:column;gap:.4rem;padding:1.35rem 1.4rem;background:var(--surface-card);text-decoration:none">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">Run it</span>
+      <span style="font-family:var(--sf-font-display);font-size:1.35rem;line-height:1.2;color:var(--text-heading)">Adventures</span>
+      <span style="font-size:var(--sf-text-sm);line-height:1.5;color:var(--text-body-card)">Session-ready, levels 1–10.</span></a>
+  </div>
+</section>
+
+<section id="wiki" style="position:relative;padding:var(--sf-section-pad-y) var(--sf-section-pad-x);background:var(--surface-page);overflow:hidden">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-ambient-violet)"></div>
+  <div class="container" style="position:relative;display:flex;flex-direction:column;gap:2.25rem">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:.55rem"><p style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">The wiki</p><h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">Explore the world</h2></div>
+      <a href="#" style="font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-link);text-decoration:none">All articles →</a>
+    </div>
+    <div class="grid-card">
+      <a href="#" style="display:flex;flex-direction:column;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);overflow:hidden;background:var(--surface-card);text-decoration:none;color:inherit">
+        <div style="position:relative;aspect-ratio:16/9;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"><div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-card)"></div></div>
+        <div style="display:flex;flex-direction:column;gap:.5rem;padding:1.15rem 1.25rem 1.35rem">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem">
+            <h3 style="min-width:0;font-family:var(--sf-font-heading);font-weight:500;font-size:1.05rem;letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-heading)">Regions</h3>
+            <span style="flex:none;white-space:nowrap;font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:.12em;text-transform:uppercase;color:var(--text-meta)">4 articles</span>
+          </div>
+          <p style="font-size:.93rem;line-height:1.55;color:var(--text-body-card)">The Drowned Coast, the Ashen Reach, the Verge, the Interior.</p>
+        </div></a>
+      <a href="#" style="display:flex;flex-direction:column;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);overflow:hidden;background:var(--surface-card);text-decoration:none;color:inherit">
+        <div style="position:relative;aspect-ratio:16/9;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"><div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-card)"></div></div>
+        <div style="display:flex;flex-direction:column;gap:.5rem;padding:1.15rem 1.25rem 1.35rem">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem">
+            <h3 style="min-width:0;font-family:var(--sf-font-heading);font-weight:500;font-size:1.05rem;letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-heading)">Races</h3>
+            <span style="flex:none;white-space:nowrap;font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:.12em;text-transform:uppercase;color:var(--text-meta)">9 articles</span>
+          </div>
+          <p style="font-size:.93rem;line-height:1.55;color:var(--text-body-card)">Peoples shaped by a century of falling light.</p>
+        </div></a>
+      <a href="#" style="display:flex;flex-direction:column;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);overflow:hidden;background:var(--surface-card);text-decoration:none;color:inherit">
+        <div style="position:relative;aspect-ratio:16/9;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"><div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-card)"></div></div>
+        <div style="display:flex;flex-direction:column;gap:.5rem;padding:1.15rem 1.25rem 1.35rem">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem">
+            <h3 style="min-width:0;font-family:var(--sf-font-heading);font-weight:500;font-size:1.05rem;letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-heading)">Gods</h3>
+            <span style="flex:none;white-space:nowrap;font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:.12em;text-transform:uppercase;color:var(--text-meta)">7 articles</span>
+          </div>
+          <p style="font-size:.93rem;line-height:1.55;color:var(--text-body-card)">Who is left, what they want, and what it costs.</p>
+        </div></a>
+      <a href="#" style="display:flex;flex-direction:column;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);overflow:hidden;background:var(--surface-card);text-decoration:none;color:inherit">
+        <div style="position:relative;aspect-ratio:16/9;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"><div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-card)"></div></div>
+        <div style="display:flex;flex-direction:column;gap:.5rem;padding:1.15rem 1.25rem 1.35rem">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem">
+            <h3 style="min-width:0;font-family:var(--sf-font-heading);font-weight:500;font-size:1.05rem;letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-heading)">The Sea</h3>
+            <span style="flex:none;white-space:nowrap;font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:.12em;text-transform:uppercase;color:var(--text-meta)">11 articles</span>
+          </div>
+          <p style="font-size:.93rem;line-height:1.55;color:var(--text-body-card)">Tides, wrecks, the cartel, and what still moves down there.</p>
+        </div></a>
+      <a href="#" style="display:flex;flex-direction:column;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);overflow:hidden;background:var(--surface-card);text-decoration:none;color:inherit">
+        <div style="position:relative;aspect-ratio:16/9;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"><div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-card)"></div></div>
+        <div style="display:flex;flex-direction:column;gap:.5rem;padding:1.15rem 1.25rem 1.35rem">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem">
+            <h3 style="min-width:0;font-family:var(--sf-font-heading);font-weight:500;font-size:1.05rem;letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-heading)">Houses & factions</h3>
+            <span style="flex:none;white-space:nowrap;font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:.12em;text-transform:uppercase;color:var(--text-meta)">18 articles</span>
+          </div>
+          <p style="font-size:.93rem;line-height:1.55;color:var(--text-body-card)">Twelve houses, three cartels, one very nervous church.</p>
+        </div></a>
+      <a href="#" style="display:flex;flex-direction:column;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);overflow:hidden;background:var(--surface-card);text-decoration:none;color:inherit">
+        <div style="position:relative;aspect-ratio:16/9;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"><div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-card)"></div></div>
+        <div style="display:flex;flex-direction:column;gap:.5rem;padding:1.15rem 1.25rem 1.35rem">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem">
+            <h3 style="min-width:0;font-family:var(--sf-font-heading);font-weight:500;font-size:1.05rem;letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-heading)">Essence</h3>
+            <span style="flex:none;white-space:nowrap;font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:.12em;text-transform:uppercase;color:var(--text-meta)">6 articles</span>
+          </div>
+          <p style="font-size:.93rem;line-height:1.55;color:var(--text-body-card)">How divinity is harvested, priced, and misused.</p>
+        </div></a>
+    </div>
+  </div>
+</section>
+
+<section style="position:relative;padding:var(--sf-section-pad-y-tight) var(--sf-section-pad-x);background:var(--surface-sea);border-top:1px solid var(--sf-line-sea);border-bottom:1px solid var(--sf-line-sea);overflow:hidden">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:radial-gradient(60% 70% at 22% 40%,rgba(44,110,127,.42),rgba(11,26,34,0) 72%)"></div>
+  <div class="container" style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(19rem,1fr));gap:3rem;align-items:center">
+    <div style="display:flex;flex-direction:column;gap:1.1rem">
+      <p style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--sf-teal-300)">The sea</p>
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--sf-ink-sea-100)">A grave the size of an ocean</h2>
+      <p style="font-size:1.02rem;line-height:1.7;color:var(--sf-ink-sea-300)">The water keeps the shape of what died in it. Currents run against the wind, drowned cities surface on no schedule, and the cartel charges by the risk rather than the mile.</p>
+      <a href="#" style="font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--sf-teal-300);text-decoration:none">Sailing rules &amp; sea tables →</a>
+    </div>
+    <div style="position:relative;border:1px solid rgba(127,211,228,.3);border-radius:var(--sf-radius-card);overflow:hidden;aspect-ratio:16/10;background:var(--sf-sea-900);background-image:repeating-linear-gradient(135deg,rgba(127,211,228,.07) 0 10px,rgba(127,211,228,0) 10px 20px)"></div>
+  </div>
+</section>
+
+<section id="shop" style="position:relative;padding:var(--sf-section-pad-y) var(--sf-section-pad-x);background:linear-gradient(180deg,var(--sf-navy-850),var(--sf-navy-750) 48%,var(--sf-navy-850));overflow:hidden">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-ambient-gold-top)"></div>
+  <div class="container" style="position:relative;display:flex;flex-direction:column;gap:2.5rem">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:.55rem">
+        <p style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-label)">Free &amp; premium</p>
+        <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-accent)">The shop</h2>
+      </div>
+      <a href="#" style="font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-link);text-decoration:none">All products →</a>
+    </div>
+    <div class="grid-cover">
+      <a href="#" style="display:flex;flex-direction:column;gap:1rem;text-decoration:none;color:inherit">
+        <div style="padding:1px;border-radius:var(--sf-radius-cover);background:linear-gradient(160deg,rgba(235,203,110,.5),rgba(162,156,196,.14));box-shadow:var(--sf-shadow-cover)">
+          <div style="position:relative;aspect-ratio:2/3;border-radius:9px;overflow:hidden;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)">
+            <span style="position:absolute;top:.65rem;left:.65rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--action-primary-ink);background:rgba(235,203,110,.92);border:1px solid var(--sf-gold-400);padding:.25rem .6rem;border-radius:999px">Premium</span>
+          </div></div>
+        <div style="display:flex;flex-direction:column;gap:.35rem">
+          <h3 style="font-family:var(--sf-font-display);font-size:var(--sf-text-lg);line-height:1.2;color:var(--text-heading)">The Starfall Setting</h3>
+          <p style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-label)">Hardcover + PDF · $24</p>
+        </div></a>
+      <a href="#" style="display:flex;flex-direction:column;gap:1rem;text-decoration:none;color:inherit">
+        <div style="padding:1px;border-radius:var(--sf-radius-cover);background:linear-gradient(160deg,rgba(235,203,110,.5),rgba(162,156,196,.14));box-shadow:var(--sf-shadow-cover)">
+          <div style="position:relative;aspect-ratio:2/3;border-radius:9px;overflow:hidden;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)">
+            <span style="position:absolute;top:.65rem;left:.65rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--sf-status-free);background:rgba(13,12,27,.7);border:1px solid rgba(155,211,168,.6);padding:.25rem .6rem;border-radius:999px">Free</span>
+          </div></div>
+        <div style="display:flex;flex-direction:column;gap:.35rem">
+          <h3 style="font-family:var(--sf-font-display);font-size:var(--sf-text-lg);line-height:1.2;color:var(--text-heading)">Quickstart & Free Map</h3>
+          <p style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-label)">PDF · Free</p>
+        </div></a>
+      <a href="#" style="display:flex;flex-direction:column;gap:1rem;text-decoration:none;color:inherit">
+        <div style="padding:1px;border-radius:var(--sf-radius-cover);background:linear-gradient(160deg,rgba(235,203,110,.5),rgba(162,156,196,.14));box-shadow:var(--sf-shadow-cover)">
+          <div style="position:relative;aspect-ratio:2/3;border-radius:9px;overflow:hidden;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)">
+            <span style="position:absolute;top:.65rem;left:.65rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--action-primary-ink);background:rgba(235,203,110,.92);border:1px solid var(--sf-gold-400);padding:.25rem .6rem;border-radius:999px">Premium</span>
+          </div></div>
+        <div style="display:flex;flex-direction:column;gap:.35rem">
+          <h3 style="font-family:var(--sf-font-display);font-size:var(--sf-text-lg);line-height:1.2;color:var(--text-heading)">The Essence Ledger</h3>
+          <p style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-label)">GM toolkit · $8</p>
+        </div></a>
+      <a href="#" style="display:flex;flex-direction:column;gap:1rem;text-decoration:none;color:inherit">
+        <div style="padding:1px;border-radius:var(--sf-radius-cover);background:linear-gradient(160deg,rgba(235,203,110,.5),rgba(162,156,196,.14));box-shadow:var(--sf-shadow-cover)">
+          <div style="position:relative;aspect-ratio:2/3;border-radius:9px;overflow:hidden;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)">
+            <span style="position:absolute;top:.65rem;left:.65rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--sf-status-free);background:rgba(13,12,27,.7);border:1px solid rgba(155,211,168,.6);padding:.25rem .6rem;border-radius:999px">Free</span>
+          </div></div>
+        <div style="display:flex;flex-direction:column;gap:.35rem">
+          <h3 style="font-family:var(--sf-font-display);font-size:var(--sf-text-lg);line-height:1.2;color:var(--text-heading)">House & Faction Sheets</h3>
+          <p style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-label)">Printable · Free</p>
+        </div></a>
+    </div>
+  </div>
+</section>
+
+<section id="signup" style="position:relative;padding:var(--sf-space-28) var(--sf-section-pad-x);background:var(--surface-page);overflow:hidden">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-ambient-gold-bottom)"></div>
+  <div style="position:relative;max-width:40rem;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:1.4rem;text-align:center">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" style="color:var(--sf-gold-400);filter:drop-shadow(0 0 10px rgba(235,203,110,.7))"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"/></svg>
+    <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-accent)">Join for a free map + new releases</h2>
+    <p style="max-width:42ch;font-size:1.02rem;line-height:1.65;color:var(--text-body)">One letter when something ships. The map is yours either way.</p>
+    <form style="display:flex;gap:.625rem;width:100%;max-width:27rem;flex-wrap:wrap" onsubmit="event.preventDefault();document.getElementById('note').textContent='The map is on its way.'">
+      <input type="email" required placeholder="you@example.com" aria-label="Email address" style="flex:1 1 12rem;min-width:0;padding:.85rem 1.1rem;border:1px solid rgba(162,156,196,.4);border-radius:999px;background:rgba(239,236,246,.06);color:var(--text-heading);font-family:var(--sf-font-body);font-size:1rem">
+      <button type="submit" style="flex:none;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:.13em;text-transform:uppercase;color:var(--action-primary-ink);background:var(--action-primary-bg);border:0;padding:.85rem 1.9rem;border-radius:999px;cursor:pointer;box-shadow:0 0 26px rgba(235,203,110,.3)">Join</button>
+    </form>
+    <p id="note" style="min-height:1.2rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-label)"></p>
+  </div>
+</section>
+
+<footer style="padding:4rem var(--sf-section-pad-x) 2rem;background:var(--surface-footer);border-top:1px solid var(--sf-line)">
+  <div class="container" style="display:flex;flex-direction:column;gap:2.5rem">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:2rem">
+      <div style="display:flex;flex-direction:column;gap:.9rem">
+        <a href="#top" style="display:flex;align-items:center;gap:.55rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="color:var(--sf-gold-400)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"/></svg>Starfall</a>
+        <a href="#" style="display:flex;align-items:center;gap:.6rem;color:var(--text-label);text-decoration:none">
+          <svg viewBox="0 0 24 24" width="14" height="18" aria-hidden="true" style="color:var(--sf-gold-400)"><path d="M12 2 C15 8 19 10 19 15 A7 7 0 0 1 5 15 C5 10 9 8 12 2 Z" fill="currentColor"/></svg>
+          <span style="font-family:var(--sf-font-body);font-style:italic;font-size:.9rem">a Pyrelight Press project</span></a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.7rem">
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-heading)">The world</span>
+        <a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">What is Starfall</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Regions</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Gods & pantheon</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Houses & factions</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">The sea</a></div><div style="display:flex;flex-direction:column;gap:.7rem">
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-heading)">Play</span>
+        <a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Adventures</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Free downloads</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Premium releases</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Tools & generators</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Art gallery</a></div><div style="display:flex;flex-direction:column;gap:.7rem">
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-heading)">Studio</span>
+        <a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Pyrelight Press</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Field notes</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Newsletter</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Press kit</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Contact</a></div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:1rem 1.5rem;align-items:center;justify-content:space-between;padding-top:1.25rem;border-top:1px solid var(--border-section)">
+      <p style="font-size:var(--sf-text-xs);line-height:1.6;color:var(--text-legal);max-width:60ch">© 2024–2026 Pyrelight Press. Starfall and all associated names, sigils and artwork are trademarks of Pyrelight Press. Compatible with fifth edition; not affiliated with or endorsed by Wizards of the Coast.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:1.25rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+        <a href="#" style="color:var(--text-label);text-decoration:none">Privacy</a><a href="#" style="color:var(--text-label);text-decoration:none">Terms</a><a href="#" style="color:var(--text-label);text-decoration:none">Cookies</a><a href="#" style="color:var(--text-label);text-decoration:none">Content licence</a><a href="#" style="color:var(--text-label);text-decoration:none">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body></html>

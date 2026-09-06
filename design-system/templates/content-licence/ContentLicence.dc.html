@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Content licence" description="What fans may do with the world: a permissive plain-English licence with a yes/conditions/no structure, credit wording and the compatibility statement." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}@media (max-width:1080px){#lic-grid{grid-template-columns:minmax(0,1fr)!important}#lic-aside{position:static!important}}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Tools</a>
+    <a href="#" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25);text-decoration:none">Newsletter</a>
+  </div>
+</nav>
+
+<header style="position:relative;padding:4rem 1.75rem 3.25rem;overflow:hidden;background:var(--surface-hero);border-bottom:1px solid var(--sf-line)">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-top)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-vignette)"></div>
+  <div style="position:relative;max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:1.15rem">
+    <p style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">Legal · plain English</p>
+    <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-3xl);line-height:var(--sf-leading-tight);color:var(--text-heading)">What you may do with Starfall</h1>
+    <p style="max-width:58ch;font-size:1.15rem;line-height:1.6;color:var(--text-over-image)">Short version: run it, stream it, write for it, sell what you write. Do not resell our files or our art, and do not imply we are involved.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:1.5rem;padding-top:.35rem">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Version 1.2</span>
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Effective 14 Fallmoon</span>
+    </div>
+  </div>
+</header>
+
+<div id="lic-grid" style="max-width:var(--sf-container);margin:0 auto;padding:2.75rem 1.75rem 5rem;display:grid;grid-template-columns:minmax(0,1fr) 19rem;gap:3.5rem;align-items:start">
+
+  <main style="display:flex;flex-direction:column;gap:2rem;min-width:0;max-width:46rem">
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="note" label="Read this bit if nothing else" hint-size="100%,190px">
+      This licence is deliberately generous because a setting nobody is allowed to build on is a setting nobody uses. If something you want to do is not covered here, write to us and ask. The answer is usually yes, and if it is no we will tell you why.
+    </x-import>
+
+    <section id="yes" style="display:flex;flex-direction:column;gap:1.25rem">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">Yes, freely</h2>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body)">No permission needed, no credit required, no need to tell us. Go ahead.</p>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListGroup" hint-size="100%,460px">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Run games, including paid ones" body="Charge for GMing a Starfall game, at a shop, a convention or online. That is your labour, not ours." meta="Play" hint-size="100%,80px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Stream and record" body="Monetised channels included. You do not owe us a cut of your ad revenue or your subscriptions." meta="Media" hint-size="100%,80px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Make things for your own table" body="Handouts, maps, NPC sheets, custom tokens, a house you invented. Share them with your players however you like." meta="Table" hint-size="100%,80px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Write fan fiction and make fan art" body="Post it anywhere, including places that pay you a share of revenue. Your art is yours." meta="Creative" hint-size="100%,80px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Quote the wiki and the books" body="For reviews, criticism, teaching, actual-play recaps and discussion. Reasonable extracts, not whole chapters." meta="Reference" hint-size="100%,80px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Translate for your own group" body="If you want to translate for publication, talk to us — we would rather help than have two competing versions." meta="Language" hint-size="100%,80px"></x-import>
+      </x-import>
+    </section>
+
+    <section id="conditions" style="display:flex;flex-direction:column;gap:1.25rem">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">Yes, with conditions</h2>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body)">You may write and <em style="font-style:italic">sell</em> your own Starfall material — adventures, regions, houses, gods, supplements, tools. Three conditions, all of them about not confusing your readers.</p>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.DataTable" caption="Conditions on commercial fan material" columns="{{ condColumns }}" rows="{{ condRows }}" align="{{ condAlign }}" hint-size="100%,300px"></x-import>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="rule" label="The credit line to use" hint-size="100%,180px">
+        <p style="margin:0 0 .8rem">"This work is unofficial fan content compatible with Starfall, published by Pyrelight Press. Not endorsed by or affiliated with Pyrelight Press."</p>
+        <p style="margin:0">Put it on the title page or the product listing. That single sentence satisfies all three conditions at once.</p>
+      </x-import>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body)">There is no revenue threshold and no royalty. If you sell ten thousand copies of a Starfall supplement, that money is yours. We would like a link.</p>
+    </section>
+
+    <section id="no" style="display:flex;flex-direction:column;gap:1.25rem">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">No</h2>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body)">These are the things that take money out of the studio's pocket or mislead someone into thinking they bought something official.</p>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListGroup" hint-size="100%,540px">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" swatch="rgba(107,43,43,.75)" title="Redistributing our files" body="Do not upload our PDFs, maps or VTT packs anywhere, free or paid, whole or in part. The free ones are already free from us." meta="Files" hint-size="100%,80px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" swatch="rgba(107,43,43,.75)" title="Using the commissioned art" body="Every illustration is licensed to us by the artist for our products only. It is not ours to sublicense and not yours to reuse." meta="Art" hint-size="100%,80px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" swatch="rgba(107,43,43,.75)" title="Using the Starfall wordmark as your own" body="Do not put it on your cover as if it were your logo, and do not register anything confusingly similar." meta="Marks" hint-size="100%,80px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" swatch="rgba(107,43,43,.75)" title="Implying we are involved" body="No “official”, no “authorised”, no “in partnership with”, unless we have actually said so in writing." meta="Endorsement" hint-size="100%,80px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" swatch="rgba(107,43,43,.75)" title="Training generative models on our work" body="Do not use our text or art as training data, and do not sell output derived from it as Starfall material." meta="AI" hint-size="100%,80px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" swatch="rgba(107,43,43,.75)" title="Hateful use" body="Do not use this world to promote bigotry. We will withdraw permission in writing, and we have." meta="Conduct" hint-size="100%,80px"></x-import>
+      </x-import>
+    </section>
+
+    <section id="ownership" style="display:flex;flex-direction:column;gap:1.25rem">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">Who owns what</h2>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body)">What you write is yours. A house you invent, an NPC you name, a port you put on the coast — you own that outright, and you do not assign it to us by publishing it as Starfall-compatible. We will not take your idea and put it in a book without asking and paying you.</p>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body)">What we published stays ours: the text of the books, the setting's own names and places, the wordmark, and the art we commissioned. Names like Marrow Bay, House Calder, the Synod and the Tidewalker are ours as trademarks and as copyright; you may write about them, and you may not claim them.</p>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="note" label="Fifth edition compatibility" hint-size="100%,170px">
+        Starfall is compatible with fifth edition and is not affiliated with or endorsed by Wizards of the Coast. Rules content in our books is offered under the terms noted in each product; whatever licence covers the mechanics you are using still applies alongside this one.
+      </x-import>
+    </section>
+
+    <section id="changes" style="display:flex;flex-direction:column;gap:1.25rem">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">If this licence changes</h2>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body)">Anything you published under an earlier version stays licensed under that version. We will not revoke permission retroactively and make your back catalogue infringing — that is the whole point of putting a version number at the top. Previous versions stay archived and linked below.</p>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body)">We can withdraw permission from a specific person for a specific reason, in writing, and the only reason we ever have is the conduct clause above.</p>
+    </section>
+  </main>
+
+  <aside id="lic-aside" style="position:sticky;top:5rem;display:flex;flex-direction:column;gap:1.5rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.TableOfContents" items="{{ tocItems }}" active-id="yes" title="On this page" hint-size="100%,220px"></x-import>
+
+    <div style="display:flex;flex-direction:column;gap:1rem;padding:1.5rem 1.6rem;border-top:2px solid var(--sf-gold-400);border-radius:0 0 var(--sf-radius-card) var(--sf-radius-card);background:var(--surface-raised);box-shadow:var(--sf-shadow-card)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">Ask us</span>
+      <p style="font-size:.95rem;line-height:1.6;color:var(--text-body-card)">Anything this page does not cover, or anything you want in writing.</p>
+      <a href="mailto:licence@pyrelightpress.com" style="font-size:.95rem;text-decoration:none">licence@pyrelightpress.com</a>
+      <p style="font-size:var(--sf-text-xs);line-height:1.6;color:var(--text-legal)">We answer within a week, usually sooner.</p>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:.8rem;padding:1.35rem 1.45rem;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);background:var(--surface-card)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Version history</span>
+      <a href="#" style="font-size:.93rem;text-decoration:none">1.2 — current, 14 Fallmoon</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">1.1 — added the AI clause</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">1.0 — first release, 2024</a>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:.75rem;padding-top:1.25rem;border-top:1px solid var(--border-section)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Other policies</span>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Privacy →</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Terms of sale →</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Cookies →</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Accessibility →</a>
+    </div>
+  </aside>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      tocItems: [
+        { id: "yes", label: "Yes, freely" },
+        { id: "conditions", label: "Yes, with conditions" },
+        { id: "no", label: "No" },
+        { id: "ownership", label: "Who owns what" },
+        { id: "changes", label: "If this licence changes" }
+      ],
+      condColumns: ["Condition", "What it means in practice"],
+      condAlign: ["left", "left"],
+      condRows: [
+        ["Say it is unofficial", "One line on the title page or listing. The exact wording is below and using it is the easiest way to comply."],
+        ["Do not use our art or files", "Commission your own, use public-domain or licensed stock, or ship text only."],
+        ["Do not use the wordmark as your own", "You may write \u201ccompatible with Starfall\u201d in text. Do not put our wordmark on your cover."]
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

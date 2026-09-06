@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Wiki faction page" description="Article variant for a house or faction: sigil, holdings, rivals and allies, and GM-only material behind a reveal." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}@media (max-width:1180px){#faction-grid{grid-template-columns:minmax(0,1fr) 19rem!important}#faction-rail{display:none!important}}@media (max-width:860px){#faction-grid{grid-template-columns:minmax(0,1fr)!important}#faction-aside{position:static!important}}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--text-accent);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Tools</a>
+    <a href="#" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25);text-decoration:none">Newsletter</a>
+  </div>
+</nav>
+
+<header style="position:relative;padding:3rem 1.75rem 2.5rem;overflow:hidden;background:var(--surface-hero);border-bottom:1px solid var(--sf-line)">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-ambient-violet)"></div>
+  <div style="position:relative;max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:1.5rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Breadcrumbs" items="{{ crumbs }}" hint-size="100%,32px"></x-import>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:2rem">
+      <div style="flex:none;width:8.5rem">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ImageFrame" ratio="1 / 1" scrim="none" hint-size="136px,136px">
+          <div aria-hidden="true" style="width:100%;height:100%;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+        </x-import>
+      </div>
+      <div style="flex:1 1 20rem;min-width:0;display:flex;flex-direction:column;gap:.85rem">
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">Houses &amp; factions · Great house</span>
+        <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-3xl);line-height:var(--sf-leading-tight);color:var(--text-heading)">House Marrow</h1>
+        <p style="max-width:62ch;font-size:1.1rem;line-height:1.6;color:var(--text-over-image)">Holds the largest port on the Drowned Coast, the chain across its headlands, and the weighing house every grain must pass through. Sets the toll. Enforces it.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:.5rem;padding-top:.15rem">
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="gold" hint-size="auto,28px">Great house</x-import>
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" hint-size="auto,28px">Seat: Marrow Bay</x-import>
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" hint-size="auto,28px">12 pages</x-import>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div id="faction-grid" style="max-width:var(--sf-container);margin:0 auto;padding:2.5rem 1.75rem 5rem;display:grid;grid-template-columns:15rem minmax(0,1fr) 19rem;gap:2.75rem;align-items:start">
+
+  <aside id="faction-rail" style="position:sticky;top:5rem;display:flex;flex-direction:column;gap:1.5rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.WikiSidebar" groups="{{ sidebarGroups }}" current-href="#marrow" hint-size="100%,420px"></x-import>
+  </aside>
+
+  <main style="display:flex;flex-direction:column;gap:1.75rem;min-width:0">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ReadingPanel" meta="Houses &amp; factions · updated 14 Fallmoon" title="House Marrow" hint-size="100%,700px">
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.2rem">House Marrow was a shipping family before the fall and is a customs authority now, though it would object to the description. Its claim on the bay predates the essence trade by two centuries; its claim on the essence trade rests entirely on owning the only deepwater channel where essence comes ashore in quantity.</p>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.6rem">The house is run by a council of seven, five of whom are Marrows by blood. It is competent, unsentimental and unusually consistent — which is why the toll arrangement has survived thirty-one years and three attempts to break it.</p>
+
+      <h2 id="how-it-works" style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading);margin:0 0 .9rem">How it makes money</h2>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.2rem">Three ways, in order of size: the toll on displacement, the weighing house's cut of every grain assayed, and the licences it sells to the mudlark villages on the flats. It does not refine and it does not ship inland, which is the arrangement it has with House Calder and the source of the friction between them.</p>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.6rem">Marrow's weakness is that it owns a chokepoint rather than a product. Every year Calder investigates whether a second channel could be dredged somewhere else on the coast, and every year the survey comes back saying no. One of these years it will come back saying yes.</p>
+
+      <h2 id="dealing-with-them" style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading);margin:0 0 .9rem">Dealing with the house</h2>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0">Marrow keeps its word and expects the same, in writing, with a witness. It does not take offence and it does not forgive debt. A party that pays the toll without complaint will find the house genuinely helpful; a party that evades it once will find every subsequent conversation on the coast slightly more expensive.</p>
+    </x-import>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.SpoilerBlock" title="GM only · the second channel" note="Spoilers for the Marrow Bay arc and anything set after it." hint-size="100%,140px">
+      <p style="margin:0 0 .9rem">Calder's survey came back positive eighteen months ago. Two members of the Marrow council know, because they were paid to know, and they have been quietly moving the house's holdings out of the bay ever since.
+      </p>
+      <p style="margin:0">The Synod also knows what fell at Marrow Bay last season, and it does not match the assay records the weighing house filed. It is waiting to see who talks first. If the party surfaces the toll ledger — three houses named on one page that should never have appeared together — both of these secrets become public in the same week.</p>
+    </x-import>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.DataTable" caption="Holdings · assessed value in grains, current season" columns="{{ holdColumns }}" rows="{{ holdRows }}" align="{{ holdAlign }}" hint-size="100%,260px"></x-import>
+
+    <section style="display:flex;flex-direction:column;gap:1.1rem;padding-top:.5rem">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">Rivals and allies</h2>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListGroup" hint-size="100%,300px">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" swatch="rgba(107,43,43,.75)" title="House Calder" body="Buys everything the bay produces and resents the price. Renegotiates every spring." meta="Great house" trailing="Rival" href="#" hint-size="100%,72px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" swatch="rgba(44,110,127,.75)" title="The Free Tide Cartel" body="Honours the toll inside the headlands. Does as it likes outside them." meta="Cartel" trailing="Truce" href="#" hint-size="100%,72px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" swatch="rgba(162,156,196,.6)" title="The Synod" body="Operates the quay assay office on a licence Marrow reviews annually." meta="Institution" trailing="Leverage" href="#" hint-size="100%,72px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" swatch="rgba(155,211,168,.6)" title="The flats villages" body="Nine mudlark settlements, licensed collectively and dependent on the licence." meta="Client" trailing="Ally" href="#" hint-size="100%,72px"></x-import>
+      </x-import>
+    </section>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="lore" label="House motto, carved over the weighing house door" hint-size="100%,120px">
+      Weighed once, weighed fairly, weighed here.
+    </x-import>
+  </main>
+
+  <aside id="faction-aside" style="position:sticky;top:5rem;display:flex;flex-direction:column;gap:1.5rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.InfoBox" title="House Marrow" rows="{{ infoRows }}" image="{{ infoArt }}" hint-size="100%,460px"></x-import>
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.TableOfContents" items="{{ tocItems }}" active-id="how-it-works" hint-size="100%,180px"></x-import>
+  </aside>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    const hatch = {
+      width: "100%", height: "100%",
+      background: "var(--surface-well)",
+      backgroundImage: "repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"
+    };
+    return {
+      crumbs: [{ label: "Wiki", href: "#" }, { label: "Houses & factions", href: "#" }, { label: "House Marrow" }],
+      sidebarGroups: [
+        { title: "Great houses", links: [
+          { label: "House Marrow", href: "#marrow", count: 12 },
+          { label: "House Calder", href: "#calder", count: 11 },
+          { label: "The lesser houses", href: "#lesser", count: 10 }
+        ]},
+        { title: "Other powers", links: [
+          { label: "The Synod", href: "#synod", count: 14 },
+          { label: "Free Tide Cartel", href: "#cartel", count: 9 },
+          { label: "The Weighing Guild", href: "#guild", count: 6 }
+        ]},
+        { title: "Reference", links: [
+          { label: "Toll schedule", href: "#toll" },
+          { label: "House builder", href: "#builder" }
+        ]}
+      ],
+      tocItems: [
+        { id: "how-it-works", label: "How it makes money" },
+        { id: "dealing-with-them", label: "Dealing with the house" }
+      ],
+      infoRows: [
+        { label: "Type", value: "Great house" },
+        { label: "Seat", value: "Marrow Bay" },
+        { label: "Founded", value: "Pre-fall" },
+        { label: "Council", value: "Seven" },
+        { label: "Income", value: "Toll, assay, licences" },
+        { label: "Rival", value: "House Calder" },
+        { label: "Sigil", value: "Chain and scale" }
+      ],
+      infoArt: React.createElement("div", { "aria-hidden": "true", style: hatch }),
+      holdColumns: ["Holding", "Kind", "Assessed"],
+      holdAlign: ["left", "left", "right"],
+      holdRows: [
+        ["The chain and headland forts", "Infrastructure", "Not for sale"],
+        ["The weighing house", "Licence", "41,000"],
+        ["Quay and warehousing", "Property", "18,400"],
+        ["Toll fleet, nine cutters", "Vessels", "9,200"],
+        ["Flats licences, nine villages", "Rents", "3,100"]
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

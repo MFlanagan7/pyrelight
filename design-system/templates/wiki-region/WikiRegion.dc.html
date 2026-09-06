@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Wiki region page" description="Article variant for a region: full-width map, settlement list, tide table, fact box and contents." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}@media (max-width:1180px){#region-grid{grid-template-columns:minmax(0,1fr) 18rem!important}#region-rail{display:none!important}}@media (max-width:860px){#region-grid{grid-template-columns:minmax(0,1fr)!important}#region-aside{position:static!important}}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--text-accent);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Tools</a>
+    <a href="#" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25);text-decoration:none">Newsletter</a>
+  </div>
+</nav>
+
+<header style="position:relative;padding:3rem 1.75rem 0;background:var(--surface-page)">
+  <div style="max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:1.25rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Breadcrumbs" items="{{ crumbs }}" hint-size="100%,32px"></x-import>
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1.5rem">
+      <div style="display:flex;flex-direction:column;gap:.85rem;min-width:0">
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">Regions · West littoral</span>
+        <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-3xl);line-height:var(--sf-leading-tight);color:var(--text-heading)">The Drowned Coast</h1>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:.5rem">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="gold" hint-size="auto,28px">Starting region</x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" hint-size="auto,28px">31 pages</x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" hint-size="auto,28px">Levels 1–6</x-import>
+      </div>
+    </div>
+    <p style="max-width:70ch;font-size:1.18rem;line-height:1.6;color:var(--text-over-image)">A drowned valley system on the western littoral, four working ports, and the place where most of what fell came ashore. If your table is starting anywhere, start here.</p>
+  </div>
+</header>
+
+<section style="padding:2rem 1.75rem 0;background:var(--surface-page)">
+  <div style="max-width:var(--sf-container);margin:0 auto">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ImageFrame" ratio="21 / 9" scrim="caption" float="{{ true }}" hint-size="100%,420px">
+      <div aria-hidden="true" style="width:100%;height:100%;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+      <div style="position:absolute;bottom:1.1rem;left:1.25rem;right:1.25rem;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:1rem">
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-label)">The Drowned Coast · player edition</span>
+        <a href="#" style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase;text-decoration:none">Download map (free) →</a>
+      </div>
+    </x-import>
+  </div>
+</section>
+
+<div id="region-grid" style="max-width:var(--sf-container);margin:0 auto;padding:2.5rem 1.75rem 5rem;display:grid;grid-template-columns:15rem minmax(0,1fr) 19rem;gap:2.75rem;align-items:start">
+
+  <aside id="region-rail" style="position:sticky;top:5rem;display:flex;flex-direction:column;gap:1.5rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.WikiSidebar" groups="{{ sidebarGroups }}" current-href="#drowned-coast" hint-size="100%,400px"></x-import>
+  </aside>
+
+  <main style="display:flex;flex-direction:column;gap:1.75rem;min-width:0">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ReadingPanel" meta="Regions · updated 12 Fallmoon" title="The Drowned Coast" hint-size="100%,760px">
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.2rem">The coast was a valley system before the fall and is an archipelago now. Ridgelines became headlands, farmland became shallows, and three river mouths became the deepwater channels that make the ports possible. Nobody planned any of it, which is why every settlement here is built on the wrong side of its own harbour.</p>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.6rem">What matters at the table is simple: this is where essence enters the economy. Everything else about the region — the toll, the cartel, the Synod's assay offices, the fact that four ports cannot agree on a tide table — follows from that one fact.</p>
+
+      <h2 id="geography" style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading);margin:0 0 .9rem">Geography</h2>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.2rem">Roughly four hundred miles of broken coast, sheltered along most of its length by a chain of headlands that used to be a ridge. The water inside them is deep, cold and unusually clear; outside them it is none of those things. Travel is by sea because the interior roads flooded and were never rebuilt.</p>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.6rem">The seabed does not hold still. Surveyors date charts by season rather than year, and a chart three seasons old is sold as a curiosity rather than a tool.</p>
+
+      <h2 id="weather" style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading);margin:0 0 .9rem">Weather and the tides</h2>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.6rem">Two tides a day, neither reliable. The interval drifts across a season by as much as an hour, and the drift is not the same in every port — which is the single most consequential piece of local knowledge on the coast. Weather comes from the west in autumn and from nowhere in particular the rest of the year.</p>
+
+      <h2 id="who-holds-it" style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading);margin:0 0 .9rem">Who holds it</h2>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.2rem">House Marrow holds the largest port and the toll that comes with it. House Calder holds the refineries inland and the roads to them. The Free Tide Cartel holds everything in between, in the sense that nothing moves between ports without its knowledge.</p>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0">The Synod maintains assay offices in all four ports. Every one of them operates on a licence the local house reviews annually, which tells you exactly how much independence an assayer has.</p>
+    </x-import>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.DataTable" caption="Tide drift · minutes per week, by port" columns="{{ tideColumns }}" rows="{{ tideRows }}" align="{{ tideAlign }}" hint-size="100%,240px"></x-import>
+
+    <section style="display:flex;flex-direction:column;gap:1.1rem;padding-top:.5rem">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem">
+        <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">Settlements</h2>
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Four ports, nine villages</span>
+      </div>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListGroup" hint-size="100%,380px">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Marrow Bay" body="Deepwater port, the chain, the weighing house. Held by House Marrow." meta="≈11,000" trailing="Port" href="#" hint-size="100%,72px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Calder Landing" body="Refinery terminus and the only paved road inland. Held by House Calder." meta="≈6,400" trailing="Port" href="#" hint-size="100%,72px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Thin Harbour" body="No toll, no chain, no questions. The cartel's port in everything but name." meta="≈3,100" trailing="Port" href="#" hint-size="100%,72px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Saltmoor" body="Synod assay station and the coast's only lending library." meta="≈1,800" trailing="Port" href="#" hint-size="100%,72px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="The flats villages" body="Nine mudlark settlements east of the chain, licensed collectively." meta="≈2,000" trailing="Villages" href="#" hint-size="100%,72px"></x-import>
+      </x-import>
+    </section>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="lore" label="From a surveyor's letter" hint-size="100%,140px">
+      I have charted this coast twice. The second chart disagrees with the first in eleven places, and I stand behind both of them.
+    </x-import>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="rule" label="Travel" hint-size="100%,140px">
+      Coastal passage between adjacent ports takes one day and costs 2 grains as deck passage. Crossing outside the headlands halves the time and requires a Wisdom (Survival) check at DC 15 against the weather.
+    </x-import>
+  </main>
+
+  <aside id="region-aside" style="position:sticky;top:5rem;display:flex;flex-direction:column;gap:1.5rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.InfoBox" title="The Drowned Coast" rows="{{ infoRows }}" image="{{ infoArt }}" hint-size="100%,440px"></x-import>
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.TableOfContents" items="{{ tocItems }}" active-id="geography" hint-size="100%,200px"></x-import>
+  </aside>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    const hatch = {
+      width: "100%", height: "100%",
+      background: "var(--surface-well)",
+      backgroundImage: "repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"
+    };
+    return {
+      crumbs: [{ label: "Wiki", href: "#" }, { label: "Regions", href: "#" }, { label: "The Drowned Coast" }],
+      sidebarGroups: [
+        { title: "Regions", links: [
+          { label: "The Drowned Coast", href: "#drowned-coast", count: 31 },
+          { label: "The Ashen Reach", href: "#ashen-reach", count: 18 },
+          { label: "The Verge", href: "#verge", count: 22 },
+          { label: "The Interior", href: "#interior", count: 26 }
+        ]},
+        { title: "On this coast", links: [
+          { label: "Marrow Bay", href: "#marrow-bay" },
+          { label: "Calder Landing", href: "#calder-landing" },
+          { label: "Thin Harbour", href: "#thin-harbour" },
+          { label: "Saltmoor", href: "#saltmoor" },
+          { label: "The flats", href: "#flats" }
+        ]},
+        { title: "Reference", links: [
+          { label: "Sailing rules", href: "#sailing" },
+          { label: "Charts", href: "#charts" }
+        ]}
+      ],
+      tocItems: [
+        { id: "geography", label: "Geography" },
+        { id: "weather", label: "Weather and the tides" },
+        { id: "who-holds-it", label: "Who holds it" }
+      ],
+      infoRows: [
+        { label: "Type", value: "Coastal archipelago" },
+        { label: "Extent", value: "≈400 miles" },
+        { label: "Ports", value: "Four" },
+        { label: "Population", value: "≈24,000" },
+        { label: "Held by", value: "Marrow, Calder" },
+        { label: "Levels", value: "1–6" },
+        { label: "Map", value: "Free download" }
+      ],
+      infoArt: React.createElement("div", { "aria-hidden": "true", style: hatch }),
+      tideColumns: ["Port", "Drift", "Published table"],
+      tideAlign: ["left", "right", "left"],
+      tideRows: [
+        ["Marrow Bay", "+7 min", "House Marrow, weekly"],
+        ["Calder Landing", "+4 min", "House Calder, monthly"],
+        ["Thin Harbour", "−11 min", "None"],
+        ["Saltmoor", "+2 min", "Synod, seasonal"]
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

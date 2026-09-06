@@ -1,0 +1,31 @@
+:root {
+  --sf-space-1: .25rem;
+  --sf-space-2: .5rem;
+  --sf-space-3: .75rem;
+  --sf-space-4: 1rem;
+  --sf-space-5: 1.25rem;
+  --sf-space-6: 1.5rem;
+  --sf-space-8: 2rem;
+  --sf-space-10: 2.5rem;
+  --sf-space-12: 3rem;
+  --sf-space-16: 4rem;
+  --sf-space-22: 5.5rem;
+  --sf-space-24: 6rem;
+  --sf-space-28: 7rem;
+
+  /* Rhythm */
+  --sf-section-pad-y: var(--sf-space-24);      /* standard section */
+  --sf-section-pad-y-tight: var(--sf-space-22);/* list-style sections */
+  --sf-section-pad-x: var(--sf-space-6);
+  --sf-container: 1180px;                       /* site max width */
+  --sf-gap-card: var(--sf-space-5);             /* grid gap, cards */
+  --sf-gap-cover: var(--sf-space-8);            /* grid gap, 2:3 covers */
+  --sf-card-pad: 1.4rem;
+  --sf-panel-pad: 2.5rem;
+
+  /* Grid minimums used with repeat(auto-fit, minmax(X, 1fr)) */
+  --sf-col-min-card: 15rem;
+  --sf-col-min-cover: 14rem;
+  --sf-col-min-wide: 20rem;
+  --sf-col-min-tile: 12rem;
+}

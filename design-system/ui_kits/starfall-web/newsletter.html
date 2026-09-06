@@ -1,0 +1,61 @@
+<!-- @dsCard group="Starfall site" viewport="1280x900" subtitle="Signup-only landing for ad and social traffic — minimal chrome" name="Newsletter landing" -->
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Starfall — newsletter</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  .container { max-width: var(--sf-container); margin: 0 auto; }
+  a { color: var(--text-link); }
+  a:hover { color: var(--text-link-hover); }
+  .caps { font-family:var(--sf-font-heading); letter-spacing:var(--sf-track-label); text-transform:uppercase; font-size:var(--sf-text-xs); }
+  .grid-card { display:grid; grid-template-columns:repeat(auto-fit,minmax(var(--sf-col-min-card),1fr)); gap:var(--sf-gap-card); }
+</style></head>
+<body>
+<header style="position:absolute;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:1.5rem 1.75rem">
+  <a href="index.html" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"/></svg>Starfall</a>
+  <span class="caps" style="color:var(--text-label)">A Pyrelight Press world</span>
+</header>
+
+<main style="position:relative;min-height:100vh;display:grid;grid-template-columns:repeat(auto-fit,minmax(21rem,1fr));align-items:center;gap:4rem;padding:7rem var(--sf-section-pad-x) 4rem;background:var(--surface-hero);overflow:hidden">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-top)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-vignette)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-glow)"></div>
+
+  <div style="position:relative;display:flex;flex-direction:column;gap:1.5rem;max-width:34rem;margin-left:auto">
+    <p class="caps" style="display:inline-flex;align-self:flex-start;align-items:center;gap:.55rem;color:var(--text-label);padding:.4rem 1rem;border:1px solid var(--sf-line-strong);border-radius:999px;background:rgba(13,12,27,.55)">
+      <svg viewBox="0 0 24 24" width="10" height="10" aria-hidden="true" style="color:var(--sf-gold-400)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"/></svg>Free map · no spam</p>
+    <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-3xl);line-height:var(--sf-leading-tight);color:var(--text-heading);text-wrap:pretty">Take the Drowned Coast with you</h1>
+    <p style="font-size:1.12rem;line-height:1.65;color:var(--text-over-image)">Join the letter and the player map arrives immediately — ports, tides and house borders, print-ready at A3. One letter when something ships, and nothing in between.</p>
+
+    <form style="display:flex;flex-direction:column;gap:.9rem;padding-top:.35rem" onsubmit="event.preventDefault();this.hidden=true;document.getElementById('done').hidden=false">
+      <div style="display:flex;gap:.625rem;flex-wrap:wrap">
+        <input type="email" required placeholder="you@example.com" aria-label="Email address" style="flex:1 1 13rem;min-width:0;padding:.9rem 1.15rem;border:1px solid rgba(162,156,196,.4);border-radius:999px;background:rgba(239,236,246,.06);color:var(--text-heading);font-family:var(--sf-font-body);font-size:1rem">
+        <button type="submit" style="flex:none;font-family:var(--sf-font-heading);font-size:1rem;letter-spacing:.13em;text-transform:uppercase;color:var(--action-primary-ink);background:var(--action-primary-bg);border:0;padding:.9rem 2.1rem;border-radius:999px;cursor:pointer;box-shadow:var(--sf-glow-button)">Send the map</button>
+      </div>
+      <label style="display:flex;align-items:flex-start;gap:.6rem;font-size:.88rem;line-height:1.55;color:var(--text-label);cursor:pointer">
+        <input type="checkbox" style="margin-top:.2rem;accent-color:var(--sf-gold-400)">Also tell me when adventures and free downloads go up.</label>
+      <p style="font-size:var(--sf-text-xs);line-height:1.6;color:var(--text-legal);max-width:52ch">We send roughly one letter a month. Unsubscribe from any of them in one click. Your address is never sold or shared — see the <a href="#" style="color:var(--text-legal);text-decoration:underline">privacy notice</a>.</p>
+    </form>
+
+    <div id="done" hidden style="display:flex;flex-direction:column;gap:.75rem;padding:1.35rem 1.45rem;border-left:2px solid var(--sf-line-gold);border-radius:0 var(--sf-radius-card) var(--sf-radius-card) 0;background:var(--tint-gold)">
+      <span class="caps" style="color:var(--sf-gold-400)">The map is on its way</span>
+      <p style="font-size:.98rem;line-height:1.65;color:var(--text-over-image)">Check your inbox for the download link. If it has not arrived in ten minutes, look in the promotions folder — then write to us and we will send it by hand.</p>
+      <a href="what-is-starfall.html" class="caps" style="letter-spacing:var(--sf-track-nav);color:var(--text-link);text-decoration:none">While you wait: what is Starfall →</a>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:.85rem;padding-top:1.5rem;border-top:1px solid var(--border-section)">
+      <span class="caps" style="color:var(--text-meta)">What lands in your inbox</span>
+      <p style="display:flex;align-items:flex-start;gap:.7rem;font-size:.95rem;line-height:1.55;color:var(--text-body)"><svg viewBox="0 0 24 24" width="9" height="9" aria-hidden="true" style="flex:none;margin-top:.42rem;color:var(--sf-gold-400)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"/></svg>The Drowned Coast player map, immediately</p><p style="display:flex;align-items:flex-start;gap:.7rem;font-size:.95rem;line-height:1.55;color:var(--text-body)"><svg viewBox="0 0 24 24" width="9" height="9" aria-hidden="true" style="flex:none;margin-top:.42rem;color:var(--sf-gold-400)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"/></svg>New releases and free downloads, when they ship</p><p style="display:flex;align-items:flex-start;gap:.7rem;font-size:.95rem;line-height:1.55;color:var(--text-body)"><svg viewBox="0 0 24 24" width="9" height="9" aria-hidden="true" style="flex:none;margin-top:.42rem;color:var(--sf-gold-400)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"/></svg>Field notes from the studio, occasionally</p>
+    </div>
+  </div>
+
+  <div style="position:relative;max-width:26rem">
+    <div style="padding:1px;border-radius:var(--sf-radius-cover);background:linear-gradient(160deg,rgba(235,203,110,.5),rgba(162,156,196,.14));box-shadow:var(--sf-shadow-cover)">
+      <div style="position:relative;aspect-ratio:4/3;border-radius:9px;overflow:hidden;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)">
+        <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-card)"></div>
+        <span class="caps" style="position:absolute;bottom:.9rem;left:.95rem;color:var(--text-label)">The player map · A3</span>
+      </div></div>
+  </div>
+</main>
+</body></html>

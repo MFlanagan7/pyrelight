@@ -1,0 +1,38 @@
+<!-- @dsCard group="Components" viewport="700x340" subtitle="Buttons, pills, badges, headings, stats, quotes" name="Core primitives" -->
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<style>
+ body { margin:0; padding:20px; background:var(--surface-page); }
+ .grp { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:16px; }
+ .btn { font-family:var(--sf-font-heading); letter-spacing:var(--sf-track-nav); text-transform:uppercase; border-radius:var(--sf-radius-pill); text-decoration:none; display:inline-flex; align-items:center; }
+ .primary { color:var(--action-primary-ink); background:var(--action-primary-bg); box-shadow:var(--sf-glow-button); }
+ .ghost { color:var(--sf-ink-100); background:var(--action-ghost-bg); border:1px solid var(--action-ghost-border); }
+ .pill { font-family:var(--sf-font-heading); font-size:var(--sf-text-xs); letter-spacing:var(--sf-track-caps); text-transform:uppercase; padding:.35rem .9rem; border-radius:var(--sf-radius-pill); border:1px solid var(--sf-line-strong); color:var(--sf-ink-300); background:var(--tint-violet); }
+</style></head><body>
+<div class="grp">
+  <a class="btn primary" style="font-size:1rem;padding:.9rem 2.3rem">Enter the World</a>
+  <a class="btn primary" style="font-size:1rem;padding:.7rem 1.6rem">Read the region</a>
+  <a class="btn primary" style="font-size:var(--sf-text-sm);padding:.45rem 1.1rem">Newsletter</a>
+  <a class="btn ghost" style="font-size:1rem;padding:.9rem 1.8rem">Free downloads</a>
+  <a style="font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-link)">All articles →</a>
+</div>
+<div class="grp">
+  <span class="pill">Tidemarked</span><span class="pill">Salt dwarves</span>
+  <span class="pill" style="color:var(--text-label);background:rgba(13,12,27,.55)">A Pyrelight Press world · 5e compatible</span>
+  <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--action-primary-ink);background:rgba(235,203,110,.92);border:1px solid var(--sf-gold-400);padding:.25rem .6rem;border-radius:999px">Premium</span>
+  <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--sf-status-free);background:rgba(13,12,27,.7);border:1px solid rgba(155,211,168,.6);padding:.25rem .6rem;border-radius:999px">Free</span>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start">
+  <div style="display:flex;flex-direction:column;gap:.55rem">
+    <p style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">The wiki</p>
+    <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">Explore the world</h2>
+  </div>
+  <div style="display:flex;gap:2.25rem">
+    <div><div style="font-family:var(--sf-font-display);font-size:var(--sf-text-xl);color:var(--text-accent);line-height:1">4</div><div style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-body-card)">Regions</div></div>
+    <div><div style="font-family:var(--sf-font-display);font-size:var(--sf-text-xl);color:var(--text-accent);line-height:1">12</div><div style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-body-card)">Houses</div></div>
+  </div>
+</div>
+<blockquote style="margin:16px 0 0;max-width:44ch;padding:1.25rem;border-left:2px solid rgba(235,203,110,.5);background:linear-gradient(120deg,rgba(58,46,92,.34),rgba(20,19,40,.1));border-radius:0 12px 12px 0">
+  <p style="font-family:var(--sf-font-display);font-size:1.3rem;font-style:italic;color:var(--text-heading);line-height:1.45">“I read the essence chapter and had a session planned before I finished it.”</p>
+</blockquote>
+</body></html>

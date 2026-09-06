@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Errata & changelog" description="Corrections by product and printing, with what changed and why, plus how to report a mistake and get credited." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}@media (max-width:960px){#err-grid{grid-template-columns:minmax(0,1fr)!important}}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--text-accent);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Tools</a>
+    <a href="#" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25);text-decoration:none">Newsletter</a>
+  </div>
+</nav>
+
+<header style="padding:3.25rem 1.75rem 2rem;background:var(--surface-page);border-bottom:1px solid var(--border-section)">
+  <div style="max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:1.1rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Breadcrumbs" items="{{ crumbs }}" hint-size="100%,32px"></x-import>
+    <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">Errata &amp; changelog</h1>
+    <p style="max-width:62ch;font-size:1.12rem;line-height:1.6;color:var(--text-over-image)">Everything we have got wrong and fixed, in public. Your PDF updates in place, so the file in your library is always the current version.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:1.5rem;padding-top:.35rem">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Last updated 14 Fallmoon</span>
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">{{ totalLabel }}</span>
+    </div>
+  </div>
+</header>
+
+<div id="err-grid" style="max-width:var(--sf-container);margin:0 auto;padding:2.5rem 1.75rem 5rem;display:grid;grid-template-columns:minmax(0,1fr) 20rem;gap:3.5rem;align-items:start">
+
+  <main style="display:flex;flex-direction:column;gap:2rem;min-width:0">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem">
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Tabs" items="{{ productTabs }}" value="{{ product }}" on-change="{{ onProduct }}" hint-size="auto,44px"></x-import>
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-meta)">{{ countLabel }}</span>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:2.5rem">
+      <sc-for list="{{ releases }}" as="r" hint-placeholder-count="3">
+        <section style="display:flex;flex-direction:column;gap:1.15rem">
+          <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--sf-line-gold)">
+            <div style="display:flex;flex-direction:column;gap:.3rem">
+              <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-accent)">{{ r.product }}</span>
+              <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-lg);line-height:1.2;color:var(--text-heading)">{{ r.version }}</h2>
+            </div>
+            <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">{{ r.date }}</span>
+          </div>
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.DataTable" columns="{{ r.columns }}" rows="{{ r.rows }}" align="{{ r.align }}" hint-size="100%,240px"></x-import>
+          <sc-if value="{{ r.hasNote }}" hint-placeholder-val="{{ false }}">
+            <p style="max-width:64ch;font-size:.98rem;line-height:1.65;color:var(--text-body-card);font-style:italic">{{ r.note }}</p>
+          </sc-if>
+        </section>
+      </sc-for>
+    </div>
+  </main>
+
+  <aside style="display:flex;flex-direction:column;gap:1.5rem">
+    <div style="display:flex;flex-direction:column;gap:1.1rem;padding:1.5rem 1.6rem;border-top:2px solid var(--sf-gold-400);border-radius:0 0 var(--sf-radius-card) var(--sf-radius-card);background:var(--surface-raised);box-shadow:var(--sf-shadow-card)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">Found a mistake?</span>
+      <p style="font-size:.95rem;line-height:1.6;color:var(--text-body-card)">Tell us the product, the page and what is wrong. We fix it, publish it here, and credit you by whatever name you give us.</p>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="ghost" size="sm" href="#" hint-size="100%,40px">Report an error</x-import>
+      <p style="font-size:var(--sf-text-xs);line-height:1.6;color:var(--text-legal)">Or write to hello@pyrelightpress.com if you would rather not use the form.</p>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:.9rem;padding:1.35rem 1.45rem;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);background:var(--surface-card)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">How updates reach you</span>
+      <p style="font-size:.92rem;line-height:1.65;color:var(--text-body)">PDFs are replaced in your storefront library at no cost. Print runs are corrected at the next printing; we do not replace a book you already own for a typo, but we will for anything that makes a rule unrunnable.</p>
+    </div>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="note" label="What counts as errata" hint-size="100%,190px">
+      Mistakes, contradictions and things that do not work at a table. Not changes of mind — if we rebalance something because we decided we prefer it differently, that is a new printing and it is labelled as one.
+    </x-import>
+
+    <div style="display:flex;flex-direction:column;gap:.75rem;padding-top:1.25rem;border-top:1px solid var(--border-section)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Elsewhere</span>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Character options →</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Field notes →</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Community hub →</a>
+    </div>
+  </aside>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { product: "all" };
+
+  static RELEASES = [
+    { product: "The Starfall Setting", version: "Second printing", date: "14 Fallmoon", key: "setting",
+      note: "Reported by four separate readers within a week of release, which is how we knew the toll table was the problem rather than a typo.",
+      entries: [
+        ["p. 74", "Toll schedule omitted the exemption for mudlark boats under 4 tons.", "Row added"],
+        ["p. 74", "Deep-hull toll read 24 gold; should be 24 grains.", "Corrected"],
+        ["p. 112", "House Calder's seat given as Marrow Bay in one caption.", "Corrected to Calder Landing"],
+        ["p. 149", "Tide-drift table for Thin Harbour had the sign reversed.", "Now reads −11 min"],
+        ["p. 203", "The Weighed background granted a skill twice.", "Second instance replaced"]
+      ]},
+    { product: "The Essence Ledger", version: "Version 1.1", date: "9 Fallmoon", key: "ledger",
+      note: "",
+      entries: [
+        ["p. 12", "Spoilage DC did not state that it rises per 10 grains over.", "Clarified"],
+        ["p. 18", "Seasonal price table summed to 101%.", "Recalculated"],
+        ["p. 31", "The Drowned Patron's third feature had no action cost.", "Now a bonus action"]
+      ]},
+    { product: "Tides of Marrow Bay", version: "Version 1.2", date: "2 Fallmoon", key: "tides",
+      note: "The act-two rewrite is the one substantive change here. If you are mid-campaign, the old version still works — it is slower, not broken.",
+      entries: [
+        ["p. 4", "GM brief did not say what happens if the party ignores the ledger.", "Paragraph added"],
+        ["p. 29", "Two NPCs shared a name.", "The assayer is now Vessa Cauld"],
+        ["p. 41", "Act two assumed the party had visited Thin Harbour.", "Alternative opening added"],
+        ["Handout", "Ledger facsimile was missing the consignment date.", "Reissued"]
+      ]},
+    { product: "The Starfall Setting", version: "First printing", date: "2024", key: "setting",
+      note: "",
+      entries: [
+        ["—", "First release. Nothing to correct yet.", "—"]
+      ]}
+  ];
+
+  renderVals() {
+    const { product } = this.state;
+    const all = Component.RELEASES;
+    const filtered = product === "all" ? all : all.filter(r => r.key === product);
+    const total = all.reduce((n, r) => n + r.entries.filter(e => e[0] !== "—").length, 0);
+    return {
+      product,
+      crumbs: [{ label: "Wiki", href: "#" }, { label: "Reference", href: "#" }, { label: "Errata" }],
+      totalLabel: total + " corrections published",
+      countLabel: filtered.length + (filtered.length === 1 ? " release" : " releases"),
+      releases: filtered.map(r => ({
+        product: r.product,
+        version: r.version,
+        date: r.date,
+        note: r.note,
+        hasNote: r.note.length > 0,
+        columns: ["Where", "What was wrong", "Fix"],
+        align: ["left", "left", "left"],
+        rows: r.entries
+      })),
+      productTabs: [
+        { value: "all", label: "All products", count: all.length },
+        { value: "setting", label: "Setting book", count: all.filter(r => r.key === "setting").length },
+        { value: "ledger", label: "Essence Ledger", count: all.filter(r => r.key === "ledger").length },
+        { value: "tides", label: "Tides of Marrow Bay", count: all.filter(r => r.key === "tides").length }
+      ],
+      onProduct: (v) => this.setState({ product: v })
+    };
+  }
+}
+
+</script>
+</body>
+</html>

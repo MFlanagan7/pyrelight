@@ -1,0 +1,21 @@
+<!-- @dsCard group="Brand" viewport="700x150" subtitle="Four durations; only stars and the scroll cue loop" name="Motion" -->
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; background: var(--surface-page); padding: 18px 20px; font-family: var(--sf-font-body); }
+  .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; }
+  .lbl { font-family: var(--sf-font-heading); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-meta); }
+  .mono { font-family: ui-monospace, Menlo, monospace; font-size: 9.5px; color: var(--text-meta); }
+  .sw { display: flex; flex-direction: column; gap: 5px; }
+  .chip { width: 92px; height: 46px; border-radius: 6px; border: 1px solid var(--sf-line); }
+</style></head><body>
+<div style="display:flex;flex-direction:column;gap:7px;font-family:var(--sf-font-heading);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-body-card)">
+  <span>press .12s — translateY(1px)</span>
+  <span>hover .25s — border, background, colour</span>
+  <span>lift .3s — translateY(-4px) card / -6px cover + shadow</span>
+  <span>chrome .35s — nav transparent → solid past 40px</span>
+  <span style="color:var(--text-meta)">loops: star twinkle 4–11s randomised · scroll cue 2.6s · parallax .12 far / .3 near</span>
+</div>
+<p class="mono" style="margin-top:12px">cubic-bezier(.4,0,.2,1) throughout · everything disabled under prefers-reduced-motion</p>
+</body></html>

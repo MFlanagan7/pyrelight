@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Wiki article" description="The wiki workhorse: left rail, breadcrumb trail, long-form reading panel, fact box and sticky contents." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}@media (max-width:1180px){#article-grid{grid-template-columns:minmax(0,1fr) 18rem!important}#article-rail{display:none!important}}@media (max-width:860px){#article-grid{grid-template-columns:minmax(0,1fr)!important}#article-aside{position:static!important}}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--text-accent);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Tools</a>
+    <a href="#" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25);text-decoration:none">Newsletter</a>
+  </div>
+</nav>
+
+<div id="article-grid" style="max-width:var(--sf-container);margin:0 auto;padding:2rem 1.75rem 5rem;display:grid;grid-template-columns:15rem minmax(0,1fr) 19rem;gap:2.75rem;align-items:start">
+
+  <aside id="article-rail" style="position:sticky;top:5rem;display:flex;flex-direction:column;gap:1.5rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.SearchField" placeholder="Search the wiki" scope="{{ articleCount }}" hint-size="100%,52px"></x-import>
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.WikiSidebar" groups="{{ sidebarGroups }}" current-href="#marrow-bay" hint-size="100%,420px"></x-import>
+  </aside>
+
+  <main style="display:flex;flex-direction:column;gap:1.75rem;min-width:0">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Breadcrumbs" items="{{ crumbs }}" hint-size="100%,32px"></x-import>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ReadingPanel" meta="Regions · The Drowned Coast · updated 14 Fallmoon" title="Marrow Bay" hint-size="100%,900px">
+      <p style="font-size:1.15rem;line-height:1.65;color:var(--text-heading);margin:0 0 1.4rem">Marrow Bay is the largest deepwater port on the Drowned Coast and the place most essence enters the world's economy. It is held, in law and in practice, by House Marrow.</p>
+
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.2rem">The bay itself is a drowned valley. Three headlands break the weather, which is why the port exists at all, and the seabed shelves so steeply that a ship can moor within a stone's throw of the quay. What fell here fell mostly in the deep channel, and it has been coming ashore in the nets ever since.</p>
+
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.6rem">Roughly eleven thousand people live in the port and the terraces above it. Perhaps a tenth of them work the water directly. The rest weigh, assay, insure, tax, guard, ship or steal what the water produces, which is a fair description of the whole coastal economy in one sentence.</p>
+
+      <h2 id="the-toll" style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading);margin:0 0 .9rem">The toll</h2>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.2rem">Every vessel entering the bay pays a toll assessed on displacement, not cargo. House Marrow set it this way deliberately: an empty hull pays the same as a full one, so there is no incentive to declare honestly and no argument at the chain. The toll captains are house officers, not customs officials, and the distinction matters when something goes wrong.</p>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.6rem">Ships that have paid cannot be attacked by cartel crews inside the headlands. This is not a law. It is an arrangement, and it has held for thirty-one years.</p>
+
+      <h2 id="the-tide" style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading);margin:0 0 .9rem">The tide</h2>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.2rem">Two tides a day, and neither of them on schedule. The bay's water remembers what died in it, and the interval between low waters drifts by as much as an hour over a season. Every crew keeps its own table; the house publishes one and nobody trusts it entirely.</p>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.6rem">Low water is when the bay pays out. Mudlarks work the flats east of the chain under licence, and what they bring up is bought at the weighing house before it can be carried inland — a rule that exists to keep essence off the terrace markets and mostly fails.</p>
+
+      <h2 id="who-holds-it" style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading);margin:0 0 .9rem">Who holds it</h2>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.2rem">House Marrow holds the bay, the chain and the weighing house. House Calder holds the refineries eight days inland and buys most of what the bay produces, at a price the two houses renegotiate every spring with visible bad grace. The Synod maintains an assay office on the quay whose licence to operate Marrow reviews annually.</p>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.6rem">Nobody in this arrangement is comfortable. That is the point of the place: Marrow Bay is where four institutions have to be polite to each other in daylight because they all need the same water.</p>
+
+      <h2 id="running-it" style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading);margin:0 0 .9rem">Running it at the table</h2>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.2rem">Marrow Bay works as a first port because everything the setting cares about is visible from the quay: the chalked price of essence, the toll chain, an assayer who is nervous about something, and the flats going dry at low water. A party can arrive with no knowledge of the world and understand it in ten minutes of walking.</p>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0">Use the toll as the opening pressure. It is a small, legible injustice that everyone at the table can hold an opinion about, and the opinion they choose tells you which house is going to hate them by session four.</p>
+    </x-import>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="lore" label="From the Ledger" hint-size="100%,120px">
+      Essence is weighed in grains, sold in vials, and taxed in whatever the local house can enforce. At Marrow Bay the house can enforce a great deal.
+    </x-import>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.DataTable" caption="Toll schedule · per entry, assessed on displacement" columns="{{ tollColumns }}" rows="{{ tollRows }}" align="{{ tollAlign }}" hint-size="100%,240px"></x-import>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="rule" label="Sailing" hint-size="100%,120px">
+      Entering the bay against the tide costs an extra hour and a Wisdom (Survival) check at DC 13. Failure does not run you aground — it means you moor after the weighing house has closed.
+    </x-import>
+
+    <section style="display:flex;flex-direction:column;gap:1.1rem;padding-top:1.75rem;border-top:1px solid var(--border-section)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Related articles</span>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListGroup" hint-size="100%,220px">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="House Marrow" body="Holds the bay, the chain and the weighing house." meta="Houses &amp; factions" href="#" hint-size="100%,72px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="The Drowned Coast" body="West littoral: four ports, one cartel, no reliable chart." meta="Regions" href="#" hint-size="100%,72px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Essence, assay and price" body="How a grain is weighed and what it is worth this season." meta="Essence" href="#" hint-size="100%,72px"></x-import>
+      </x-import>
+    </section>
+  </main>
+
+  <aside id="article-aside" style="position:sticky;top:5rem;display:flex;flex-direction:column;gap:1.5rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.InfoBox" title="Marrow Bay" rows="{{ infoRows }}" image="{{ infoArt }}" hint-size="100%,420px"></x-import>
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.TableOfContents" items="{{ tocItems }}" active-id="the-toll" hint-size="100%,220px"></x-import>
+    <div style="display:flex;flex-direction:column;gap:.65rem;padding-top:1.25rem;border-top:1px solid var(--border-section)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Cite this article</span>
+      <p style="font-size:.85rem;line-height:1.6;color:var(--text-legal);margin:0">"Marrow Bay", <em>The Starfall Wiki</em>, Pyrelight Press. Retrieved 14 Fallmoon.</p>
+    </div>
+  </aside>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    const hatch = {
+      width: "100%", height: "100%",
+      background: "var(--surface-well)",
+      backgroundImage: "repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"
+    };
+    return {
+      articleCount: "412 articles",
+      crumbs: [
+        { label: "Wiki", href: "#" },
+        { label: "Regions", href: "#" },
+        { label: "The Drowned Coast", href: "#" },
+        { label: "Marrow Bay" }
+      ],
+      sidebarGroups: [
+        { title: "The world", links: [
+          { label: "Regions", href: "#regions", count: 4 },
+          { label: "Races", href: "#races", count: 9 },
+          { label: "Gods", href: "#gods", count: 7 },
+          { label: "The Sea", href: "#sea", count: 11 },
+          { label: "Houses & factions", href: "#houses", count: 18 },
+          { label: "Essence", href: "#essence", count: 6 }
+        ]},
+        { title: "The Drowned Coast", links: [
+          { label: "Marrow Bay", href: "#marrow-bay" },
+          { label: "The chain", href: "#chain" },
+          { label: "The weighing house", href: "#weighing" },
+          { label: "Calder refineries", href: "#calder" },
+          { label: "The flats", href: "#flats" }
+        ]},
+        { title: "Reference", links: [
+          { label: "Timeline", href: "#timeline" },
+          { label: "Sailing rules", href: "#sailing" },
+          { label: "Errata", href: "#errata" }
+        ]}
+      ],
+      tocItems: [
+        { id: "the-toll", label: "The toll" },
+        { id: "the-tide", label: "The tide" },
+        { id: "who-holds-it", label: "Who holds it" },
+        { id: "running-it", label: "Running it at the table" }
+      ],
+      infoRows: [
+        { label: "Type", value: "Deepwater port" },
+        { label: "Region", value: "The Drowned Coast" },
+        { label: "Held by", value: "House Marrow" },
+        { label: "Population", value: "≈11,000" },
+        { label: "Tides", value: "Two, unscheduled" },
+        { label: "Toll", value: "By displacement" }
+      ],
+      infoArt: React.createElement("div", { "aria-hidden": "true", style: hatch }),
+      tollColumns: ["Vessel", "Displacement", "Toll"],
+      tollAlign: ["left", "right", "right"],
+      tollRows: [
+        ["Skiff, mudlark boat", "under 4 tons", "Exempt"],
+        ["Coaster", "4–40 tons", "2 grains"],
+        ["Merchantman", "40–200 tons", "9 grains"],
+        ["Deep hull", "over 200 tons", "24 grains"],
+        ["Synod vessel", "any", "By treaty"]
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Tools & generators index" description="Landing page for the four GM generators: essence ledger, house builder, sea tables, name forge." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}@media (max-width:900px){#tools-lower{grid-template-columns:minmax(0,1fr)!important}}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--text-accent);text-decoration:none">Tools</a>
+    <a href="#" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25);text-decoration:none">Newsletter</a>
+  </div>
+</nav>
+
+<header style="position:relative;padding:4rem 1.75rem 3.25rem;overflow:hidden;background:var(--surface-hero);border-bottom:1px solid var(--sf-line)">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-top)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-vignette)"></div>
+  <div style="position:relative;max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:1.15rem">
+    <p style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--sf-status-free)">Free, no account</p>
+    <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-3xl);line-height:var(--sf-leading-tight);color:var(--text-heading)">Tools &amp; generators</h1>
+    <p style="max-width:58ch;font-size:1.12rem;line-height:1.65;color:var(--text-over-image)">Four things a GM running this coast needs at the table. They work in the browser, they work offline once loaded, and they print.</p>
+  </div>
+</header>
+
+<section style="padding:2.5rem 1.75rem 3rem;background:var(--surface-page)">
+  <div style="max-width:var(--sf-container);margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(var(--sf-col-min-card),1fr));gap:var(--sf-gap-card)">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ContentCard" title="The essence ledger" count="Tracker" body="Track what the party is carrying, what it weighs, and what it is worth in the port they are standing in." tag="At the table" href="#" image="{{ art }}" gradient-border="{{ true }}" hint-size="100%,310px"></x-import>
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ContentCard" title="House builder" count="Generator" body="Roll a merchant house: holdings, income, a rival, and the one thing it will not do for money." tag="Prep" href="#" image="{{ art }}" gradient-border="{{ true }}" hint-size="100%,310px"></x-import>
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ContentCard" title="Sea tables" count="Random" body="Weather, tide, what the nets bring up and who else is on the water. Roll or pick." tag="At the table" href="#" image="{{ art }}" gradient-border="{{ true }}" hint-size="100%,310px"></x-import>
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ContentCard" title="Name forge" count="Generator" body="Coastfolk, house names, ships and ports, built from the setting's own naming patterns." tag="Prep" href="#" image="{{ art }}" gradient-border="{{ true }}" hint-size="100%,310px"></x-import>
+  </div>
+</section>
+
+<section style="padding:0 1.75rem 5rem;background:var(--surface-page)">
+  <div id="tools-lower" style="max-width:var(--sf-container);margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 21rem;gap:3.5rem;align-items:start;padding-top:2.5rem;border-top:1px solid var(--border-section)">
+    <div style="display:flex;flex-direction:column;gap:1.5rem">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-xl);line-height:1.2;color:var(--text-heading)">Printable versions</h2>
+      <p style="max-width:64ch;font-size:1.02rem;line-height:var(--sf-leading-body);color:var(--text-body)">Every generator has a paper equivalent, because a laptop at the table is not always welcome. These are the same tables the browser tools roll on.</p>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListGroup" hint-size="100%,300px">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Essence tracking cards" body="Print-and-cut vial cards, three sheets." meta="PDF" trailing="Free" href="#" display="{{ true }}" hint-size="100%,76px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="House sheet, blank" body="One page per house, ready to fill in by hand." meta="PDF" trailing="Free" href="#" display="{{ true }}" hint-size="100%,76px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Sea tables, GM screen insert" body="Four panels, landscape, sized for a standard screen." meta="PDF" trailing="Free" href="#" display="{{ true }}" hint-size="100%,76px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Name lists" body="Two hundred names by category, pre-rolled." meta="PDF" trailing="Free" href="#" display="{{ true }}" hint-size="100%,76px"></x-import>
+      </x-import>
+    </div>
+    <aside style="display:flex;flex-direction:column;gap:1.5rem">
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="note" label="Nothing is stored" hint-size="100%,170px">
+        These tools run entirely in your browser. Nothing you enter is sent anywhere or saved on a server — which also means closing the tab loses it, so use the export button if a house is worth keeping.
+      </x-import>
+      <div style="display:flex;flex-direction:column;gap:.75rem;padding-top:1.25rem;border-top:1px solid var(--border-section)">
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Deeper toolkit</span>
+        <p style="font-size:.9rem;line-height:1.6;color:var(--text-body-card)">The Essence Ledger book carries the full economy: seasonal prices, refinement rules, and what happens to someone who carries raw essence too long.</p>
+        <a href="#" style="font-size:.93rem;text-decoration:none">The Essence Ledger, $8 →</a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      art: React.createElement("div", { "aria-hidden": "true", style: {
+        width: "100%", height: "100%",
+        background: "var(--surface-well)",
+        backgroundImage: "repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"
+      }})
+    };
+  }
+}
+
+</script>
+</body>
+</html>

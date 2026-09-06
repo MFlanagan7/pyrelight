@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Artwork detail" description="Single piece with full artist attribution: credit block, commission brief, licence terms and where else the piece appears." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}@media (max-width:1020px){#art-grid{grid-template-columns:minmax(0,1fr)!important}#art-side{position:static!important}}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--text-accent);text-decoration:none">Gallery</a>
+    <a href="#" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25);text-decoration:none">Newsletter</a>
+  </div>
+</nav>
+
+<div style="max-width:var(--sf-container);margin:0 auto;padding:2rem 1.75rem 1.25rem">
+  <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Breadcrumbs" items="{{ crumbs }}" hint-size="100%,32px"></x-import>
+</div>
+
+<section style="padding:0 1.75rem;background:var(--surface-page)">
+  <div style="max-width:var(--sf-container);margin:0 auto">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ImageFrame" ratio="16 / 9" scrim="none" float="{{ true }}" hint-size="100%,560px">
+      <div aria-hidden="true" style="width:100%;height:100%;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+    </x-import>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;padding-top:.85rem">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">4200 × 2362 px · shown at 60%</span>
+      <div style="display:flex;gap:1.25rem">
+        <a href="#" style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;text-decoration:none">View full size</a>
+        <a href="#" style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;text-decoration:none">Press download</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="art-grid" style="max-width:var(--sf-container);margin:0 auto;padding:2.75rem 1.75rem 5rem;display:grid;grid-template-columns:minmax(0,1fr) 21rem;gap:3.5rem;align-items:start">
+
+  <main style="display:flex;flex-direction:column;gap:2.25rem;min-width:0">
+    <div style="display:flex;flex-direction:column;gap:1rem;max-width:44rem">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">Cover art · The Starfall Setting</span>
+      <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">Marrow Bay at low tide</h1>
+      <p style="font-size:1.15rem;line-height:1.6;color:var(--text-over-image)">The flats east of the chain, an hour after low water, with the weighing house lit and the mudlark boats already out. This is the image the whole book was designed around.</p>
+    </div>
+
+    <section style="display:flex;flex-direction:column;gap:1.15rem;max-width:44rem">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-xl);line-height:1.2;color:var(--text-heading)">The brief</h2>
+      <p style="font-size:1.02rem;line-height:var(--sf-leading-body);color:var(--text-body)">We asked for a working port rather than a beautiful one: something that looks like a place where people are paid badly to do dangerous things at four in the morning. The instruction that mattered most was "the light is a commodity, not a miracle" — no glow, no rapture, just cold value being weighed under lamps.</p>
+      <p style="font-size:1.02rem;line-height:var(--sf-leading-body);color:var(--text-body)">Three revisions. The first had too much sky and read as fantasy landscape; the second moved the horizon down and put the boats in the foreground, which is where it found the subject.</p>
+    </section>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="lore" label="From the caption in the book" hint-size="100%,120px">
+      An hour after low water, the flats are worth more than the town behind them.
+    </x-import>
+
+    <section style="display:flex;flex-direction:column;gap:1.15rem">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-xl);line-height:1.2;color:var(--text-heading)">Where this appears</h2>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListGroup" hint-size="100%,240px">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="The Starfall Setting" body="Front cover, full bleed, and again as the chapter two plate." meta="Print + PDF" trailing="Cover" href="#" display="{{ true }}" hint-size="100%,76px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Marrow Bay" body="Header image on the wiki article." meta="Wiki" trailing="Header" href="#" display="{{ true }}" hint-size="100%,76px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Press kit" body="Cleared for editorial use at print resolution." meta="Press" trailing="Cleared" href="#" display="{{ true }}" hint-size="100%,76px"></x-import>
+      </x-import>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:1.15rem;max-width:44rem">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-xl);line-height:1.2;color:var(--text-heading)">More from this artist</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:var(--sf-gap-card)">
+        <figure style="display:flex;flex-direction:column;gap:.6rem;margin:0">
+          <a href="#" style="display:block;text-decoration:none">
+            <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ImageFrame" ratio="4 / 3" scrim="card" hint-size="100%,150px">
+              <div aria-hidden="true" style="width:100%;height:100%;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+            </x-import>
+          </a>
+          <figcaption style="font-size:.9rem;color:var(--text-body-card)">The chain, raised</figcaption>
+        </figure>
+        <figure style="display:flex;flex-direction:column;gap:.6rem;margin:0">
+          <a href="#" style="display:block;text-decoration:none">
+            <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ImageFrame" ratio="4 / 3" scrim="card" hint-size="100%,150px">
+              <div aria-hidden="true" style="width:100%;height:100%;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+            </x-import>
+          </a>
+          <figcaption style="font-size:.9rem;color:var(--text-body-card)">The tide stair</figcaption>
+        </figure>
+        <figure style="display:flex;flex-direction:column;gap:.6rem;margin:0">
+          <a href="#" style="display:block;text-decoration:none">
+            <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ImageFrame" ratio="4 / 3" scrim="card" hint-size="100%,150px">
+              <div aria-hidden="true" style="width:100%;height:100%;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+            </x-import>
+          </a>
+          <figcaption style="font-size:.9rem;color:var(--text-body-card)">Nine fathoms down</figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <aside id="art-side" style="position:sticky;top:5rem;display:flex;flex-direction:column;gap:1.5rem">
+    <div style="display:flex;flex-direction:column;gap:1.15rem;padding:1.6rem 1.7rem;border-top:2px solid var(--sf-gold-400);border-radius:0 0 var(--sf-radius-card) var(--sf-radius-card);background:var(--surface-raised);box-shadow:var(--sf-shadow-card)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">Artist</span>
+      <div style="display:flex;align-items:center;gap:1rem">
+        <div style="flex:none;width:3.5rem">
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ImageFrame" ratio="1 / 1" scrim="none" radius="999px" hint-size="56px,56px">
+            <div aria-hidden="true" style="width:100%;height:100%;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+          </x-import>
+        </div>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:.2rem">
+          <span style="font-family:var(--sf-font-display);font-size:1.3rem;line-height:1.2;color:var(--text-heading)">[ARTIST 1]</span>
+          <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">Cover &amp; interiors</span>
+        </div>
+      </div>
+      <p style="font-size:.95rem;line-height:1.6;color:var(--text-body-card)">[One or two sentences of artist bio, supplied by the artist. Ask them to write it — do not paraphrase a portfolio.]</p>
+      <div style="display:flex;flex-direction:column;gap:.55rem;padding-top:.25rem">
+        <a href="#" style="font-size:.93rem;text-decoration:none">Portfolio →</a>
+        <a href="#" style="font-size:.93rem;text-decoration:none">Commission enquiries →</a>
+        <a href="#" style="font-size:.93rem;text-decoration:none">All nine pieces by this artist →</a>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:.9rem;padding:1.35rem 1.45rem;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);background:var(--surface-card)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Credit line</span>
+      <p style="font-size:.92rem;line-height:1.65;color:var(--text-body)">"Marrow Bay at low tide" by [ARTIST 1], commissioned by Pyrelight Press for <em style="font-style:italic">The Starfall Setting</em> (2024).</p>
+      <button type="button" onClick="{{ copyCredit }}" style="align-self:flex-start;border:1px solid var(--action-ghost-border);background:var(--action-ghost-bg);padding:.5rem 1.1rem;border-radius:999px;cursor:pointer;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--sf-ink-100)">{{ copyLabel }}</button>
+      <p style="font-size:var(--sf-text-xs);line-height:1.6;color:var(--text-legal)">Use this wording verbatim if you reproduce the image. Crop it and the signature goes, which is why we ask you not to.</p>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:.9rem;padding:1.35rem 1.45rem;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);background:var(--surface-card)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Details</span>
+      <dl style="margin:0;display:flex;flex-direction:column;gap:.5rem">
+        <sc-for list="{{ details }}" as="d" hint-placeholder-count="6">
+          <div style="display:flex;justify-content:space-between;gap:.75rem;align-items:baseline;padding-bottom:.5rem;border-bottom:1px solid var(--border-section)">
+            <dt style="flex:none;font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">{{ d.label }}</dt>
+            <dd style="margin:0;text-align:right;font-size:.92rem;color:var(--text-body)">{{ d.value }}</dd>
+          </div>
+        </sc-for>
+      </dl>
+    </div>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="note" label="Licence" hint-size="100%,180px">
+      Licensed to Pyrelight Press for Starfall products; copyright remains with the artist. Not covered by the fan content licence — please do not use it in your own material.
+    </x-import>
+  </aside>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { copied: false };
+
+  renderVals() {
+    // Artist name is a placeholder. Never ship a fabricated attribution —
+    // replace [ARTIST 1] and the bio with what the artist supplies.
+    const credit = '"Marrow Bay at low tide" by [ARTIST 1], commissioned by Pyrelight Press for The Starfall Setting (2024).';
+    return {
+      crumbs: [{ label: "Gallery", href: "#" }, { label: "Places", href: "#" }, { label: "Marrow Bay at low tide" }],
+      copyLabel: this.state.copied ? "Copied" : "Copy credit line",
+      copyCredit: () => {
+        if (navigator.clipboard) navigator.clipboard.writeText(credit);
+        this.setState({ copied: true });
+        setTimeout(() => this.setState({ copied: false }), 2000);
+      },
+      details: [
+        { label: "Medium", value: "Digital" },
+        { label: "Year", value: "2024" },
+        { label: "Dimensions", value: "4200 × 2362 px" },
+        { label: "Commissioned for", value: "Cover art" },
+        { label: "Revisions", value: "Three" },
+        { label: "Copyright", value: "The artist" },
+        { label: "Press use", value: "Cleared" }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

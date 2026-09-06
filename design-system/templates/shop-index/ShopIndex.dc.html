@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Shop index" description="All products with Free/Premium filter tabs, live basket count, and the storefront handoff note." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--text-accent);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Tools</a>
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.CartButton" count="{{ basketCount }}" on-click="{{ openBasket }}" hint-size="auto,34px"></x-import>
+  </div>
+</nav>
+
+<header style="position:relative;padding:4rem 1.75rem 3.25rem;overflow:hidden;background:var(--surface-hero);border-bottom:1px solid var(--sf-line)">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-top)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-vignette)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-ambient-gold-top)"></div>
+  <div style="position:relative;max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:1.15rem">
+    <p style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">Free &amp; premium</p>
+    <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-3xl);line-height:var(--sf-leading-tight);color:var(--text-heading)">The shop</h1>
+    <p style="max-width:56ch;font-size:1.12rem;line-height:1.65;color:var(--text-over-image)">Books, adventures and GM tools. Half of it is free and stays free. Checkout is handled by itch.io or DriveThruRPG, whichever you prefer.</p>
+  </div>
+</header>
+
+<section style="padding:2.5rem 1.75rem 5rem;background:var(--surface-page)">
+  <div style="max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:2.25rem">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem">
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Tabs" items="{{ filterTabs }}" value="{{ filter }}" on-change="{{ onFilter }}" hint-size="auto,44px"></x-import>
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-meta)">{{ countLabel }}</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(var(--sf-col-min-cover),1fr));gap:var(--sf-gap-cover)">
+      <sc-for list="{{ products }}" as="p" hint-placeholder-count="8">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ProductCard" title="{{ p.title }}" meta="{{ p.meta }}" tone="{{ p.tone }}" badge="{{ p.badge }}" href="#" cover="{{ cover }}" hint-size="100%,420px"></x-import>
+      </sc-for>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem;padding-top:1.75rem;border-top:1px solid var(--border-section)">
+      <p style="max-width:58ch;font-size:.95rem;line-height:1.65;color:var(--text-body)">Every print order includes the PDF at no extra cost. PDFs are updated in place, so the link you are given always returns the current edition.</p>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="ghost" size="sm" href="#" hint-size="auto,40px">Buy on itch.io</x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="ghost" size="sm" href="#" hint-size="auto,40px">Buy on DriveThruRPG</x-import>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="position:relative;padding:var(--sf-space-28) 1.75rem;background:var(--surface-page);border-top:1px solid var(--border-section);overflow:hidden">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-ambient-gold-bottom)"></div>
+  <div style="position:relative;max-width:40rem;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:1.35rem;text-align:center">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" style="color:var(--sf-gold-400);filter:drop-shadow(0 0 10px rgba(235,203,110,.7))"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>
+    <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-accent)">Told first when something ships</h2>
+    <p style="max-width:44ch;font-size:1.02rem;line-height:1.65;color:var(--text-body)">One letter when there is something to say. The player map is free either way.</p>
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.NewsletterForm" align="center" note="{{ signupNote }}" on-submit="{{ onSignup }}" hint-size="100%,120px"></x-import>
+  </div>
+</section>
+
+<x-import component-from-global-scope="StarfallDesignSystem_6487a4.CartDrawer" open="{{ basketOpen }}" on-close="{{ closeBasket }}" subtotal="{{ subtotal }}" note="PDFs are delivered immediately. Print ships in 3–5 days. Checkout completes on itch.io or DriveThruRPG." hint-size="0,0">
+  <sc-for list="{{ basket }}" as="b" hint-placeholder-count="2">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.CartLineItem" title="{{ b.title }}" meta="{{ b.meta }}" price="{{ b.price }}" qty="{{ b.qty }}" cover="{{ cover }}" hint-size="100%,84px"></x-import>
+  </sc-for>
+</x-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { filter: "all", basketOpen: false, signupNote: "" };
+
+  static PRODUCTS = [
+    { title: "The Starfall Setting", meta: "Hardcover + PDF · $24 · itch", tone: "premium", badge: "Premium", kind: "premium", price: "$24" },
+    { title: "Quickstart & Free Map", meta: "PDF · Free · direct", tone: "free", badge: "Free", kind: "free", price: "Free" },
+    { title: "The Essence Ledger", meta: "GM toolkit · $8 · itch", tone: "premium", badge: "Premium", kind: "premium", price: "$8" },
+    { title: "House & Faction Sheets", meta: "Printable · Free · direct", tone: "free", badge: "Free", kind: "free", price: "Free" },
+    { title: "Tides of Marrow Bay", meta: "Adventure, levels 1–4 · $6 · itch", tone: "premium", badge: "Premium", kind: "premium", price: "$6" },
+    { title: "The Second Channel", meta: "Adventure, levels 5–8 · $6 · itch", tone: "premium", badge: "Premium", kind: "premium", price: "$6" },
+    { title: "GM Screen Inserts", meta: "PDF · Free · direct", tone: "free", badge: "Free", kind: "free", price: "Free" },
+    { title: "Sea Tables & Charts", meta: "PDF + VTT pack · $5 · DriveThru", tone: "premium", badge: "Premium", kind: "premium", price: "$5" }
+  ];
+
+  renderVals() {
+    const { filter, basketOpen, signupNote } = this.state;
+    const all = Component.PRODUCTS;
+    const products = filter === "all" ? all : all.filter(p => p.kind === filter);
+    const basket = [
+      { title: "The Starfall Setting", meta: "Hardcover + PDF", price: "$24", qty: 1 },
+      { title: "The Essence Ledger", meta: "PDF", price: "$8", qty: 1 }
+    ];
+    return {
+      filter,
+      products,
+      basket,
+      basketOpen,
+      basketCount: basket.length,
+      subtotal: "$32",
+      signupNote,
+      countLabel: products.length + " products",
+      filterTabs: [
+        { value: "all", label: "All", count: all.length },
+        { value: "free", label: "Free", count: all.filter(p => p.kind === "free").length },
+        { value: "premium", label: "Premium", count: all.filter(p => p.kind === "premium").length }
+      ],
+      onFilter: (v) => this.setState({ filter: v }),
+      openBasket: () => this.setState({ basketOpen: true }),
+      closeBasket: () => this.setState({ basketOpen: false }),
+      onSignup: (e) => { e.preventDefault(); this.setState({ signupNote: "The map is on its way." }); },
+      cover: React.createElement("div", { "aria-hidden": "true", style: {
+        width: "100%", height: "100%",
+        background: "var(--surface-well)",
+        backgroundImage: "repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"
+      }})
+    };
+  }
+}
+
+</script>
+</body>
+</html>

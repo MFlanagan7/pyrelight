@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Character options index" description="Player-facing index of backgrounds, subclasses and feats, filtered by type, with source and free/premium marking." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}@media (max-width:960px){#opt-grid{grid-template-columns:minmax(0,1fr)!important}}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--text-accent);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Tools</a>
+    <a href="#" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25);text-decoration:none">Newsletter</a>
+  </div>
+</nav>
+
+<header style="position:relative;padding:4rem 1.75rem 3.25rem;overflow:hidden;background:var(--surface-hero);border-bottom:1px solid var(--sf-line)">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-top)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-vignette)"></div>
+  <div style="position:relative;max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:1.15rem">
+    <p style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">For players</p>
+    <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-3xl);line-height:var(--sf-leading-tight);color:var(--text-heading)">Character options</h1>
+    <p style="max-width:60ch;font-size:1.12rem;line-height:1.65;color:var(--text-over-image)">Everything Starfall adds to a fifth-edition character. Nothing here is required — any 5e character works on this coast as written.</p>
+  </div>
+</header>
+
+<div id="opt-grid" style="max-width:var(--sf-container);margin:0 auto;padding:2.5rem 1.75rem 5rem;display:grid;grid-template-columns:minmax(0,1fr) 20rem;gap:3.5rem;align-items:start">
+
+  <main style="display:flex;flex-direction:column;gap:2rem;min-width:0">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem">
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Tabs" items="{{ typeTabs }}" value="{{ type }}" on-change="{{ onType }}" hint-size="auto,44px"></x-import>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.SearchField" placeholder="Filter options" scope="{{ countLabel }}" hint-size="15rem,52px"></x-import>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:1px;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);overflow:hidden;background:rgba(162,156,196,.14)">
+      <div style="display:flex;gap:1rem;padding:.75rem 1.25rem;background:var(--surface-well)">
+        <span style="flex:1;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">Option</span>
+        <span style="flex:none;width:7rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">Type</span>
+        <span style="flex:none;width:9rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">Source</span>
+      </div>
+      <sc-for list="{{ options }}" as="o" hint-placeholder-count="8">
+        <a href="#" style="display:flex;flex-wrap:wrap;gap:1rem;padding:1.05rem 1.25rem;background:var(--surface-card);text-decoration:none">
+          <span style="flex:1;min-width:14rem;display:flex;flex-direction:column;gap:.25rem">
+            <span style="font-family:var(--sf-font-display);font-size:1.12rem;line-height:1.2;color:var(--text-heading)">{{ o.name }}</span>
+            <span style="font-size:.93rem;line-height:1.55;color:var(--text-body-card)">{{ o.body }}</span>
+          </span>
+          <span style="flex:none;width:7rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">{{ o.typeLabel }}</span>
+          <span style="flex:none;width:9rem;display:flex;flex-direction:column;gap:.3rem">
+            <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">{{ o.source }}</span>
+            <sc-if value="{{ o.isFree }}" hint-placeholder-val="{{ false }}">
+              <span style="align-self:flex-start;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--sf-status-free);border:1px solid rgba(155,211,168,.6);background:rgba(13,12,27,.7);padding:.15rem .5rem;border-radius:999px">Free</span>
+            </sc-if>
+          </span>
+        </a>
+      </sc-for>
+    </div>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="rule" label="Essence and characters" hint-size="100%,190px">
+      No option here gives a character essence-based powers. Essence is money in this setting, not a spell list — a character who wants to use it has to buy it, carry it and spend it like everybody else. The Weighed background is about being marked by it, not empowered.
+    </x-import>
+
+    <section style="display:flex;flex-direction:column;gap:1.25rem;padding-top:1rem;border-top:1px solid var(--border-section)">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-xl);line-height:1.2;color:var(--text-heading)">The two extra questions</h2>
+      <p style="max-width:64ch;font-size:1.02rem;line-height:var(--sf-leading-body);color:var(--text-body)">Whatever you build, the quickstart asks two things at the end of character creation. They matter more than any subclass choice on this page.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(17rem,1fr));gap:var(--sf-gap-card)">
+        <div style="display:flex;flex-direction:column;gap:.6rem;padding:1.4rem 1.5rem;border-left:2px solid var(--sf-line-gold);border-radius:0 var(--sf-radius-card) var(--sf-radius-card) 0;background:var(--tint-gold)">
+          <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--sf-gold-400)">One</span>
+          <p style="font-size:1.02rem;line-height:1.65;color:var(--text-over-image)">Which house does your family owe, and for what?</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.6rem;padding:1.4rem 1.5rem;border-left:2px solid var(--sf-line-gold);border-radius:0 var(--sf-radius-card) var(--sf-radius-card) 0;background:var(--tint-gold)">
+          <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--sf-gold-400)">Two</span>
+          <p style="font-size:1.02rem;line-height:1.65;color:var(--text-over-image)">What is the most essence you have ever held at once?</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <aside style="display:flex;flex-direction:column;gap:1.5rem">
+    <div style="display:flex;flex-direction:column;gap:1.1rem;padding:1.5rem 1.6rem;border-top:2px solid var(--sf-gold-400);border-radius:0 0 var(--sf-radius-card) var(--sf-radius-card);background:var(--surface-raised);box-shadow:var(--sf-shadow-card)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">Try before you buy</span>
+      <p style="font-size:.95rem;line-height:1.6;color:var(--text-body-card)">Two backgrounds and one subclass are in the free quickstart, playtest-ready.</p>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="ghost" size="sm" href="#" hint-size="100%,40px">Free character options</x-import>
+    </div>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="note" label="For GMs" hint-size="100%,170px">
+      Everything on this page is player-safe and balanced against the core rules rather than against each other. If an option looks strong for your table, the setting book's GM chapter says which ones to watch.
+    </x-import>
+
+    <div style="display:flex;flex-direction:column;gap:.75rem;padding-top:1.25rem;border-top:1px solid var(--border-section)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Reference</span>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Races of the coast →</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Essence, assay and price →</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Errata &amp; changelog →</a>
+    </div>
+  </aside>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { type: "all" };
+
+  static OPTIONS = [
+    { name: "The Weighed", type: "background", body: "Born to parents who handled raw essence. Marked, valuable, and watched by people who will not say why.", source: "Setting book", free: true },
+    { name: "Toll Officer", type: "background", body: "You collected the toll for a house, and you know exactly how the arrangement works from the inside.", source: "Setting book", free: true },
+    { name: "Mudlark", type: "background", body: "You worked the flats at low water under licence. You know what the tide leaves and who buys it.", source: "Setting book", free: false },
+    { name: "Licensed Assayer", type: "background", body: "The Synod trained you to weigh divinity. Your licence is renewable, which is the whole problem.", source: "Setting book", free: false },
+    { name: "Tide Clerk", type: "background", body: "Ordained to the Tidewalker, which in practice means you keep records nobody reads until they matter.", source: "Setting book", free: false },
+    { name: "Circle of the Long Interval", type: "subclass", body: "Druid. Reads the tide as the god does — slowly, and correctly. Divination that takes weeks and never lies.", source: "Setting book", free: true },
+    { name: "Oath of Honest Measure", type: "subclass", body: "Paladin. Sworn to the Weigher. Powerful against those who falsify, useless against the merely cruel.", source: "Setting book", free: false },
+    { name: "The Drowned Patron", type: "subclass", body: "Warlock. Something under nine fathoms answered. It has not explained itself and does not intend to.", source: "Essence Ledger", free: false },
+    { name: "Salvage Specialist", type: "subclass", body: "Rogue. Built for wrecks, cold water and getting out with the reliquary before the tide turns.", source: "Essence Ledger", free: false },
+    { name: "Grain-Handler", type: "feat", body: "Carry essence above your Constitution score without the daily save. The reason is not explained and you would rather not know.", source: "Setting book", free: false },
+    { name: "Chartwise", type: "feat", body: "You can tell how old a chart is by looking at it, and you are right about the seabed more often than the chart.", source: "Setting book", free: false },
+    { name: "Toll-Sworn", type: "feat", body: "A house owes you passage. Once per season it must honour it, however inconvenient that is for them.", source: "Essence Ledger", free: false }
+  ];
+
+  static LABELS = { background: "Background", subclass: "Subclass", feat: "Feat" };
+
+  renderVals() {
+    const { type } = this.state;
+    const all = Component.OPTIONS;
+    const filtered = type === "all" ? all : all.filter(o => o.type === type);
+    return {
+      type,
+      options: filtered.map(o => ({
+        name: o.name,
+        body: o.body,
+        source: o.source,
+        typeLabel: Component.LABELS[o.type],
+        isFree: o.free
+      })),
+      countLabel: filtered.length + " options",
+      typeTabs: [
+        { value: "all", label: "All", count: all.length },
+        { value: "background", label: "Backgrounds", count: all.filter(o => o.type === "background").length },
+        { value: "subclass", label: "Subclasses", count: all.filter(o => o.type === "subclass").length },
+        { value: "feat", label: "Feats", count: all.filter(o => o.type === "feat").length }
+      ],
+      onType: (v) => this.setState({ type: v })
+    };
+  }
+}
+
+</script>
+</body>
+</html>

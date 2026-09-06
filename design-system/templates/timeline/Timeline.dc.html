@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="History timeline" description="Interactive history of the fall and the century after. Era buttons and arrow-key navigation; a static list view is always rendered below for keyboard and screen-reader users." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}@media (max-width:960px){#tl-detail{grid-template-columns:minmax(0,1fr)!important}}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--text-accent);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Tools</a>
+    <a href="#" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25);text-decoration:none">Newsletter</a>
+  </div>
+</nav>
+
+<header style="padding:3.25rem 1.75rem 2rem;background:var(--surface-page)">
+  <div style="max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:1.1rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Breadcrumbs" items="{{ crumbs }}" hint-size="100%,32px"></x-import>
+    <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-3xl);line-height:var(--sf-leading-tight);color:var(--text-heading)">A hundred and nine years</h1>
+    <p style="max-width:60ch;font-size:1.15rem;line-height:1.6;color:var(--text-over-image)">From the night the sky came apart to the spring renegotiation the published adventures build toward. Player-safe throughout.</p>
+  </div>
+</header>
+
+<section aria-label="Timeline" style="padding:1rem 1.75rem 0;background:var(--surface-page)">
+  <div style="max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:1.5rem">
+
+    <div role="group" aria-label="Choose an era" tabindex="0" ref="{{ groupRef }}" onKeyDown="{{ onKeyDown }}" style="display:flex;flex-wrap:wrap;gap:.5rem;border-radius:var(--sf-radius-card)" style-focus="outline:2px solid var(--sf-gold-400);outline-offset:4px">
+      <sc-for list="{{ eras }}" as="e" hint-placeholder-count="5">
+        <sc-if value="{{ e.on }}" hint-placeholder-val="{{ false }}">
+          <button type="button" aria-current="true" tabindex="-1" onClick="{{ e.onPick }}" style="display:flex;flex-direction:column;gap:.2rem;text-align:left;padding:.8rem 1.15rem;border:1px solid var(--sf-gold-400);border-radius:var(--sf-radius-card);background:rgba(235,203,110,.14);cursor:pointer">
+            <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-accent)">{{ e.years }}</span>
+            <span style="font-family:var(--sf-font-display);font-size:1.08rem;color:var(--text-heading)">{{ e.name }}</span>
+          </button>
+        </sc-if>
+        <sc-if value="{{ e.off }}" hint-placeholder-val="{{ true }}">
+          <button type="button" tabindex="-1" onClick="{{ e.onPick }}" style="display:flex;flex-direction:column;gap:.2rem;text-align:left;padding:.8rem 1.15rem;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);background:var(--surface-card);cursor:pointer">
+            <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">{{ e.years }}</span>
+            <span style="font-family:var(--sf-font-display);font-size:1.08rem;color:var(--sf-ink-300)">{{ e.name }}</span>
+          </button>
+        </sc-if>
+      </sc-for>
+    </div>
+
+    <p style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">Left and right arrows move between eras</p>
+
+    <div aria-live="polite" style="display:flex;flex-direction:column;gap:1.5rem;padding:1.75rem 1.85rem;border-top:2px solid var(--sf-gold-400);border-radius:0 0 var(--sf-radius-card) var(--sf-radius-card);background:var(--surface-raised);box-shadow:var(--sf-shadow-card)">
+      <div id="tl-detail" style="display:grid;grid-template-columns:minmax(0,1fr) 17rem;gap:2.5rem;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:1rem">
+          <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">{{ current.years }}</span>
+          <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">{{ current.name }}</h2>
+          <p style="max-width:60ch;font-size:1.08rem;line-height:1.65;color:var(--text-body)">{{ current.summary }}</p>
+        </div>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ImageFrame" ratio="4 / 3" scrim="card" hint-size="100%,200px">
+          <div aria-hidden="true" style="width:100%;height:100%;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+        </x-import>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:1px;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);overflow:hidden;background:rgba(162,156,196,.14)">
+        <sc-for list="{{ current.events }}" as="ev" hint-placeholder-count="4">
+          <div style="display:flex;flex-wrap:wrap;gap:1.15rem;padding:1.05rem 1.25rem;background:var(--surface-card)">
+            <span style="flex:none;width:4.5rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-accent)">{{ ev.year }}</span>
+            <div style="flex:1;min-width:14rem;display:flex;flex-direction:column;gap:.25rem">
+              <span style="font-family:var(--sf-font-heading);font-size:.98rem;letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-heading)">{{ ev.title }}</span>
+              <span style="font-size:.95rem;line-height:1.6;color:var(--text-body-card)">{{ ev.detail }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center">
+        <button type="button" onClick="{{ goPrev }}" disabled="{{ atStart }}" style="border:1px solid var(--action-ghost-border);background:var(--action-ghost-bg);padding:.6rem 1.25rem;border-radius:999px;cursor:pointer;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--sf-ink-100)">← {{ prevLabel }}</button>
+        <button type="button" onClick="{{ goNext }}" disabled="{{ atEnd }}" style="border:1px solid var(--action-ghost-border);background:var(--action-ghost-bg);padding:.6rem 1.25rem;border-radius:999px;cursor:pointer;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--sf-ink-100)">{{ nextLabel }} →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:3.5rem 1.75rem 5rem;background:var(--surface-page)">
+  <div style="max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:1.5rem;padding-top:2.5rem;border-top:1px solid var(--border-section)">
+    <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:1rem">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-xl);line-height:1.2;color:var(--text-heading)">The whole chronology</h2>
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-meta)">Every era, in order</span>
+    </div>
+    <p style="max-width:64ch;font-size:1.02rem;line-height:var(--sf-leading-body);color:var(--text-body)">The same content as above, as one list. Nothing is hidden behind the interactive view.</p>
+    <div style="display:flex;flex-direction:column;gap:2rem">
+      <sc-for list="{{ allEras }}" as="e" hint-placeholder-count="5">
+        <div style="display:flex;flex-direction:column;gap:.85rem;padding-left:1.35rem;border-left:2px solid var(--sf-line-gold)">
+          <div style="display:flex;flex-direction:column;gap:.25rem">
+            <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-accent)">{{ e.years }}</span>
+            <h3 style="font-family:var(--sf-font-display);font-size:1.35rem;line-height:1.2;color:var(--text-heading)">{{ e.name }}</h3>
+          </div>
+          <p style="max-width:62ch;font-size:1rem;line-height:1.65;color:var(--text-body)">{{ e.summary }}</p>
+          <dl style="margin:0;display:flex;flex-direction:column;gap:.5rem">
+            <sc-for list="{{ e.events }}" as="ev" hint-placeholder-count="3">
+              <div style="display:flex;flex-wrap:wrap;gap:.85rem">
+                <dt style="flex:none;width:4.5rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">{{ ev.year }}</dt>
+                <dd style="flex:1;min-width:14rem;margin:0;font-size:.95rem;line-height:1.6;color:var(--text-body-card)"><strong style="font-weight:500;color:var(--text-heading)">{{ ev.title }}. </strong>{{ ev.detail }}</dd>
+              </div>
+            </sc-for>
+          </dl>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { index: 1 };
+
+  groupRef = React.createRef();
+
+  /** The era buttons are two mutually-exclusive branches, so changing the index
+   *  unmounts whichever one had focus. The group is the single tab stop and the
+   *  key target; pull focus back to it so arrow keys keep working. */
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.index !== this.state.index && this.groupRef.current) {
+      this.groupRef.current.focus();
+    }
+  }
+
+  static ERAS = [
+    { name: "Before", years: "Pre-fall",
+      summary: "A working world of small kingdoms, coastal trade and seven gods whose authority nobody had reason to question. Worth knowing mostly for what was lost: the tides ran to schedule and divinity could not be bought.",
+      events: [
+        { year: "—", title: "The old coast", detail: "A valley system, farmed and populated, where the Drowned Coast now is." },
+        { year: "—", title: "House Marrow, shipping family", detail: "Two centuries of moving grain along a coastline that still had roads." },
+        { year: "—", title: "The Tidewalker, minor", detail: "Four temples and a reputation for punctuality. Nothing more." }
+      ]},
+    { name: "The Fall", years: "Year 0",
+      summary: "Something enormous came apart above the world across a single night and the following autumn. Nobody agrees on what it was; every account of that night was written afterwards by someone with a reason to shape it.",
+      events: [
+        { year: "0", title: "The night itself", detail: "Light falls for eleven hours. The valley floods within a week as the coastline reshapes." },
+        { year: "0", title: "The first grains", detail: "What fell is found to be solid, cold, and — within months — spendable." },
+        { year: "0", title: "Eleven thousand dead", detail: "Almost all of them in the flooding rather than the fall. The number is the Synod's and is probably low." }
+      ]},
+    { name: "The Scramble", years: "Years 1–31",
+      summary: "Three decades of undirected greed. No toll, no assay standard, no licences — just whoever reached the water first. Most of the coast's grievances were established in this period and none of them have been settled since.",
+      events: [
+        { year: "4", title: "Marrow claims the bay", detail: "The family fortifies the headlands and begins charging for anchorage. Nobody stops them." },
+        { year: "12", title: "The Synod forms", detail: "Six scholarly houses combine to study essence, and accidentally acquire a monopoly on permission." },
+        { year: "18", title: "The Tidewalker stops speaking", detail: "No vision, no voice, no explanation. Ninety-one years of silence, counting to now." },
+        { year: "19", title: "Calder builds inland", detail: "The first refinery, eight days from the coast, and the road to reach it." },
+        { year: "26", title: "The cartel years begin", detail: "Three shipping combines discover that the sea outside the headlands has no owner." }
+      ]},
+    { name: "The Arrangement", years: "Years 31–108",
+      summary: "The toll on displacement is established and, against everyone's expectation, holds for seventy-seven years. This is the world the published setting describes: stable, expensive, and resented by all four parties who agreed to it.",
+      events: [
+        { year: "31", title: "The toll is set", detail: "Assessed on displacement rather than cargo, so there is no incentive to declare honestly." },
+        { year: "31", title: "The chain goes up", detail: "Ships that have paid cannot be attacked inside the headlands. An arrangement, not a law." },
+        { year: "94", title: "The weighing house opens", detail: "Every grain must be assayed before it can be carried inland. The rule mostly fails." },
+        { year: "107", title: "The second survey", detail: "Calder investigates a second channel. The result is not published." }
+      ]},
+    { name: "Now", years: "Year 109",
+      summary: "Where your table starts. The arrangement is intact and under more strain than it has ever been: a survey nobody will discuss, an assay that does not match its filing, and a spring renegotiation everyone can see coming.",
+      events: [
+        { year: "109", title: "The toll ledger", detail: "Three houses named on one consignment page that should never have carried all three." },
+        { year: "109", title: "The spring renegotiation", detail: "Marrow and Calder set the price of essence. Both arrive knowing something the other does not." },
+        { year: "109", title: "Your party arrives", detail: "Probably by boat, probably objecting to the toll. That is the recommended opening." }
+      ]}
+  ];
+
+  renderVals() {
+    const eras = Component.ERAS;
+    const last = eras.length - 1;
+    const index = Math.min(Math.max(0, this.state.index), last);
+    const go = (n) => this.setState({ index: Math.min(Math.max(0, n), last) });
+    return {
+      groupRef: this.groupRef,
+      crumbs: [{ label: "Wiki", href: "#" }, { label: "Reference", href: "#" }, { label: "Timeline" }],
+      current: eras[index],
+      allEras: eras,
+      atStart: index === 0,
+      atEnd: index === last,
+      prevLabel: index === 0 ? "Start" : eras[index - 1].name,
+      nextLabel: index === last ? "Now" : eras[index + 1].name,
+      goPrev: () => go(index - 1),
+      goNext: () => go(index + 1),
+      onKeyDown: (e) => {
+        if (e.key === "ArrowRight") { e.preventDefault(); go(index + 1); }
+        if (e.key === "ArrowLeft") { e.preventDefault(); go(index - 1); }
+      },
+      eras: eras.map((era, i) => ({
+        name: era.name,
+        years: era.years,
+        on: i === index,
+        off: i !== index,
+        onPick: () => go(i)
+      }))
+    };
+  }
+}
+
+</script>
+</body>
+</html>

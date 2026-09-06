@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Tool page" description="One working generator page — switch between the essence ledger, house builder, sea tables and name forge with the tool tweak." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}input,select{font-family:var(--sf-font-body)}@media (max-width:960px){#tool-grid{grid-template-columns:minmax(0,1fr)!important}#tool-side{position:static!important}}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--text-accent);text-decoration:none">Tools</a>
+    <a href="#" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25);text-decoration:none">Newsletter</a>
+  </div>
+</nav>
+
+<header style="padding:2.75rem 1.75rem 1.5rem;background:var(--surface-page)">
+  <div style="max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:1.1rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Breadcrumbs" items="{{ crumbs }}" hint-size="100%,32px"></x-import>
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1.5rem">
+      <div style="display:flex;flex-direction:column;gap:.8rem;min-width:0">
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">{{ toolKicker }}</span>
+        <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">{{ toolTitle }}</h1>
+        <p style="max-width:60ch;font-size:1.08rem;line-height:1.6;color:var(--text-body)">{{ toolIntro }}</p>
+      </div>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="ghost" size="sm" href="#" hint-size="auto,40px">Printable version</x-import>
+    </div>
+  </div>
+</header>
+
+<div id="tool-grid" style="max-width:var(--sf-container);margin:0 auto;padding:1.5rem 1.75rem 5rem;display:grid;grid-template-columns:minmax(0,1fr) 20rem;gap:3.5rem;align-items:start">
+
+  <main style="display:flex;flex-direction:column;gap:2rem;min-width:0">
+
+    <sc-if value="{{ isLedger }}" hint-placeholder-val="{{ true }}">
+      <section style="display:flex;flex-direction:column;gap:1.35rem">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:1rem;padding:1.15rem 1.25rem;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);background:var(--surface-card)">
+          <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Price at</span>
+          <select value="{{ port }}" onChange="{{ onPort }}" style="flex:1 1 10rem;min-width:0;padding:.6rem .8rem;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);background:var(--surface-well);color:var(--text-heading);font-size:.95rem">
+            <sc-for list="{{ ports }}" as="p" hint-placeholder-count="4">
+              <option value="{{ p.name }}">{{ p.label }}</option>
+            </sc-for>
+          </select>
+          <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-accent)">{{ portRate }}</span>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:1px;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);overflow:hidden;background:rgba(162,156,196,.14)">
+          <div style="display:flex;gap:1rem;padding:.75rem 1.25rem;background:var(--surface-well)">
+            <span style="flex:1;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">Held by</span>
+            <span style="flex:none;width:5rem;text-align:right;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">Grains</span>
+            <span style="flex:none;width:5.5rem;text-align:right;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">Value</span>
+            <span style="flex:none;width:2.5rem"></span>
+          </div>
+          <sc-for list="{{ ledgerRows }}" as="r" hint-placeholder-count="3">
+            <div style="display:flex;align-items:center;gap:1rem;padding:.7rem 1.25rem;background:var(--surface-card)">
+              <input value="{{ r.who }}" onChange="{{ r.onWho }}" placeholder="Character or vial" style="flex:1;min-width:0;padding:.5rem .7rem;border:1px solid transparent;border-radius:6px;background:transparent;color:var(--text-heading);font-size:.95rem">
+              <input value="{{ r.grains }}" onChange="{{ r.onGrains }}" inputmode="numeric" style="flex:none;width:5rem;text-align:right;padding:.5rem .7rem;border:1px solid var(--border-card);border-radius:6px;background:var(--surface-well);color:var(--text-heading);font-size:.95rem">
+              <span style="flex:none;width:5.5rem;text-align:right;font-family:var(--sf-font-display);font-size:1.1rem;color:var(--text-accent)">{{ r.value }}</span>
+              <button type="button" onClick="{{ r.onRemove }}" style="flex:none;width:2.5rem;border:0;background:transparent;cursor:pointer;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">Del</button>
+            </div>
+          </sc-for>
+          <div style="display:flex;align-items:center;gap:1rem;padding:.9rem 1.25rem;background:var(--surface-raised);border-top:1px solid var(--sf-line-gold)">
+            <span style="flex:1;font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-heading)">Total</span>
+            <span style="flex:none;width:5rem;text-align:right;font-family:var(--sf-font-display);font-size:1.15rem;color:var(--text-heading)">{{ totalGrains }}</span>
+            <span style="flex:none;width:5.5rem;text-align:right;font-family:var(--sf-font-display);font-size:1.35rem;color:var(--text-accent)">{{ totalValue }}</span>
+            <span style="flex:none;width:2.5rem"></span>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;gap:.75rem">
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="ghost" size="sm" on-click="{{ addRow }}" hint-size="auto,40px">Add a row</x-import>
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="quiet" on-click="{{ clearRows }}" hint-size="auto,32px">Clear the ledger</x-import>
+        </div>
+
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="rule" label="Carrying it" hint-size="100%,160px">
+          A character may carry up to their Constitution score in grains without consequence. Above that, one Constitution saving throw at DC 10 per day carried, and the DC rises by one for every ten grains over.
+        </x-import>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isHouse }}" hint-placeholder-val="{{ false }}">
+      <section style="display:flex;flex-direction:column;gap:1.35rem">
+        <div style="display:flex;flex-wrap:wrap;gap:.75rem">
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="primary" size="md" on-click="{{ rollHouse }}" hint-size="auto,46px">Roll a house</x-import>
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="quiet" href="#" hint-size="auto,32px">Blank sheet (PDF) →</x-import>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1.35rem;padding:1.6rem 1.7rem;border-top:2px solid var(--sf-gold-400);border-radius:0 0 var(--sf-radius-card) var(--sf-radius-card);background:var(--surface-raised);box-shadow:var(--sf-shadow-card)">
+          <div style="display:flex;flex-direction:column;gap:.4rem">
+            <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">{{ house.rank }}</span>
+            <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">{{ house.name }}</h2>
+            <p style="font-style:italic;font-size:1.02rem;color:var(--text-body-card)">{{ house.motto }}</p>
+          </div>
+          <dl style="margin:0;display:flex;flex-direction:column;gap:.6rem">
+            <sc-for list="{{ house.rows }}" as="h" hint-placeholder-count="6">
+              <div style="display:flex;justify-content:space-between;gap:1rem;align-items:baseline;padding-bottom:.6rem;border-bottom:1px solid var(--border-section)">
+                <dt style="flex:none;font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">{{ h.label }}</dt>
+                <dd style="margin:0;text-align:right;font-size:.98rem;line-height:1.5;color:var(--text-body)">{{ h.value }}</dd>
+              </div>
+            </sc-for>
+          </dl>
+          <div style="display:flex;flex-direction:column;gap:.5rem;padding:1.1rem 1.2rem;border-left:2px solid rgba(107,43,43,.55);border-radius:0 var(--sf-radius-card) var(--sf-radius-card) 0;background:rgba(107,43,43,.18)">
+            <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:#D89A9A">Will not do for money</span>
+            <p style="font-size:.98rem;line-height:1.6;color:var(--text-over-image)">{{ house.limit }}</p>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isSea }}" hint-placeholder-val="{{ false }}">
+      <section style="display:flex;flex-direction:column;gap:1.35rem">
+        <div style="display:flex;flex-wrap:wrap;gap:.75rem">
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="primary" size="md" on-click="{{ rollSea }}" hint-size="auto,46px">Roll the watch</x-import>
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="quiet" href="#" hint-size="auto,32px">Screen insert (PDF) →</x-import>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:var(--sf-gap-card)">
+          <sc-for list="{{ seaResults }}" as="s" hint-placeholder-count="4">
+            <div style="display:flex;flex-direction:column;gap:.6rem;padding:1.3rem 1.4rem;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);background:var(--surface-card)">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem">
+                <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">{{ s.table }}</span>
+                <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">{{ s.roll }}</span>
+              </div>
+              <p style="font-size:1.02rem;line-height:1.6;color:var(--text-body)">{{ s.result }}</p>
+            </div>
+          </sc-for>
+        </div>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.DataTable" caption="d20 · What the tide left" columns="{{ tideColumns }}" rows="{{ tideRows }}" align="{{ tideAlign }}" hint-size="100%,260px"></x-import>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isNames }}" hint-placeholder-val="{{ false }}">
+      <section style="display:flex;flex-direction:column;gap:1.35rem">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem">
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Tabs" items="{{ nameTabs }}" value="{{ nameKind }}" on-change="{{ onNameKind }}" hint-size="auto,44px"></x-import>
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="primary" size="sm" on-click="{{ rollNames }}" hint-size="auto,40px">Forge twelve</x-import>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(11rem,1fr));gap:1px;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);overflow:hidden;background:rgba(162,156,196,.14)">
+          <sc-for list="{{ names }}" as="n" hint-placeholder-count="12">
+            <div style="padding:.95rem 1.1rem;background:var(--surface-card);font-family:var(--sf-font-display);font-size:1.12rem;color:var(--text-heading)">{{ n }}</div>
+          </sc-for>
+        </div>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="note" label="How these are built" hint-size="100%,160px">
+          Coastfolk names are occupational or tidal. House names are places the family once held, which is why so many of them are geography. Ships are named for what the owner is afraid of.
+        </x-import>
+      </section>
+    </sc-if>
+  </main>
+
+  <aside id="tool-side" style="position:sticky;top:5rem;display:flex;flex-direction:column;gap:1.5rem">
+    <div style="display:flex;flex-direction:column;gap:.8rem;padding:1.35rem 1.45rem;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);background:var(--surface-card)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">All tools</span>
+      <a href="#" style="font-size:.95rem;text-decoration:none">The essence ledger</a>
+      <a href="#" style="font-size:.95rem;text-decoration:none">House builder</a>
+      <a href="#" style="font-size:.95rem;text-decoration:none">Sea tables</a>
+      <a href="#" style="font-size:.95rem;text-decoration:none">Name forge</a>
+    </div>
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="note" label="Nothing is stored" hint-size="100%,160px">
+      This runs entirely in your browser. Nothing is sent anywhere — and nothing survives closing the tab, so export anything worth keeping.
+    </x-import>
+    <div style="display:flex;flex-direction:column;gap:.75rem;padding-top:1.25rem;border-top:1px solid var(--border-section)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Reference</span>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Essence, assay and price →</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Sailing rules →</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">The Essence Ledger, $8 →</a>
+    </div>
+  </aside>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;tool&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;essence-ledger&quot;,&quot;house-builder&quot;,&quot;sea-tables&quot;,&quot;name-forge&quot;],&quot;default&quot;:&quot;essence-ledger&quot;,&quot;tsType&quot;:&quot;\&quot;essence-ledger\&quot; | \&quot;house-builder\&quot; | \&quot;sea-tables\&quot; | \&quot;name-forge\&quot;&quot;,&quot;section&quot;:&quot;Content&quot;}}">
+class Component extends DCLogic {
+  state = {
+    port: "Marrow Bay",
+    rows: [
+      { who: "Vessa (party purse)", grains: "14" },
+      { who: "Sealed vial, unassayed", grains: "6" },
+      { who: "Toll payment, held back", grains: "9" }
+    ],
+    houseSeed: 0,
+    seaSeed: 0,
+    nameKind: "coastfolk",
+    nameSeed: 0
+  };
+
+  static PORTS = [
+    { name: "Marrow Bay", rate: 12 },
+    { name: "Calder Landing", rate: 11 },
+    { name: "Thin Harbour", rate: 15 },
+    { name: "Saltmoor", rate: 10 }
+  ];
+
+  static TOOLS = {
+    "essence-ledger": { kicker: "At the table · tracker", title: "The essence ledger",
+      intro: "Track what the party is carrying and what it is worth in the port they are standing in. Prices are seasonal and every port pays differently." },
+    "house-builder": { kicker: "Prep · generator", title: "House builder",
+      intro: "Roll a merchant house complete enough to use tonight: what it holds, what it earns, who it hates, and the one thing it will not do for money." },
+    "sea-tables": { kicker: "At the table · random", title: "Sea tables",
+      intro: "Weather, tide, what the nets bring up and who else is on the water. Roll a whole watch at once or take what you need." },
+    "name-forge": { kicker: "Prep · generator", title: "Name forge",
+      intro: "Names built from the setting's own patterns — coastfolk, houses, ships and ports. Forge twelve and take the two you like." }
+  };
+
+  pick(list, seed, offset) {
+    const i = Math.abs(Math.floor(Math.sin(seed * 9301 + offset * 49297) * 233280)) % list.length;
+    return list[i];
+  }
+
+  buildHouse(seed) {
+    const names = ["House Verrow", "House Ashlyn", "House Tarn", "House Bellweather", "House Quill", "House Sarran", "House Ockham", "House Drede"];
+    const ranks = ["Lesser house, rising", "Great house", "Lesser house, failing", "Cadet branch, ambitious"];
+    const mottos = ["Weighed once, weighed here.", "We were here before the water.", "Nothing sinks that is not owed.", "Measure twice, name your price once."];
+    const seats = ["Saltmoor", "Thin Harbour", "the terraces above Marrow Bay", "Calder Landing", "a fortified quay with no town"];
+    const incomes = ["Insurance on cartel hulls", "Refining, unlicensed", "Licences on four flats villages", "Freight between three ports", "Assay, and lending against it"];
+    const rivals = ["House Marrow, over the toll", "House Calder, over refinery access", "The Weighing Guild, over a falsified assay", "The Synod, over an expired licence", "A cadet branch of itself"];
+    const holds = ["Two deep hulls and a dry dock", "A weighing house it does not legally own", "The only chart-maker on the coast", "Eleven warehouses, four of them empty", "A god's licensed reliquary"];
+    const limits = [
+      "Will not move cargo it has not weighed itself. This has cost it three contracts and it has not bent once.",
+      "Will not deal with the cartel in daylight, which everyone understands to mean it deals with the cartel.",
+      "Will not employ anyone the Synod has censured, out of fear rather than principle.",
+      "Will not sell the family quay, even now that keeping it is ruining them.",
+      "Will not take essence as payment. Coin only. Nobody outside the house knows why."
+    ];
+    return {
+      name: this.pick(names, seed, 1),
+      rank: this.pick(ranks, seed, 2),
+      motto: this.pick(mottos, seed, 3),
+      limit: this.pick(limits, seed, 4),
+      rows: [
+        { label: "Seat", value: this.pick(seats, seed, 5) },
+        { label: "Chief income", value: this.pick(incomes, seed, 6) },
+        { label: "Also holds", value: this.pick(holds, seed, 7) },
+        { label: "Rival", value: this.pick(rivals, seed, 8) },
+        { label: "Council", value: (3 + (seed % 5)) + " seats" },
+        { label: "Standing", value: this.pick(["Solvent", "Overextended", "Quietly wealthy", "In arrears"], seed, 9) }
+      ]
+    };
+  }
+
+  buildSea(seed) {
+    return [
+      { table: "Weather", roll: "d12", result: this.pick([
+        "Flat calm. The crew will start talking about why.",
+        "West wind, rising. Good passage, bad mooring.",
+        "Fog to the masthead by the second hour.",
+        "Rain that tastes of metal. The oldest hand goes quiet."
+      ], seed, 11) },
+      { table: "Tide", roll: "d8", result: this.pick([
+        "Low water forty minutes early. Nobody's table said so.",
+        "On the published schedule, exactly. Suspicious.",
+        "High water holds an hour longer than it should.",
+        "The interval has doubled. This is new."
+      ], seed, 12) },
+      { table: "The nets", roll: "d20", result: this.pick([
+        "Nothing. The water is only water today.",
+        "A sealed Synod reliquary, still warm.",
+        "A drowned toll ledger, three houses named.",
+        "Eleven grains of raw essence and a hand that will not open."
+      ], seed, 13) },
+      { table: "Company", roll: "d10", result: this.pick([
+        "A cartel cutter, matching your speed, not closing.",
+        "A Marrow toll boat, flying the chain signal.",
+        "An unflagged hull with no one on deck.",
+        "Nothing on the horizon, and the lookout is certain that is wrong."
+      ], seed, 14) }
+    ];
+  }
+
+  /** Deterministic Fisher-Yates using the same hash as pick(), so a seed always
+   *  gives the same order — but every name appears exactly once. */
+  shuffle(list, seed) {
+    const out = list.slice();
+    for (let i = out.length - 1; i > 0; i--) {
+      const j = Math.abs(Math.floor(Math.sin(seed * 9301 + i * 49297) * 233280)) % (i + 1);
+      const t = out[i]; out[i] = out[j]; out[j] = t;
+    }
+    return out;
+  }
+
+  buildNames(kind, seed) {
+    // Canon names (House Marrow/Calder, Marrow Bay, Thin Harbour, Saltmoor) are
+    // deliberately absent — the world has already established those as taken.
+    const sets = {
+      coastfolk: ["Vessa Toll", "Bren Lowwater", "Marisk Cauld", "Sefa Chain", "Odram Tide", "Lil Weigher", "Corran Flats", "Nessa Drown", "Halt Ferrier", "Perrin Salt", "Tam Netter", "Ysolde Quay", "Gethin Mudlark", "Aisl Fathom", "Rook Assay", "Denna Shoreward"],
+      houses: ["House Verrow", "House Ashlyn", "House Tarn", "House Bellweather", "House Quill", "House Sarran", "House Ockham", "House Drede", "House Havel", "House Corrin", "House Mawe", "House Selkirk", "House Pellow", "House Grange", "House Ythe", "House Ballast"],
+      ships: ["The Unpaid Toll", "Nine Fathoms", "Honest Measure", "The Second Channel", "Late for the Weighing", "Grain and Grievance", "The Drowned Ledger", "Wrong Tide", "Bellweather's Regret", "Sealed and Warm", "The Long Interval", "Nothing Owed", "Two Tides Early", "The Witness Fee", "Chalk and Water", "Owed in Kind"],
+      ports: ["Cauldwick", "Low Ferrier", "Netter's Reach", "Drownholt", "Quayhead", "Grainmouth", "Chainford", "Weighstead", "Ashen Mooring", "Tarnmouth", "Coldshoal", "Fathomgate", "Sarran's Landing", "Wrackford", "Dryhold", "Nine Steps"]
+    };
+    const pool = sets[kind] || sets.coastfolk;
+    return this.shuffle(pool, seed).slice(0, 12);
+  }
+
+  renderVals() {
+    const key = this.props.tool || "essence-ledger";
+    const tool = Component.TOOLS[key] || Component.TOOLS["essence-ledger"];
+    const port = Component.PORTS.find(p => p.name === this.state.port) || Component.PORTS[0];
+
+    const ledgerRows = this.state.rows.map((r, idx) => ({
+      who: r.who,
+      grains: r.grains,
+      value: "$" + (Number(r.grains || 0) * port.rate),
+      onWho: (e) => this.setState(s => ({ rows: s.rows.map((x, i) => i === idx ? { ...x, who: e.target.value } : x) })),
+      onGrains: (e) => this.setState(s => ({ rows: s.rows.map((x, i) => i === idx ? { ...x, grains: e.target.value.replace(/[^0-9]/g, "") } : x) })),
+      onRemove: () => this.setState(s => ({ rows: s.rows.filter((_, i) => i !== idx) }))
+    }));
+    const totalGrains = this.state.rows.reduce((n, r) => n + Number(r.grains || 0), 0);
+
+    return {
+      toolKicker: tool.kicker,
+      toolTitle: tool.title,
+      toolIntro: tool.intro,
+      crumbs: [{ label: "Tools", href: "#" }, { label: tool.title }],
+      isLedger: key === "essence-ledger",
+      isHouse: key === "house-builder",
+      isSea: key === "sea-tables",
+      isNames: key === "name-forge",
+
+      port: this.state.port,
+      ports: Component.PORTS.map(p => ({ name: p.name, label: p.name })),
+      portRate: "$" + port.rate + " a grain",
+      onPort: (e) => this.setState({ port: e.target.value }),
+      ledgerRows,
+      totalGrains: String(totalGrains),
+      totalValue: "$" + (totalGrains * port.rate),
+      addRow: () => this.setState(s => ({ rows: [...s.rows, { who: "", grains: "0" }] })),
+      clearRows: () => this.setState({ rows: [] }),
+
+      house: this.buildHouse(this.state.houseSeed),
+      rollHouse: () => this.setState(s => ({ houseSeed: s.houseSeed + 1 })),
+
+      seaResults: this.buildSea(this.state.seaSeed),
+      rollSea: () => this.setState(s => ({ seaSeed: s.seaSeed + 1 })),
+      tideColumns: ["d20", "Result"],
+      tideAlign: ["right", "left"],
+      tideRows: [
+        ["1–4", "A sealed Synod reliquary, still warm."],
+        ["5–11", "Nothing. The water is only water today."],
+        ["12–17", "A drowned toll ledger, three houses named."],
+        ["18–19", "Eleven grains of raw essence, unassayed."],
+        ["20", "Something that was not in the water an hour ago."]
+      ],
+
+      nameKind: this.state.nameKind,
+      nameTabs: [
+        { value: "coastfolk", label: "Coastfolk" },
+        { value: "houses", label: "Houses" },
+        { value: "ships", label: "Ships" },
+        { value: "ports", label: "Ports" }
+      ],
+      onNameKind: (v) => this.setState({ nameKind: v, nameSeed: this.state.nameSeed + 1 }),
+      names: this.buildNames(this.state.nameKind, this.state.nameSeed),
+      rollNames: () => this.setState(s => ({ nameSeed: s.nameSeed + 7 }))
+    };
+  }
+}
+
+</script>
+</body>
+</html>

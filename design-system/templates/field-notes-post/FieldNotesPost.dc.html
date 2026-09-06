@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Field notes post" description="Studio blog post: reading column, pull quote, rules table, a GM-only spoiler aside, and a next-post footer." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}@media (max-width:1080px){#post-grid{grid-template-columns:minmax(0,1fr)!important}#post-aside{position:static!important}}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Tools</a>
+    <a href="#" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25);text-decoration:none">Newsletter</a>
+  </div>
+</nav>
+
+<header style="padding:2.75rem 1.75rem 1.75rem;background:var(--surface-page)">
+  <div style="max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:1.25rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Breadcrumbs" items="{{ crumbs }}" hint-size="100%,32px"></x-import>
+    <div style="max-width:44rem;display:flex;flex-direction:column;gap:1.1rem">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:.7rem">
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-accent)">Design</span>
+        <span style="color:var(--sf-line-strong)">·</span>
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">14 Sunmoon</span>
+        <span style="color:var(--sf-line-strong)">·</span>
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">9 min read</span>
+      </div>
+      <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-3xl);line-height:var(--sf-leading-tight);color:var(--text-heading)">We cut the essence corruption rules three times</h1>
+      <p style="font-size:1.22rem;line-height:1.6;color:var(--text-over-image)">Every version worked mechanically and none of them worked at a table. What finally shipped is smaller, meaner and about money — which is what the setting was always about.</p>
+    </div>
+  </div>
+</header>
+
+<section style="padding:.5rem 1.75rem 0;background:var(--surface-page)">
+  <div style="max-width:var(--sf-container);margin:0 auto">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ImageFrame" ratio="21 / 9" scrim="caption" float="{{ true }}" hint-size="100%,400px">
+      <div aria-hidden="true" style="width:100%;height:100%;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+      <span style="position:absolute;bottom:1.1rem;left:1.25rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-label)">Assay bench study · art by [ARTIST]</span>
+    </x-import>
+  </div>
+</section>
+
+<div id="post-grid" style="max-width:var(--sf-container);margin:0 auto;padding:2.75rem 1.75rem 5rem;display:grid;grid-template-columns:minmax(0,1fr) 18rem;gap:3.5rem;align-items:start">
+
+  <main style="display:flex;flex-direction:column;gap:1.75rem;min-width:0;max-width:44rem">
+
+    <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body)">The first draft of Starfall had corruption rules that took up nine pages. Carrying raw essence gave you a die you rolled at dawn, and the die got worse, and eventually your character changed in a way you did not choose. It was thorough. Our playtesters hated it in a specific and useful way: they simply stopped carrying essence.</p>
+
+    <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body)">That is a real failure. The whole premise is that divinity is currency, and we had written a rule that made the currency radioactive. Parties would sell every grain the moment they surfaced, which is sensible play and terrible drama — the interesting question is not "will you carry it" but "what will you do while you are carrying it".</p>
+
+    <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">The second attempt: make it slower</h2>
+    <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body)">So we slowed it down. Weeks instead of days, gentler escalation, an escape hatch involving a licensed assayer. Tables carried essence again, and the rule stopped mattering — nobody tracks a consequence that arrives in six weeks of game time when the campaign moves in scenes. We had turned a problem into bookkeeping, which is the worse of the two outcomes because it is harder to notice.</p>
+
+    <blockquote style="display:flex;flex-direction:column;gap:.85rem;padding:0 0 0 1.35rem;border-left:2px solid var(--sf-line-gold);margin:0">
+      <p style="font-family:var(--sf-font-display);font-style:italic;font-size:1.4rem;line-height:1.4;color:var(--text-heading)">A rule nobody can feel is not a gentler rule. It is a paragraph.</p>
+    </blockquote>
+
+    <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">The third attempt: make it about money</h2>
+    <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body)">The version that shipped is four paragraphs long. Carrying essence above your Constitution score costs you a saving throw a day, and failure does not transform you — it spoils the grain. The essence you are carrying loses value, visibly, on a scale your players can read on the ledger.</p>
+
+    <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body)">This worked immediately, and the reason is worth writing down. The setting's pressure was never body horror; it was debt. Players who cannot afford to lose nine grains behave completely differently from players who are afraid of growing gills, and the first behaviour is the one the whole coast is built to reward.</p>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.DataTable" caption="What shipped · carrying raw essence" columns="{{ ruleColumns }}" rows="{{ ruleRows }}" align="{{ ruleAlign }}" hint-size="100%,240px"></x-import>
+
+    <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body)">One consequence we did not anticipate: the rule made the weighing houses interesting. If spoilage is real then getting to an assayer quickly is worth paying for, which means the toll matters more, which means House Marrow's chokepoint got sharper without us writing another word about it.</p>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.SpoilerBlock" title="GM only · what we cut from the second-channel arc" note="Spoilers for The Second Channel, levels 5–8." hint-size="100%,140px">
+      <p style="margin:0 0 .9rem">The original version of that arc used the discarded corruption rules as its engine: the surveyor who found the second channel was dying of essence exposure, and the party's deadline was her body. It read well and played badly, for exactly the reason above — the clock was invisible.</p>
+      <p style="margin:0">In the shipped version she is perfectly healthy and being paid by both houses. The deadline is now the spring renegotiation, which the players can see coming on a calendar. Same arc, same betrayal, and a clock everyone at the table can read.</p>
+    </x-import>
+
+    <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">What we would tell anyone writing a resource</h2>
+    <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body)">Write the rule so the players can watch the number move. Anything that punishes them out of sight will either be ignored or avoided entirely, and both of those remove the resource from your game. We spent nine pages learning that and shipped four paragraphs.</p>
+
+    <div style="display:flex;flex-direction:column;gap:.65rem;padding-top:1.75rem;border-top:1px solid var(--border-section)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Filed under</span>
+      <div style="display:flex;flex-wrap:wrap;gap:.5rem">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" href="#" hint-size="auto,28px">Design</x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" href="#" hint-size="auto,28px">Essence</x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" href="#" hint-size="auto,28px">Playtest</x-import>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:space-between;padding-top:1.5rem;border-top:1px solid var(--border-section)">
+      <a href="#" style="display:flex;flex-direction:column;gap:.3rem;text-decoration:none;max-width:20rem">
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">← Previous</span>
+        <span style="font-family:var(--sf-font-display);font-size:1.15rem;line-height:1.25;color:var(--text-heading)">Drawing a coast that keeps moving</span>
+      </a>
+      <a href="#" style="display:flex;flex-direction:column;gap:.3rem;text-decoration:none;text-align:right;max-width:20rem">
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">Next →</span>
+        <span style="font-family:var(--sf-font-display);font-size:1.15rem;line-height:1.25;color:var(--text-heading)">The toll is the whole setting</span>
+      </a>
+    </div>
+  </main>
+
+  <aside id="post-aside" style="position:sticky;top:5rem;display:flex;flex-direction:column;gap:1.5rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.TableOfContents" items="{{ tocItems }}" active-id="third" title="In this note" hint-size="100%,200px"></x-import>
+
+    <div style="display:flex;flex-direction:column;gap:1rem;padding:1.5rem 1.6rem;border-top:2px solid var(--sf-gold-400);border-radius:0 0 var(--sf-radius-card) var(--sf-radius-card);background:var(--surface-raised);box-shadow:var(--sf-shadow-card)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">The rules discussed here</span>
+      <p style="font-size:.95rem;line-height:1.6;color:var(--text-body-card)">Live in the setting book, chapter three, and free in the quickstart.</p>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="ghost" size="sm" href="#" hint-size="100%,40px">Get the quickstart</x-import>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:.75rem;padding-top:1.25rem;border-top:1px solid var(--border-section)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Related</span>
+      <a href="#" style="font-size:.93rem;line-height:1.5;text-decoration:none">Essence, assay and price →</a>
+      <a href="#" style="font-size:.93rem;line-height:1.5;text-decoration:none">The essence ledger tool →</a>
+      <a href="#" style="font-size:.93rem;line-height:1.5;text-decoration:none">All field notes →</a>
+    </div>
+  </aside>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      crumbs: [{ label: "Field notes", href: "#" }, { label: "Design", href: "#" }, { label: "Cutting the corruption rules" }],
+      tocItems: [
+        { id: "second", label: "Make it slower" },
+        { id: "third", label: "Make it about money" },
+        { id: "advice", label: "What we would tell anyone" }
+      ],
+      ruleColumns: ["Grains carried", "Effect", "On a failure"],
+      ruleAlign: ["left", "left", "left"],
+      ruleRows: [
+        ["Up to your Constitution", "None", "—"],
+        ["Up to +10 over", "CON save, DC 10, each dawn", "One grain spoils"],
+        ["Up to +20 over", "CON save, DC 11, each dawn", "Two grains spoil"],
+        ["Each further +10", "DC rises by 1", "One more grain"],
+        ["Spoiled grain", "Assays at a tenth of value", "Cannot be restored"]
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

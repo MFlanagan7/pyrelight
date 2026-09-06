@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Adventures index" description="The published adventure list with level-range filters, session counts and a level-band ladder." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}@media (max-width:960px){#adv-grid{grid-template-columns:minmax(0,1fr)!important}}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--text-accent);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Tools</a>
+    <a href="#" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25);text-decoration:none">Newsletter</a>
+  </div>
+</nav>
+
+<header style="position:relative;padding:4rem 1.75rem 3.25rem;overflow:hidden;background:var(--surface-hero);border-bottom:1px solid var(--sf-line)">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-top)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-vignette)"></div>
+  <div style="position:relative;max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:1.15rem">
+    <p style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">Session-ready</p>
+    <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-3xl);line-height:var(--sf-leading-tight);color:var(--text-heading)">Adventures</h1>
+    <p style="max-width:58ch;font-size:1.12rem;line-height:1.65;color:var(--text-over-image)">Nine published adventures covering levels 1 to 10. Every page here is player-safe — hooks and level ranges only, with nothing spoiled.</p>
+  </div>
+</header>
+
+<div id="adv-grid" style="max-width:var(--sf-container);margin:0 auto;padding:2.5rem 1.75rem 5rem;display:grid;grid-template-columns:minmax(0,1fr) 20rem;gap:3.5rem;align-items:start">
+
+  <main style="display:flex;flex-direction:column;gap:2rem;min-width:0">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem">
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Tabs" items="{{ bandTabs }}" value="{{ band }}" on-change="{{ onBand }}" hint-size="auto,44px"></x-import>
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-meta)">{{ countLabel }}</span>
+    </div>
+
+    <sc-if value="{{ hasResults }}" hint-placeholder-val="{{ true }}">
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListGroup" hint-size="100%,620px">
+        <sc-for list="{{ adventures }}" as="a" hint-placeholder-count="6">
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="{{ a.title }}" body="{{ a.hook }}" meta="{{ a.levels }}" trailing="{{ a.price }}" href="#" display="{{ true }}" thumb="{{ cover }}" hint-size="100%,88px"></x-import>
+        </sc-for>
+      </x-import>
+    </sc-if>
+
+    <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.EmptyState" title="Nothing published in that band yet" body="Levels 11 and above are in the writing queue. The setting book carries guidance for taking a party past level 10 in the meantime." hint-size="100%,240px"></x-import>
+    </sc-if>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="note" label="How these fit together" hint-size="100%,180px">
+      Each adventure stands alone and each one also moves the coast forward. Run them in published order and the toll arrangement comes apart across roughly thirty sessions; run one in isolation and nothing breaks.
+    </x-import>
+
+    <section style="display:flex;flex-direction:column;gap:1.25rem;padding-top:1rem;border-top:1px solid var(--border-section)">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-xl);line-height:1.2;color:var(--text-heading)">Start here if you are new</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(var(--sf-col-min-card),1fr));gap:var(--sf-gap-card)">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ContentCard" title="The quickstart adventure" count="Free" body="A salvage job at Marrow Bay for levels 1–2. Three hours, five players, no prep beyond one decision." tag="Levels 1–2" href="#" image="{{ art }}" hint-size="100%,300px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ContentCard" title="Tides of Marrow Bay" count="$6" body="The full first arc. Picks up where the quickstart leaves off and runs to level four." tag="Levels 1–4" href="#" image="{{ art }}" hint-size="100%,300px"></x-import>
+      </div>
+    </section>
+  </main>
+
+  <aside style="display:flex;flex-direction:column;gap:1.5rem">
+    <div style="display:flex;flex-direction:column;gap:1.15rem;padding:1.5rem 1.6rem;border-top:2px solid var(--sf-gold-400);border-radius:0 0 var(--sf-radius-card) var(--sf-radius-card);background:var(--surface-raised);box-shadow:var(--sf-shadow-card)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">The published arc</span>
+      <div style="display:flex;flex-direction:column;gap:.75rem">
+        <sc-for list="{{ ladder }}" as="l" hint-placeholder-count="5">
+          <div style="display:flex;align-items:baseline;gap:.85rem">
+            <span style="flex:none;width:3.4rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">{{ l.levels }}</span>
+            <span style="flex:1;min-width:0;font-size:.93rem;line-height:1.5;color:var(--text-body-card)">{{ l.title }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <p style="font-size:var(--sf-text-xs);line-height:1.6;color:var(--text-legal)">Roughly thirty sessions end to end, at three hours a session.</p>
+    </div>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="gm" label="Running these cold" hint-size="100%,170px">
+      Every adventure opens with a one-page GM brief: what the players want, what the houses want, and the single fact that changes if they do nothing. Read that page and you can run session one unprepared.
+    </x-import>
+
+    <div style="display:flex;flex-direction:column;gap:.75rem;padding-top:.25rem">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Also useful</span>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Tools &amp; generators →</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Free GM downloads →</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">The wiki →</a>
+    </div>
+  </aside>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { band: "all" };
+
+  static ADVENTURES = [
+    { title: "The Salvage at Marrow Bay", levels: "Levels 1–2", price: "Free", low: 1, high: 2,
+      hook: "A wreck surfaces on the flats and three parties want what is in it. One session." },
+    { title: "Tides of Marrow Bay", levels: "Levels 1–4", price: "$6", low: 1, high: 4,
+      hook: "The toll ledger names three houses that should never have appeared on one page." },
+    { title: "The Weighing House", levels: "Levels 3–5", price: "$6", low: 3, high: 5,
+      hook: "An assayer wants to be arrested, and will not say by whom." },
+    { title: "Thin Harbour", levels: "Levels 4–6", price: "$6", low: 4, high: 6,
+      hook: "The cartel's port has no toll, no chain and no questions. Somebody is asking anyway." },
+    { title: "The Second Channel", levels: "Levels 5–8", price: "$6", low: 5, high: 8,
+      hook: "A survey came back positive eighteen months ago. Two people were paid to lose it." },
+    { title: "Nine Fathoms Down", levels: "Levels 6–8", price: "$7", low: 6, high: 8,
+      hook: "The drowned temple is still attended. The Synod would like to know by what." },
+    { title: "The Spring Renegotiation", levels: "Levels 7–9", price: "$7", low: 7, high: 9,
+      hook: "Marrow and Calder meet to set the price of essence. The party is the security." },
+    { title: "What the Tide Owes", levels: "Levels 8–10", price: "$8", low: 8, high: 10,
+      hook: "The Tidewalker has answered a question nobody remembers asking." },
+    { title: "The Chain Breaks", levels: "Levels 9–10", price: "$8", low: 9, high: 10,
+      hook: "Thirty-one years of arrangement end in one week. The coast decides what replaces it." }
+  ];
+
+  renderVals() {
+    const { band } = this.state;
+    const all = Component.ADVENTURES;
+    const inBand = (a) => {
+      if (band === "all") return true;
+      if (band === "low") return a.low <= 4;
+      if (band === "mid") return a.high >= 4 && a.low <= 7;
+      if (band === "high") return a.high >= 8;
+      if (band === "epic") return a.low >= 11;
+      return true;
+    };
+    const adventures = all.filter(inBand);
+    return {
+      band,
+      adventures,
+      hasResults: adventures.length > 0,
+      isEmpty: adventures.length === 0,
+      countLabel: adventures.length + (adventures.length === 1 ? " adventure" : " adventures"),
+      bandTabs: [
+        { value: "all", label: "All", count: all.length },
+        { value: "low", label: "Levels 1–4", count: all.filter(a => a.low <= 4).length },
+        { value: "mid", label: "Levels 4–7", count: all.filter(a => a.high >= 4 && a.low <= 7).length },
+        { value: "high", label: "Levels 8–10", count: all.filter(a => a.high >= 8).length },
+        { value: "epic", label: "Level 11+", count: 0 }
+      ],
+      onBand: (v) => this.setState({ band: v }),
+      ladder: all.map(a => ({ levels: a.levels.replace("Levels ", ""), title: a.title })),
+      cover: React.createElement("div", { "aria-hidden": "true", style: {
+        width: "100%", height: "100%",
+        background: "var(--surface-well)",
+        backgroundImage: "repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"
+      }}),
+      art: React.createElement("div", { "aria-hidden": "true", style: {
+        width: "100%", height: "100%",
+        background: "var(--surface-well)",
+        backgroundImage: "repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"
+      }})
+    };
+  }
+}
+
+</script>
+</body>
+</html>

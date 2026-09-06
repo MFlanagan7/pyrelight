@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="VTT assets" description="Virtual tabletop downloads by platform: Foundry modules, Roll20 packs, plain maps and token sets, with grid specs." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}@media (max-width:960px){#vtt-grid{grid-template-columns:minmax(0,1fr)!important}}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--text-accent);text-decoration:none">Tools</a>
+    <a href="#" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25);text-decoration:none">Newsletter</a>
+  </div>
+</nav>
+
+<header style="position:relative;padding:4rem 1.75rem 3.25rem;overflow:hidden;background:var(--surface-hero);border-bottom:1px solid var(--sf-line)">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-top)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-vignette)"></div>
+  <div style="position:relative;max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:1.15rem">
+    <p style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">Playing online</p>
+    <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-3xl);line-height:var(--sf-leading-tight);color:var(--text-heading)">VTT assets</h1>
+    <p style="max-width:58ch;font-size:1.12rem;line-height:1.65;color:var(--text-over-image)">Maps, tokens and modules for the tables that play online. If you own the adventure, the pack came with it — these are the standalone downloads and the free ones.</p>
+  </div>
+</header>
+
+<div id="vtt-grid" style="max-width:var(--sf-container);margin:0 auto;padding:2.5rem 1.75rem 5rem;display:grid;grid-template-columns:minmax(0,1fr) 21rem;gap:3.5rem;align-items:start">
+
+  <main style="display:flex;flex-direction:column;gap:2rem;min-width:0">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem">
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Tabs" items="{{ platformTabs }}" value="{{ platform }}" on-change="{{ onPlatform }}" hint-size="auto,44px"></x-import>
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-meta)">{{ countLabel }}</span>
+    </div>
+
+    <sc-if value="{{ hasAssets }}" hint-placeholder-val="{{ true }}">
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListGroup" hint-size="100%,600px">
+        <sc-for list="{{ assets }}" as="a" hint-placeholder-count="6">
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="{{ a.title }}" body="{{ a.body }}" meta="{{ a.meta }}" trailing="{{ a.price }}" href="#" display="{{ true }}" thumb="{{ thumb }}" hint-size="100%,84px"></x-import>
+        </sc-for>
+      </x-import>
+    </sc-if>
+
+    <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.EmptyState" title="Nothing for that platform yet" body="We support Foundry and Roll20 directly, and ship plain image maps that work anywhere else. Tell us what you use and we will consider it." hint-size="100%,240px"></x-import>
+    </sc-if>
+
+    <section style="display:flex;flex-direction:column;gap:1.25rem;padding-top:1rem;border-top:1px solid var(--border-section)">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-xl);line-height:1.2;color:var(--text-heading)">Grid and scale</h2>
+      <p style="max-width:64ch;font-size:1.02rem;line-height:var(--sf-leading-body);color:var(--text-body)">Everything ships on one convention so maps from different products line up in the same scene.</p>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.DataTable" caption="Specifications" columns="{{ specColumns }}" rows="{{ specRows }}" align="{{ specAlign }}" hint-size="100%,280px"></x-import>
+    </section>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="note" label="Community module" hint-size="100%,180px">
+      The community-maintained Foundry suite automates essence tracking, the tide clock and toll assessment. We did not write it and do not support it, but we use it, and it is better than what we would have built.
+    </x-import>
+  </main>
+
+  <aside style="display:flex;flex-direction:column;gap:1.5rem">
+    <div style="display:flex;flex-direction:column;gap:1.1rem;padding:1.5rem 1.6rem;border-top:2px solid var(--sf-gold-400);border-radius:0 0 var(--sf-radius-card) var(--sf-radius-card);background:var(--surface-raised);box-shadow:var(--sf-shadow-card)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">Already bought an adventure?</span>
+      <p style="font-size:.95rem;line-height:1.6;color:var(--text-body-card)">Its VTT pack is in the same download. You do not need to buy anything on this page twice.</p>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="ghost" size="sm" href="#" hint-size="100%,40px">Your download library</x-import>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:.9rem;padding:1.35rem 1.45rem;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);background:var(--surface-card)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Licence</span>
+      <p style="font-size:.92rem;line-height:1.65;color:var(--text-body)">Use these at your own table, including paid games. Do not redistribute the files or use the art in your own products — the content licence has the detail.</p>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Content licence →</a>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:.75rem;padding-top:1.25rem;border-top:1px solid var(--border-section)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Also useful</span>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Free downloads →</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Tools &amp; generators →</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Community hub →</a>
+    </div>
+  </aside>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { platform: "all" };
+
+  static ASSETS = [
+    { title: "The Drowned Coast, region map", body: "Player and GM editions. Ports, tides and house borders; the GM copy marks the wreck sites.", meta: "Image · PNG + WebP", price: "Free", plat: "any" },
+    { title: "Marrow Bay scene pack", body: "The quay, the weighing house floor, the flats at low water, and the chain. Walls and lighting pre-built.", meta: "Foundry module", price: "$4", plat: "foundry" },
+    { title: "Marrow Bay map set", body: "The same four maps as flat images with a grid overlay, ready to drop into a Roll20 page.", meta: "Roll20 pack", price: "$4", plat: "roll20" },
+    { title: "Token set: the coast", body: "Toll captains, mudlarks, cartel crews, assayers and dock crowds. Forty-two tokens with borders.", meta: "Image · PNG", price: "Free", plat: "any" },
+    { title: "Token set: what is in the water", body: "Eleven creatures from the sea chapter. GM-facing names are in a separate key file.", meta: "Image · PNG", price: "$3", plat: "any" },
+    { title: "Essence & tide automation", body: "Community-maintained module: essence tracking, spoilage saves, a tide clock and toll assessment.", meta: "Foundry module", price: "Free", plat: "foundry" },
+    { title: "Tides of Marrow Bay, full pack", body: "Every scene from the first arc, plus the ledger handout as a shareable journal entry.", meta: "Foundry module", price: "Incl.", plat: "foundry" },
+    { title: "Handout pack", body: "The ledger facsimile, tide tables and toll schedule sized for a VTT journal rather than print.", meta: "Image · PNG", price: "Free", plat: "any" }
+  ];
+
+  renderVals() {
+    const { platform } = this.state;
+    const all = Component.ASSETS;
+    const assets = platform === "all" ? all : all.filter(a => a.plat === platform || a.plat === "any");
+    return {
+      platform,
+      assets,
+      hasAssets: assets.length > 0,
+      isEmpty: assets.length === 0,
+      countLabel: assets.length + (assets.length === 1 ? " download" : " downloads"),
+      platformTabs: [
+        { value: "all", label: "Everything", count: all.length },
+        { value: "foundry", label: "Foundry", count: all.filter(a => a.plat === "foundry" || a.plat === "any").length },
+        { value: "roll20", label: "Roll20", count: all.filter(a => a.plat === "roll20" || a.plat === "any").length },
+        { value: "any", label: "Plain images", count: all.filter(a => a.plat === "any").length }
+      ],
+      onPlatform: (v) => this.setState({ platform: v }),
+      specColumns: ["Property", "Value", "Note"],
+      specAlign: ["left", "left", "left"],
+      specRows: [
+        ["Grid", "100 px per 5 ft square", "Hex maps are 100 px per hex, flat-topped"],
+        ["Map resolution", "Up to 8000 px wide", "Downscaled copies included for slower connections"],
+        ["Tokens", "256 px, transparent", "Circular border baked in; a borderless set is included"],
+        ["Lighting", "Pre-built in Foundry scenes", "Roll20 packs ship dynamic-lighting paths as SVG"],
+        ["Format", "WebP, with PNG fallback", "Both in every download"]
+      ],
+      thumb: React.createElement("div", { "aria-hidden": "true", style: {
+        width: "100%", height: "100%",
+        background: "var(--surface-well)",
+        backgroundImage: "repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"
+      }})
+    };
+  }
+}
+
+</script>
+</body>
+</html>

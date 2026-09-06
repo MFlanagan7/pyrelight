@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Basket & storefront handoff" description="Replaces on-site checkout: review the basket, pick itch.io or DriveThruRPG, and leave. Explains why the handoff exists." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}@media (max-width:960px){#handoff-grid{grid-template-columns:minmax(0,1fr)!important}#handoff-side{position:static!important}}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--text-accent);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Tools</a>
+  </div>
+</nav>
+
+<header style="padding:3.25rem 1.75rem 2rem;background:var(--surface-page)">
+  <div style="max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:1.1rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Breadcrumbs" items="{{ crumbs }}" hint-size="100%,32px"></x-import>
+    <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">Your basket</h1>
+    <p style="max-width:60ch;font-size:1.08rem;line-height:1.65;color:var(--text-body)">Check it over, then choose where to pay. We do not process payments ourselves — the storefront handles the money, the delivery and your download library.</p>
+  </div>
+</header>
+
+<div id="handoff-grid" style="max-width:var(--sf-container);margin:0 auto;padding:1rem 1.75rem 5rem;display:grid;grid-template-columns:minmax(0,1fr) 23rem;gap:3.5rem;align-items:start">
+
+  <main style="display:flex;flex-direction:column;gap:2rem;min-width:0">
+    <sc-if value="{{ hasItems }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:1px;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);overflow:hidden;background:rgba(162,156,196,.14)">
+        <sc-for list="{{ items }}" as="i" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:1.15rem;padding:1.15rem 1.25rem;background:var(--surface-card)">
+            <div style="flex:none;width:3.25rem">
+              <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ImageFrame" ratio="2 / 3" scrim="none" radius="4px" hint-size="52px,78px">
+                <div aria-hidden="true" style="width:100%;height:100%;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+              </x-import>
+            </div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:.3rem">
+              <span style="font-family:var(--sf-font-display);font-size:1.12rem;line-height:1.2;color:var(--text-heading)">{{ i.title }}</span>
+              <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">{{ i.meta }}</span>
+              <span style="font-size:.85rem;color:var(--text-body-card)">{{ i.delivery }}</span>
+            </div>
+            <span style="flex:none;font-family:var(--sf-font-display);font-size:1.2rem;color:var(--text-accent)">{{ i.price }}</span>
+            <button type="button" onClick="{{ i.onRemove }}" style="flex:none;border:0;background:transparent;cursor:pointer;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">Remove</button>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.EmptyState" title="Nothing in the basket" body="The free downloads need no basket at all — they are one click each, no account required." hint-size="100%,240px"></x-import>
+    </sc-if>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="note" label="Why you leave the site to pay" hint-size="100%,180px">
+      We are two people and a printer. Running our own payments would mean holding your card details, handling tax in forty jurisdictions and building a download library — all of which itch.io and DriveThruRPG already do properly. Your purchase lands in an account you keep, and any future edition updates in place there.
+    </x-import>
+
+    <section style="display:flex;flex-direction:column;gap:1.25rem;padding-top:1rem;border-top:1px solid var(--border-section)">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-xl);line-height:1.2;color:var(--text-heading)">Which storefront?</h2>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.DataTable" caption="The honest comparison" columns="{{ storeColumns }}" rows="{{ storeRows }}" align="{{ storeAlign }}" hint-size="100%,260px"></x-import>
+    </section>
+  </main>
+
+  <aside id="handoff-side" style="position:sticky;top:5rem;display:flex;flex-direction:column;gap:1.5rem">
+    <div style="display:flex;flex-direction:column;gap:1.15rem;padding:1.5rem 1.6rem;border-top:2px solid var(--sf-gold-400);border-radius:0 0 var(--sf-radius-card) var(--sf-radius-card);background:var(--surface-raised);box-shadow:var(--sf-shadow-card)">
+      <dl style="margin:0;display:flex;flex-direction:column;gap:.55rem">
+        <div style="display:flex;justify-content:space-between;gap:.75rem;align-items:baseline;padding-bottom:.55rem;border-bottom:1px solid var(--border-section)">
+          <dt style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Items</dt>
+          <dd style="margin:0;font-size:.95rem;color:var(--text-body)">{{ itemCount }}</dd>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:.75rem;align-items:baseline;padding-bottom:.55rem;border-bottom:1px solid var(--border-section)">
+          <dt style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Subtotal</dt>
+          <dd style="margin:0;font-size:.95rem;color:var(--text-body)">{{ subtotal }}</dd>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:.75rem;align-items:baseline;padding-bottom:.55rem;border-bottom:1px solid var(--border-section)">
+          <dt style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Shipping</dt>
+          <dd style="margin:0;font-size:.95rem;color:var(--text-body)">Calculated at the store</dd>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:.75rem;align-items:baseline">
+          <dt style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-heading)">Total to pay</dt>
+          <dd style="margin:0;font-family:var(--sf-font-display);font-size:1.5rem;color:var(--text-accent)">{{ subtotal }}</dd>
+        </div>
+      </dl>
+
+      <div style="display:flex;flex-direction:column;gap:.65rem">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="primary" size="lg" href="#" hint-size="100%,52px">Continue on itch.io</x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="ghost" size="md" href="#" hint-size="100%,44px">Continue on DriveThruRPG</x-import>
+      </div>
+      <p style="font-size:var(--sf-text-xs);line-height:1.6;color:var(--text-legal)">Your basket is rebuilt on the storefront. Prices match; taxes and shipping are added there according to where you are.</p>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:.9rem;padding:1.35rem 1.45rem;border-left:2px solid var(--sf-line-gold);border-radius:0 var(--sf-radius-card) var(--sf-radius-card) 0;background:var(--tint-gold)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--sf-gold-400)">Every print order</span>
+      <p style="font-size:.95rem;line-height:1.6;color:var(--text-over-image)">includes the PDF, delivered the moment you pay, so you can read on the train while the book ships.</p>
+    </div>
+
+    <a href="#" style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase;text-decoration:none">← Back to the shop</a>
+  </aside>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = {
+    items: [
+      { title: "The Starfall Setting", meta: "Hardcover + PDF", delivery: "PDF immediately · print in 3–5 days", price: "$24" },
+      { title: "The Essence Ledger", meta: "PDF, GM toolkit", delivery: "Delivered immediately", price: "$8" },
+      { title: "Sea Tables & Charts", meta: "PDF + VTT pack", delivery: "Delivered immediately", price: "$5" }
+    ]
+  };
+
+  renderVals() {
+    const items = this.state.items.map((it, idx) => ({
+      ...it,
+      onRemove: () => this.setState(s => ({ items: s.items.filter((_, i) => i !== idx) }))
+    }));
+    const total = this.state.items.reduce((sum, it) => sum + Number(it.price.replace("$", "")), 0);
+    return {
+      items,
+      hasItems: items.length > 0,
+      isEmpty: items.length === 0,
+      itemCount: items.length === 1 ? "1 item" : items.length + " items",
+      subtotal: "$" + total,
+      crumbs: [{ label: "Shop", href: "#" }, { label: "Basket" }],
+      storeColumns: ["", "itch.io", "DriveThruRPG"],
+      storeAlign: ["left", "left", "left"],
+      storeRows: [
+        ["Print orders", "Yes", "Yes, print on demand"],
+        ["PDF library", "Yes, updates in place", "Yes, updates in place"],
+        ["Bundles with our other titles", "Basic", "Better"],
+        ["Pays us more", "Yes", "—"],
+        ["Account required", "No, guest checkout", "Yes"]
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

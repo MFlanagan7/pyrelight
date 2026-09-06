@@ -1,0 +1,43 @@
+<!-- @dsCard group="Components" viewport="700x420" subtitle="Breadcrumbs, tabs, search, pagination, wiki rail, TOC" name="Navigation" -->
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:20px;background:var(--surface-page)}
+ .caps{font-family:var(--sf-font-heading);letter-spacing:var(--sf-track-caps);text-transform:uppercase}
+ .pill{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase;padding:.5rem 1.1rem;border-radius:999px;border:1px solid var(--sf-line);color:var(--sf-ink-300);background:var(--tint-violet)}
+ .num{display:flex;align-items:center;justify-content:center;min-width:2.35rem;height:2.35rem;border-radius:999px;border:1px solid var(--sf-line);color:var(--sf-ink-300);background:var(--tint-violet);font-family:var(--sf-font-heading);font-size:var(--sf-text-sm)}
+</style></head><body>
+<div style="display:grid;grid-template-columns:1.15fr .85fr;gap:18px;align-items:start">
+ <div style="display:flex;flex-direction:column;gap:16px">
+  <nav class="caps" style="display:flex;gap:.5rem;font-size:var(--sf-text-xs)">
+    <a href="#" style="color:var(--text-label);text-decoration:none">Wiki</a><span style="color:var(--text-meta)">·</span>
+    <a href="#" style="color:var(--text-label);text-decoration:none">Regions</a><span style="color:var(--text-meta)">·</span>
+    <span style="color:var(--text-heading)">The Drowned Coast</span></nav>
+  <div style="display:flex;align-items:center;gap:.7rem;padding:.7rem 1rem;border:1px solid var(--sf-line-strong);border-radius:999px;background:rgba(239,236,246,.06)">
+    <svg viewBox="0 0 24 24" width="15" height="15" style="color:var(--text-meta)"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 15.5 L21 21" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+    <span style="flex:1;color:var(--text-meta);font-family:var(--sf-font-body)">Search the wiki</span>
+    <span class="caps" style="font-size:var(--sf-text-xs);color:var(--text-meta)">412 articles</span></div>
+  <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+    <span class="pill" style="border-color:var(--sf-line-gold);color:var(--text-accent);background:var(--tint-gold)">All <span style="color:var(--text-meta);font-size:var(--sf-text-xs)">24</span></span>
+    <span class="pill">Free <span style="color:var(--text-meta);font-size:var(--sf-text-xs)">6</span></span>
+    <span class="pill">Premium <span style="color:var(--text-meta);font-size:var(--sf-text-xs)">18</span></span></div>
+  <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+    <span class="num">←</span><span class="num">2</span>
+    <span class="num" style="border-color:var(--sf-gold-400);background:var(--sf-gold-400);color:var(--action-primary-ink)">3</span>
+    <span class="num">4</span><span class="num">5</span><span style="color:var(--text-meta)">…</span><span class="num">→</span></div>
+  <nav style="display:flex;flex-direction:column;gap:.7rem;padding-left:1rem;border-left:1px solid var(--sf-line)">
+    <span class="caps" style="font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);color:var(--text-meta)">On this page</span>
+    <a href="#" style="padding-left:.6rem;border-left:2px solid var(--sf-gold-400);color:var(--text-heading);text-decoration:none;font-size:.95rem">Tides</a>
+    <a href="#" style="margin-left:.85rem;padding-left:.6rem;border-left:2px solid transparent;color:var(--text-body-card);text-decoration:none;font-size:.88rem">Wrecks</a>
+    <a href="#" style="padding-left:.6rem;border-left:2px solid transparent;color:var(--text-body-card);text-decoration:none;font-size:.95rem">The cartel</a></nav>
+ </div>
+ <nav style="display:flex;flex-direction:column;gap:1.5rem;padding:1.5rem 1.25rem;border:1px solid var(--border-card);border-radius:12px;background:var(--surface-card)">
+  <div style="display:flex;flex-direction:column;gap:.55rem">
+    <span class="caps" style="font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);color:var(--text-accent)">The world</span>
+    <a href="#" style="display:flex;justify-content:space-between;gap:.75rem;align-items:baseline;padding:.3rem .5rem;margin-left:-.5rem;border-radius:6px;text-decoration:none;font-size:.95rem;color:var(--text-heading);background:var(--tint-violet-strong)"><span>Regions</span><span class="caps" style="flex:none;white-space:nowrap;font-size:var(--sf-text-xs);color:var(--text-meta)">4</span></a><a href="#" style="display:flex;justify-content:space-between;gap:.75rem;align-items:baseline;padding:.3rem .5rem;margin-left:-.5rem;border-radius:6px;text-decoration:none;font-size:.95rem;color:var(--text-body-card)"><span>Races</span><span class="caps" style="flex:none;white-space:nowrap;font-size:var(--sf-text-xs);color:var(--text-meta)">9</span></a><a href="#" style="display:flex;justify-content:space-between;gap:.75rem;align-items:baseline;padding:.3rem .5rem;margin-left:-.5rem;border-radius:6px;text-decoration:none;font-size:.95rem;color:var(--text-body-card)"><span>Gods</span><span class="caps" style="flex:none;white-space:nowrap;font-size:var(--sf-text-xs);color:var(--text-meta)">7</span></a>
+  </div><div style="display:flex;flex-direction:column;gap:.55rem">
+    <span class="caps" style="font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);color:var(--text-accent)">Play</span>
+    <a href="#" style="display:flex;justify-content:space-between;gap:.75rem;align-items:baseline;padding:.3rem .5rem;margin-left:-.5rem;border-radius:6px;text-decoration:none;font-size:.95rem;color:var(--text-body-card)"><span>Adventures</span><span class="caps" style="flex:none;white-space:nowrap;font-size:var(--sf-text-xs);color:var(--text-meta)">3</span></a><a href="#" style="display:flex;justify-content:space-between;gap:.75rem;align-items:baseline;padding:.3rem .5rem;margin-left:-.5rem;border-radius:6px;text-decoration:none;font-size:.95rem;color:var(--text-body-card)"><span>Tools</span><span class="caps" style="flex:none;white-space:nowrap;font-size:var(--sf-text-xs);color:var(--text-meta)">4</span></a>
+  </div>
+ </nav>
+</div>
+</body></html>

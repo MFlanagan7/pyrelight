@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Wiki category index" description="One index template for all six categories: intro, sort tabs, article card grid and pager. Switch the category with a tweak." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}@media (max-width:900px){#cat-grid{grid-template-columns:minmax(0,1fr)!important}#cat-rail{display:none!important}}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--text-accent);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Tools</a>
+    <a href="#" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25);text-decoration:none">Newsletter</a>
+  </div>
+</nav>
+
+<header style="position:relative;padding:4rem 1.75rem 3.25rem;overflow:hidden;background:var(--surface-hero);border-bottom:1px solid var(--sf-line)">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-top)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-vignette)"></div>
+  <div style="position:relative;max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:1.15rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Breadcrumbs" items="{{ crumbs }}" hint-size="100%,32px"></x-import>
+    <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-3xl);line-height:var(--sf-leading-tight);color:var(--text-heading)">{{ categoryTitle }}</h1>
+    <p style="max-width:62ch;font-size:1.1rem;line-height:1.65;color:var(--text-over-image)">{{ categoryIntro }}</p>
+    <div style="display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center;padding-top:.35rem">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">{{ countLabel }}</span>
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Updated {{ lastUpdated }}</span>
+    </div>
+  </div>
+</header>
+
+<div id="cat-grid" style="max-width:var(--sf-container);margin:0 auto;padding:2.5rem 1.75rem 5rem;display:grid;grid-template-columns:minmax(0,1fr) 17rem;gap:3.5rem;align-items:start">
+
+  <main style="display:flex;flex-direction:column;gap:2rem;min-width:0">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap">
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Tabs" items="{{ sortTabs }}" value="{{ sort }}" on-change="{{ onSort }}" hint-size="auto,44px"></x-import>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.SearchField" placeholder="Filter this index" scope="{{ categoryName }}" hint-size="16rem,52px"></x-import>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(var(--sf-col-min-card),1fr));gap:var(--sf-gap-card)">
+      <sc-for list="{{ entries }}" as="e" hint-placeholder-count="6">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ContentCard" title="{{ e.title }}" body="{{ e.body }}" tag="{{ e.tag }}" count="{{ e.count }}" href="#" image="{{ art }}" hint-size="100%,300px"></x-import>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ showPager }}" hint-placeholder-val="{{ true }}">
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pagination" page="{{ page }}" pages="{{ pages }}" on-change="{{ onPage }}" hint-size="100%,60px"></x-import>
+    </sc-if>
+  </main>
+
+  <aside id="cat-rail" style="position:sticky;top:5rem;display:flex;flex-direction:column;gap:1.5rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.WikiSidebar" groups="{{ sidebarGroups }}" current-href="{{ currentHref }}" hint-size="100%,340px"></x-import>
+    <div style="display:flex;flex-direction:column;gap:.75rem;padding-top:1.25rem;border-top:1px solid var(--border-section)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Elsewhere</span>
+      <a href="#" style="font-size:.93rem;text-decoration:none">The premise, one page →</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Free downloads →</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Errata &amp; changelog →</a>
+    </div>
+  </aside>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;category&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;regions&quot;,&quot;races&quot;,&quot;gods&quot;,&quot;sea&quot;,&quot;houses&quot;,&quot;essence&quot;],&quot;default&quot;:&quot;regions&quot;,&quot;tsType&quot;:&quot;\&quot;regions\&quot; | \&quot;races\&quot; | \&quot;gods\&quot; | \&quot;sea\&quot; | \&quot;houses\&quot; | \&quot;essence\&quot;&quot;,&quot;section&quot;:&quot;Content&quot;}}">
+class Component extends DCLogic {
+  state = { sort: "az", page: 1 };
+
+  static PAGE_SIZE = 4;
+
+  static CATEGORIES = {
+    regions: {
+      name: "Regions", title: "Regions",
+      intro: "Four regions, each with its own weather, its own economy and its own reason to distrust the others. Start with the Drowned Coast — most published material is set there.",
+      updated: "14 Fallmoon",
+      entries: [
+        { title: "The Drowned Coast", tag: "West littoral", count: "31 pages", body: "Four ports, one cartel, no reliable chart. Where most essence comes ashore." },
+        { title: "The Ashen Reach", tag: "North", count: "18 pages", body: "What the fall did to a mountain range, and who mines it now." },
+        { title: "The Verge", tag: "East frontier", count: "22 pages", body: "Claims filed faster than they can be surveyed. Law arrives by season." },
+        { title: "The Interior", tag: "Inland", count: "26 pages", body: "Refineries, grain, and the roads House Calder built to join them." }
+      ]
+    },
+    races: {
+      name: "Races", title: "Races",
+      intro: "Nine peoples, all of them changed by a century of falling light — some in the body, most in what they are permitted to own.",
+      updated: "9 Fallmoon",
+      entries: [
+        { title: "Coastfolk", tag: "Human", count: "6 pages", body: "Three generations of port families who learned to read a tide that will not hold still." },
+        { title: "The Weighed", tag: "Human", count: "8 pages", body: "Born to parents who handled raw essence. Marked, valuable, and watched." },
+        { title: "Dragonborn of the toll houses", tag: "Dragonborn", count: "5 pages", body: "Brought in as neutral officers, now a class of their own with no house to belong to." },
+        { title: "Deepkin", tag: "Uncommon", count: "7 pages", body: "Changed by long submersion. The Synod argues about whether they consented." },
+        { title: "Reach dwarves", tag: "Dwarf", count: "6 pages", body: "Mining what the fall left in the mountains, on terms they negotiated once and regret." },
+        { title: "Verge halflings", tag: "Halfling", count: "4 pages", body: "The frontier's surveyors, couriers and unlicensed assayers." }
+      ]
+    },
+    gods: {
+      name: "Gods", title: "Gods & pantheon",
+      intro: "Seven still answer. Their answers have grown strange, and their authority now carries a market price.",
+      updated: "9 Fallmoon",
+      entries: [
+        { title: "The Tidewalker", tag: "Ascendant", count: "9 pages", body: "Stopped speaking to clergy. Communicates through the tide, and the tide has opinions." },
+        { title: "The Weigher", tag: "Ascendant", count: "7 pages", body: "God of honest measure, now the patron of an industry built on dishonest measure." },
+        { title: "The Unlit", tag: "Diminished", count: "6 pages", body: "Knows what it lost and says so. The only god who answers questions plainly." },
+        { title: "Saint Calder", tag: "Contested", count: "5 pages", body: "A house founder the Synod has not agreed to canonise. The house proceeded anyway." },
+        { title: "The Quiet Brother", tag: "Silent", count: "4 pages", body: "Has not answered in ninety years. Two hundred clergy still hold the office." },
+        { title: "The Ninefold Court", tag: "Disputed", count: "8 pages", body: "One god or nine, depending which temple you ask and what it costs to agree." }
+      ]
+    },
+    sea: {
+      name: "The Sea", title: "The Sea",
+      intro: "The water kept the shape of what died in it. Tides, wrecks, the cartel, and what still moves down there.",
+      updated: "2 Fallmoon",
+      entries: [
+        { title: "Charts and why they expire", tag: "Navigation", count: "5 pages", body: "The seabed moves. A chart is a claim about last season, sold as a claim about this one." },
+        { title: "The unscheduled tides", tag: "Navigation", count: "6 pages", body: "Two a day, drifting by up to an hour across a season. Every crew keeps its own table." },
+        { title: "The Free Tide Cartel", tag: "Factions", count: "9 pages", body: "Prices passage by risk rather than distance. The risk is honestly assessed, which is the problem." },
+        { title: "Wreck sites", tag: "Salvage", count: "11 pages", body: "Nineteen catalogued, four of them licensed, one that nobody will discuss on the quay." },
+        { title: "What still moves down there", tag: "Bestiary", count: "8 pages", body: "Things the fall made and the water kept. GM-facing detail is gated per entry." },
+        { title: "Sailing rules", tag: "Rules", count: "4 pages", body: "Passage, weather, tide checks and the cost of arriving after the weighing house shuts." }
+      ]
+    },
+    houses: {
+      name: "Houses & factions", title: "Houses & factions",
+      intro: "Twelve merchant houses, three cartels and one very nervous Synod. None of them is the villain; all of them will use you.",
+      updated: "11 Fallmoon",
+      entries: [
+        { title: "House Marrow", tag: "Great house", count: "12 pages", body: "Holds Marrow Bay, the chain and the weighing house. Sets the toll and enforces it." },
+        { title: "House Calder", tag: "Great house", count: "11 pages", body: "Holds the inland refineries. Buys what the bay produces and resents the price." },
+        { title: "The Synod", tag: "Institution", count: "14 pages", body: "Decides who may legally study essence. Understaffed, frightened, holding a monopoly it never asked for." },
+        { title: "The Free Tide Cartel", tag: "Cartel", count: "9 pages", body: "Controls what moves between ports when the houses cannot agree." },
+        { title: "The Weighing Guild", tag: "Guild", count: "6 pages", body: "Licensed assayers. In theory neutral; in practice paid by whoever owns the building." },
+        { title: "The lesser houses", tag: "Overview", count: "10 pages", body: "Ten houses between Marrow and Calder, in varying states of alliance and grievance." }
+      ]
+    },
+    essence: {
+      name: "Essence", title: "Essence",
+      intro: "How divinity is harvested, weighed, priced and misused. The rules articles live here alongside the lore.",
+      updated: "4 Fallmoon",
+      entries: [
+        { title: "What essence is", tag: "Lore", count: "5 pages", body: "Light that fell, burns cold, and can be spent. Nobody agrees on what it was before that." },
+        { title: "Assay and price", tag: "Rules", count: "7 pages", body: "Weighed in grains. Seasonal price table, and why the table is always slightly wrong." },
+        { title: "Handling and harm", tag: "Rules", count: "6 pages", body: "What raw essence does to someone who carries it badly, and how long they have." },
+        { title: "The weighing houses", tag: "Institutions", count: "4 pages", body: "Where a grain becomes a number. One per port, all of them owned." },
+        { title: "Refinement", tag: "Rules", count: "5 pages", body: "Grain to vial. What is lost, who is licensed, and what the unlicensed process costs." },
+        { title: "Misuse", tag: "Lore", count: "6 pages", body: "The recorded attempts to use essence as something other than currency. All of them ended." }
+      ]
+    }
+  };
+
+  renderVals() {
+    const key = this.props.category || "regions";
+    const cat = Component.CATEGORIES[key] || Component.CATEGORIES.regions;
+    const entries = cat.entries.length ? cat.entries : [
+      { title: "First article", tag: cat.name, count: "— pages", body: "Content for this category has not been written yet." }
+    ];
+    const sorted = this.state.sort === "az"
+      ? entries.slice().sort((a, b) => a.title.localeCompare(b.title))
+      : entries;
+    const size = Component.PAGE_SIZE;
+    const pages = Math.max(1, Math.ceil(sorted.length / size));
+    const page = Math.min(Math.max(1, this.state.page), pages);
+    return {
+      page,
+      pages,
+      showPager: pages > 1,
+      onPage: (n) => this.setState({ page: Math.min(Math.max(1, n), pages) }),
+      categoryName: cat.name,
+      categoryTitle: cat.title,
+      categoryIntro: cat.intro,
+      lastUpdated: cat.updated,
+      countLabel: entries.length + (entries.length === 1 ? " article" : " articles"),
+      currentHref: "#" + key,
+      entries: sorted.slice((page - 1) * size, page * size),
+      sort: this.state.sort,
+      sortTabs: [
+        { value: "az", label: "A–Z" },
+        { value: "recent", label: "Recently updated" },
+        { value: "depth", label: "Most detailed" }
+      ],
+      onSort: (v) => this.setState({ sort: v, page: 1 }),
+      crumbs: [{ label: "Wiki", href: "#" }, { label: cat.title }],
+      sidebarGroups: [
+        { title: "Categories", links: [
+          { label: "Regions", href: "#regions", count: 4 },
+          { label: "Races", href: "#races", count: 9 },
+          { label: "Gods", href: "#gods", count: 7 },
+          { label: "The Sea", href: "#sea", count: 11 },
+          { label: "Houses & factions", href: "#houses", count: 18 },
+          { label: "Essence", href: "#essence", count: 6 }
+        ]}
+      ],
+      art: React.createElement("div", { "aria-hidden": "true", style: {
+        width: "100%", height: "100%",
+        background: "var(--surface-well)",
+        backgroundImage: "repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"
+      }})
+    };
+  }
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Shop product detail" description="Product page: cover gallery, storefront handoff buttons, specs table, sample pages, contents and FAQ." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}@media (max-width:960px){#prod-grid{grid-template-columns:minmax(0,1fr)!important}#prod-buy{position:static!important}}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--text-accent);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Tools</a>
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.CartButton" count="1" href="#" hint-size="auto,34px"></x-import>
+  </div>
+</nav>
+
+<div style="max-width:var(--sf-container);margin:0 auto;padding:2rem 1.75rem 1rem">
+  <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Breadcrumbs" items="{{ crumbs }}" hint-size="100%,32px"></x-import>
+</div>
+
+<div id="prod-grid" style="max-width:var(--sf-container);margin:0 auto;padding:1rem 1.75rem 5rem;display:grid;grid-template-columns:minmax(0,1fr) 22rem;gap:3.5rem;align-items:start">
+
+  <main style="display:flex;flex-direction:column;gap:2.5rem;min-width:0">
+
+    <section style="display:flex;flex-wrap:wrap;gap:2rem;align-items:flex-start">
+      <div style="flex:none;width:15rem">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ImageFrame" ratio="2 / 3" scrim="none" float="{{ true }}" radius="var(--sf-radius-cover)" hint-size="240px,360px">
+          <div aria-hidden="true" style="width:100%;height:100%;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+        </x-import>
+      </div>
+      <div style="flex:1 1 18rem;min-width:0;display:flex;flex-direction:column;gap:1.1rem">
+        <div style="display:flex;flex-wrap:wrap;gap:.5rem">
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Badge" tone="premium" hint-size="auto,26px">Premium</x-import>
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" hint-size="auto,28px">5e compatible</x-import>
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" hint-size="auto,28px">288 pages</x-import>
+        </div>
+        <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">The Starfall Setting</h1>
+        <p style="font-size:1.15rem;line-height:1.6;color:var(--text-over-image)">The whole world in one book: four regions, twelve houses, seven gods who still answer, and the essence economy that binds them. Written for GMs who want a coastline with consequences.</p>
+        <p style="font-size:1.02rem;line-height:var(--sf-leading-body);color:var(--text-body)">Everything in the book has been run at open tables. The regional chapters carry tide tables, toll schedules and price lists you can put in front of players, and every GM-facing secret is marked as such so the book is safe to pass around.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:.5rem;padding-top:.25rem">
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="neutral" hint-size="auto,28px">Setting</x-import>
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="neutral" hint-size="auto,28px">Maps included</x-import>
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="neutral" hint-size="auto,28px">Levels 1–10</x-import>
+        </div>
+      </div>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:1.25rem">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-xl);line-height:1.2;color:var(--text-heading)">Sample pages</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:var(--sf-gap-card)">
+        <figure style="display:flex;flex-direction:column;gap:.6rem;margin:0">
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ImageFrame" ratio="3 / 4" scrim="card" hint-size="100%,240px">
+            <div aria-hidden="true" style="width:100%;height:100%;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+          </x-import>
+          <figcaption style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">Marrow Bay, spread</figcaption>
+        </figure>
+        <figure style="display:flex;flex-direction:column;gap:.6rem;margin:0">
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ImageFrame" ratio="3 / 4" scrim="card" hint-size="100%,240px">
+            <div aria-hidden="true" style="width:100%;height:100%;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+          </x-import>
+          <figcaption style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">Essence rules</figcaption>
+        </figure>
+        <figure style="display:flex;flex-direction:column;gap:.6rem;margin:0">
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ImageFrame" ratio="3 / 4" scrim="card" hint-size="100%,240px">
+            <div aria-hidden="true" style="width:100%;height:100%;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+          </x-import>
+          <figcaption style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">Pantheon chapter</figcaption>
+        </figure>
+        <figure style="display:flex;flex-direction:column;gap:.6rem;margin:0">
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ImageFrame" ratio="3 / 4" scrim="card" hint-size="100%,240px">
+            <div aria-hidden="true" style="width:100%;height:100%;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+          </x-import>
+          <figcaption style="font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">The Drowned Coast map</figcaption>
+        </figure>
+      </div>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="quiet" href="#" hint-size="auto,32px">Download a 12-page sample (free) →</x-import>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:1.25rem">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-xl);line-height:1.2;color:var(--text-heading)">What is inside</h2>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.DataTable" caption="Contents · 288 pages" columns="{{ contentsColumns }}" rows="{{ contentsRows }}" align="{{ contentsAlign }}" hint-size="100%,320px"></x-import>
+    </section>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="note" label="On formats" hint-size="100%,140px">
+      The print edition is a sewn hardcover with a lay-flat binding, because a book you run from has to stay open on a table. Every print order includes the PDF.
+    </x-import>
+
+    <section style="display:flex;flex-direction:column;gap:1.25rem">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-xl);line-height:1.2;color:var(--text-heading)">Questions</h2>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.FaqAccordion" items="{{ faqItems }}" default-open="{{ faqOpen }}" hint-size="100%,320px"></x-import>
+    </section>
+  </main>
+
+  <aside id="prod-buy" style="position:sticky;top:5rem;display:flex;flex-direction:column;gap:1.5rem">
+    <div style="display:flex;flex-direction:column;gap:1.15rem;padding:1.5rem 1.6rem;border-top:2px solid var(--sf-gold-400);border-radius:0 0 var(--sf-radius-card) var(--sf-radius-card);background:var(--surface-raised);box-shadow:var(--sf-shadow-card)">
+      <div style="display:flex;flex-direction:column;gap:.9rem">
+        <sc-for list="{{ formats }}" as="f" hint-placeholder-count="3">
+          <label style="display:flex;align-items:center;gap:.8rem;padding:.85rem 1rem;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);background:var(--surface-card);cursor:pointer">
+            <input type="radio" name="format" checked="{{ f.checked }}" onChange="{{ f.onPick }}" style="accent-color:var(--sf-gold-400)">
+            <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:.15rem">
+              <span style="font-family:var(--sf-font-heading);font-size:.95rem;letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-heading)">{{ f.label }}</span>
+              <span style="font-size:.85rem;color:var(--text-body-card)">{{ f.note }}</span>
+            </span>
+            <span style="flex:none;font-family:var(--sf-font-display);font-size:1.15rem;color:var(--text-accent)">{{ f.price }}</span>
+          </label>
+        </sc-for>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:.65rem">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="primary" size="lg" href="#" hint-size="100%,52px">{{ buyLabel }}</x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="ghost" size="md" href="#" hint-size="100%,44px">Or buy on DriveThruRPG</x-import>
+      </div>
+      <p style="font-size:var(--sf-text-xs);line-height:1.6;color:var(--text-legal)">Checkout completes on the storefront you choose. PDFs arrive immediately; print ships in 3–5 days. Both stores deliver the PDF the moment you order.</p>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:.9rem;padding:1.35rem 1.45rem;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);background:var(--surface-card)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Specifications</span>
+      <dl style="margin:0;display:flex;flex-direction:column;gap:.5rem">
+        <sc-for list="{{ specs }}" as="s" hint-placeholder-count="6">
+          <div style="display:flex;justify-content:space-between;gap:.75rem;align-items:baseline;padding-bottom:.5rem;border-bottom:1px solid var(--border-section)">
+            <dt style="flex:none;font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">{{ s.label }}</dt>
+            <dd style="margin:0;text-align:right;font-size:.92rem;color:var(--text-body)">{{ s.value }}</dd>
+          </div>
+        </sc-for>
+      </dl>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:.75rem;padding-top:.25rem">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Free instead</span>
+      <a href="#" style="font-size:.93rem;text-decoration:none">The quickstart and player map →</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">All free downloads →</a>
+    </div>
+  </aside>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { format: "print" };
+
+  renderVals() {
+    const formats = [
+      { key: "print", label: "Hardcover + PDF", note: "Sewn, lay-flat. PDF included.", price: "$24" },
+      { key: "pdf", label: "PDF only", note: "Updated in place, forever.", price: "$14" },
+      { key: "bundle", label: "Book + Essence Ledger", note: "Save $4 on the GM toolkit.", price: "$28" }
+    ].map(f => ({
+      ...f,
+      checked: this.state.format === f.key,
+      onPick: () => this.setState({ format: f.key })
+    }));
+    const picked = formats.find(f => f.checked) || formats[0];
+    return {
+      formats,
+      buyLabel: "Buy on itch.io · " + picked.price,
+      crumbs: [{ label: "Shop", href: "#" }, { label: "Premium", href: "#" }, { label: "The Starfall Setting" }],
+      contentsColumns: ["Part", "Chapters", "Pages"],
+      contentsAlign: ["left", "left", "right"],
+      contentsRows: [
+        ["The world", "The fall, essence, the century after", "38"],
+        ["The Drowned Coast", "Four ports, the flats, the chain", "64"],
+        ["Three further regions", "Ashen Reach, the Verge, the Interior", "58"],
+        ["Houses & factions", "Twelve houses, three cartels, the Synod", "52"],
+        ["Gods & pantheon", "Seven who answer, favour and cost", "34"],
+        ["GM chapter", "Running the coast, secrets, tables", "42"]
+      ],
+      specs: [
+        { label: "Pages", value: "288" },
+        { label: "Format", value: "210 × 280 mm" },
+        { label: "Binding", value: "Sewn hardcover" },
+        { label: "Interior", value: "Full colour" },
+        { label: "Maps", value: "9, print + VTT" },
+        { label: "System", value: "5e compatible" },
+        { label: "Edition", value: "Second printing" }
+      ],
+      faqOpen: [0],
+      faqItems: [
+        { title: "Do I need the quickstart too?", body: "No. The setting book contains everything in the quickstart and a great deal more. The quickstart exists so you can try the world before buying." },
+        { title: "Is the PDF updated?", body: "Yes, in place. Errata and new printings replace the file on your storefront library, so the link you already have returns the current edition." },
+        { title: "Which storefront should I use?", body: "Either. itch.io pays us slightly more and handles print; DriveThruRPG has better bundle handling if you already own our other titles." },
+        { title: "Does it work with my own setting?", body: "The essence economy is portable — drop the falling light on any coastline and the houses invent themselves. The regional chapters are the part you would replace." },
+        { title: "Print outside the EU and US?", body: "Yes, printed regionally where possible. Shipping is calculated at checkout on the storefront." }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

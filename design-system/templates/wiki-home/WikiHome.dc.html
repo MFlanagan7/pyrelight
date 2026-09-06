@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Wiki home" description="Search-led wiki landing: large search field, the six category cards, recently updated and depth stats." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}@media (max-width:900px){#wiki-lower{grid-template-columns:minmax(0,1fr)!important}}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--text-accent);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Tools</a>
+    <a href="#" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25);text-decoration:none">Newsletter</a>
+  </div>
+</nav>
+
+<header style="position:relative;padding:5.5rem 1.75rem 4rem;overflow:hidden;background:var(--surface-hero)">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-top)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-bottom)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-vignette)"></div>
+  <div style="position:relative;max-width:44rem;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:1.35rem;text-align:center">
+    <p style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">The Starfall wiki</p>
+    <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-3xl);line-height:var(--sf-leading-tight);color:var(--text-heading)">Everything known about the world</h1>
+    <p style="max-width:46ch;font-size:1.08rem;line-height:1.65;color:var(--text-over-image)">Four hundred articles on regions, gods, houses and the sea. Player-safe by default — anything GM-facing is behind a reveal.</p>
+    <div style="width:100%;max-width:34rem;padding-top:.5rem">
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.SearchField" size="lg" placeholder="Search regions, houses, gods, essence…" scope="412 articles" hint-size="100%,64px"></x-import>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;padding-top:.35rem">
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" href="#" hint-size="auto,28px">Marrow Bay</x-import>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" href="#" hint-size="auto,28px">Essence</x-import>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" href="#" hint-size="auto,28px">The Synod</x-import>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" href="#" hint-size="auto,28px">Tides</x-import>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" href="#" hint-size="auto,28px">House Marrow</x-import>
+    </div>
+  </div>
+</header>
+
+<section style="padding:0 1.75rem;background:var(--surface-page)">
+  <div style="max-width:var(--sf-container);margin:-2.5rem auto 0;position:relative">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.StatRow" items="{{ stats }}" align="center" hint-size="100%,110px"></x-import>
+  </div>
+</section>
+
+<section style="position:relative;padding:var(--sf-section-pad-y) 1.75rem;background:var(--surface-page);overflow:hidden">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-ambient-violet)"></div>
+  <div style="position:relative;max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:2.25rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.SectionHeading" eyebrow="Browse" title="Six ways into the world" body="Start wherever your table is looking. Every category opens on an index you can read end to end." hint-size="100%,150px"></x-import>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(var(--sf-col-min-card),1fr));gap:var(--sf-gap-card)">
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ContentCard" title="Regions" count="4 articles" body="The Drowned Coast, the Ashen Reach, the Verge, the Interior." tag="Geography" href="#" image="{{ art }}" hint-size="100%,300px"></x-import>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ContentCard" title="Races" count="9 articles" body="Peoples shaped by a century of falling light." tag="Peoples" href="#" image="{{ art }}" hint-size="100%,300px"></x-import>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ContentCard" title="Gods" count="7 articles" body="Who is left, what they want, and what it costs to ask." tag="Cosmology" href="#" image="{{ art }}" hint-size="100%,300px"></x-import>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ContentCard" title="The Sea" count="11 articles" body="Tides, wrecks, the cartel, and what still moves down there." tag="Geography" href="#" image="{{ art }}" hint-size="100%,300px"></x-import>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ContentCard" title="Houses &amp; factions" count="18 articles" body="Twelve houses, three cartels, one very nervous church." tag="Politics" href="#" image="{{ art }}" hint-size="100%,300px"></x-import>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ContentCard" title="Essence" count="6 articles" body="How divinity is harvested, priced, and misused." tag="Rules &amp; lore" href="#" image="{{ art }}" hint-size="100%,300px"></x-import>
+    </div>
+  </div>
+</section>
+
+<section style="padding:var(--sf-section-pad-y-tight) 1.75rem;background:var(--surface-page);border-top:1px solid var(--border-section)">
+  <div id="wiki-lower" style="max-width:var(--sf-container);margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 20rem;gap:3.5rem;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:1.5rem">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">Recently updated</span>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListGroup" hint-size="100%,360px">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Marrow Bay" body="Toll schedule corrected; the exemption for mudlark boats was missing." meta="Regions" trailing="14 Fallmoon" href="#" hint-size="100%,72px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="House Calder" body="Refinery holdings expanded, rivalry with Marrow clarified." meta="Houses" trailing="11 Fallmoon" href="#" hint-size="100%,72px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="The Tidewalker" body="Favour rules rewritten after playtest feedback." meta="Gods" trailing="9 Fallmoon" href="#" hint-size="100%,72px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Assay and price" body="Seasonal price table added for the current year." meta="Essence" trailing="4 Fallmoon" href="#" hint-size="100%,72px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Charts and why they expire" body="New article." meta="The Sea" trailing="2 Fallmoon" href="#" hint-size="100%,72px"></x-import>
+      </x-import>
+    </div>
+    <aside style="display:flex;flex-direction:column;gap:1.5rem">
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="note" label="How to read this wiki" hint-size="100%,150px">
+        Articles are written player-safe. Where an entry has GM-facing material it sits behind a reveal marked <strong style="font-weight:500">GM only</strong>, so you can put this on a screen at the table.
+      </x-import>
+      <div style="display:flex;flex-direction:column;gap:.75rem;padding-top:1.25rem;border-top:1px solid var(--border-section)">
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Reference</span>
+        <a href="#" style="font-size:.93rem;text-decoration:none">Timeline of the fall →</a>
+        <a href="#" style="font-size:.93rem;text-decoration:none">Sailing rules &amp; sea tables →</a>
+        <a href="#" style="font-size:.93rem;text-decoration:none">Errata &amp; changelog →</a>
+        <a href="#" style="font-size:.93rem;text-decoration:none">Content licence →</a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      stats: [
+        { n: "412", label: "Articles" },
+        { n: "4", label: "Regions" },
+        { n: "12", label: "Houses" },
+        { n: "7", label: "Gods who answer" }
+      ],
+      art: React.createElement("div", { "aria-hidden": "true", style: {
+        width: "100%", height: "100%",
+        background: "var(--surface-well)",
+        backgroundImage: "repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"
+      }})
+    };
+  }
+}
+
+</script>
+</body>
+</html>

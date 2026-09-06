@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Wiki god page" description="Article variant for a deity: domain and status, favour and cost rules tables, clergy, and worship sites." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}@media (max-width:1180px){#god-grid{grid-template-columns:minmax(0,1fr) 19rem!important}#god-rail{display:none!important}}@media (max-width:860px){#god-grid{grid-template-columns:minmax(0,1fr)!important}#god-aside{position:static!important}}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--text-accent);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Tools</a>
+    <a href="#" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25);text-decoration:none">Newsletter</a>
+  </div>
+</nav>
+
+<header style="position:relative;padding:3rem 1.75rem 2.75rem;overflow:hidden;background:var(--surface-sea);border-bottom:1px solid var(--sf-line-sea)">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:radial-gradient(60% 70% at 28% 40%,rgba(44,110,127,.42),rgba(11,26,34,0) 72%)"></div>
+  <div style="position:relative;max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:1.5rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Breadcrumbs" items="{{ crumbs }}" hint-size="100%,32px"></x-import>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:2.25rem">
+      <div style="flex:none;width:9.5rem">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ImageFrame" ratio="1 / 1" scrim="none" hint-size="152px,152px">
+          <div aria-hidden="true" style="width:100%;height:100%;background:var(--sf-sea-900);background-image:repeating-linear-gradient(135deg,rgba(127,211,228,.07) 0 10px,rgba(127,211,228,0) 10px 20px)"></div>
+        </x-import>
+      </div>
+      <div style="flex:1 1 20rem;min-width:0;display:flex;flex-direction:column;gap:.85rem">
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--sf-teal-300)">Gods · Ascendant</span>
+        <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-3xl);line-height:var(--sf-leading-tight);color:var(--sf-ink-sea-100)">The Tidewalker</h1>
+        <p style="max-width:62ch;font-size:1.1rem;line-height:1.6;color:var(--sf-ink-sea-300)">Stopped speaking to clergy ninety-one years ago and has communicated through the tide ever since. Stronger now than before the fall, which nobody in the Synod is willing to write down.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:.5rem;padding-top:.15rem">
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" hint-size="auto,28px">Ascendant</x-import>
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" hint-size="auto,28px">Sea, measure, arrival</x-import>
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Pill" tone="outline" hint-size="auto,28px">9 pages</x-import>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div id="god-grid" style="max-width:var(--sf-container);margin:0 auto;padding:2.5rem 1.75rem 5rem;display:grid;grid-template-columns:15rem minmax(0,1fr) 19rem;gap:2.75rem;align-items:start">
+
+  <aside id="god-rail" style="position:sticky;top:5rem;display:flex;flex-direction:column;gap:1.5rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.WikiSidebar" groups="{{ sidebarGroups }}" current-href="#tidewalker" hint-size="100%,420px"></x-import>
+  </aside>
+
+  <main style="display:flex;flex-direction:column;gap:1.75rem;min-width:0">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ReadingPanel" meta="Gods &amp; pantheon · updated 9 Fallmoon" title="The Tidewalker" hint-size="100%,660px">
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.2rem">Before the fall the Tidewalker was a minor coastal god with four temples and a reputation for punctuality. It was the god you prayed to for a tide that arrived when it said it would, which in a fishing economy is not a small thing.</p>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.6rem">The fall took the punctuality and gave back something much larger. The tides have not run to schedule since, and the Tidewalker's authority over the water has grown in exact proportion to how unpredictable that water has become. Its clergy find this theologically uncomfortable and its congregations do not care.</p>
+
+      <h2 id="the-silence" style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading);margin:0 0 .9rem">The silence</h2>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.2rem">Ninety-one years ago the Tidewalker stopped answering clergy directly. No vision, no voice, no dream — and no explanation. What replaced it was the tide itself: intervals that resolve into answers if you keep a long enough record, which is why the god's priesthood is now largely a profession of statisticians.</p>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.6rem">A question put to the Tidewalker is answered over weeks. This makes it useless for emergencies and unusually trustworthy for everything else, and it has quietly become the god that merchants consult before signing.</p>
+
+      <h2 id="favour" style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading);margin:0 0 .9rem">Favour and its cost</h2>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0 0 1.6rem">Favour is earned by honest measure and lost by false measure — of cargo, of debt, of anything a person could lie about for gain. The god does not care about cruelty, piety or worship attendance. It cares whether the number you wrote down is the number that was true.</p>
+
+      <h2 id="clergy" style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading);margin:0 0 .9rem">Clergy</h2>
+      <p style="font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body);margin:0">Six hundred ordained, most of them working assayers, harbourmasters or tide clerks with a second title. The order has no central seat: the tide is the seat. This has made it impossible for any house to capture and is the reason the Synod finds it so irritating.</p>
+    </x-import>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.DataTable" caption="Favour · what moves the tide toward you" columns="{{ favColumns }}" rows="{{ favRows }}" align="{{ favAlign }}" hint-size="100%,300px"></x-import>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="rule" label="Asking the tide" hint-size="100%,160px">
+      A character with favour may put one question to the tide per season. The answer arrives across the following four weeks as a pattern in the tide table, and requires a Wisdom (Insight) or Intelligence (Investigation) check at DC 14 to read. The answer is always true and rarely timely.
+    </x-import>
+
+    <section style="display:flex;flex-direction:column;gap:1.1rem;padding-top:.5rem">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">Sites of worship</h2>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListGroup" hint-size="100%,300px">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" swatch="rgba(44,110,127,.75)" title="The tide stair, Marrow Bay" body="Ninety-one steps, the lowest submerged twice daily. Readings taken since the silence began." meta="Marrow Bay" trailing="Primary" href="#" hint-size="100%,72px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" swatch="rgba(44,110,127,.55)" title="The clerks' house, Saltmoor" body="The order's records office. Two centuries of tables, none of them discarded." meta="Saltmoor" trailing="Archive" href="#" hint-size="100%,72px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" swatch="rgba(44,110,127,.4)" title="The drowned temple" body="One of the four pre-fall temples, now nine fathoms down and still attended." meta="Open water" trailing="Contested" href="#" hint-size="100%,72px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" swatch="rgba(44,110,127,.3)" title="Every harbourmaster's office" body="Unofficially. The tide table on the wall counts as a shrine and the order encourages the confusion." meta="Coast-wide" trailing="Informal" href="#" hint-size="100%,72px"></x-import>
+      </x-import>
+    </section>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="lore" label="Inscribed at the tide stair" hint-size="100%,120px">
+      It will tell you. It will not hurry.
+    </x-import>
+  </main>
+
+  <aside id="god-aside" style="position:sticky;top:5rem;display:flex;flex-direction:column;gap:1.5rem">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.InfoBox" title="The Tidewalker" rows="{{ infoRows }}" image="{{ infoArt }}" hint-size="100%,480px"></x-import>
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.TableOfContents" items="{{ tocItems }}" active-id="favour" hint-size="100%,200px"></x-import>
+  </aside>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      crumbs: [{ label: "Wiki", href: "#" }, { label: "Gods & pantheon", href: "#" }, { label: "The Tidewalker" }],
+      sidebarGroups: [
+        { title: "Ascendant", links: [
+          { label: "The Tidewalker", href: "#tidewalker", count: 9 },
+          { label: "The Weigher", href: "#weigher", count: 7 }
+        ]},
+        { title: "Diminished", links: [
+          { label: "The Unlit", href: "#unlit", count: 6 },
+          { label: "The Quiet Brother", href: "#quiet", count: 4 }
+        ]},
+        { title: "Contested", links: [
+          { label: "Saint Calder", href: "#calder", count: 5 },
+          { label: "The Ninefold Court", href: "#ninefold", count: 8 }
+        ]},
+        { title: "Reference", links: [
+          { label: "Favour rules", href: "#favour" },
+          { label: "Clerical domains", href: "#domains" }
+        ]}
+      ],
+      tocItems: [
+        { id: "the-silence", label: "The silence" },
+        { id: "favour", label: "Favour and its cost" },
+        { id: "clergy", label: "Clergy" }
+      ],
+      infoRows: [
+        { label: "Status", value: "Ascendant" },
+        { label: "Domain", value: "Sea, measure, arrival" },
+        { label: "Alignment", value: "Neutral" },
+        { label: "Answers", value: "Through the tide" },
+        { label: "Silent since", value: "91 years" },
+        { label: "Clergy", value: "≈600 ordained" },
+        { label: "Seat", value: "None — the tide" },
+        { label: "5e domains", value: "Knowledge, Tempest" }
+      ],
+      infoArt: React.createElement("div", { "aria-hidden": "true", style: {
+        width: "100%", height: "100%",
+        background: "var(--sf-sea-900)",
+        backgroundImage: "repeating-linear-gradient(135deg,rgba(127,211,228,.07) 0 10px,rgba(127,211,228,0) 10px 20px)"
+      }}),
+      favColumns: ["Act", "Effect on favour"],
+      favAlign: ["left", "left"],
+      favRows: [
+        ["Declaring cargo honestly when it costs you", "Gain"],
+        ["Keeping a tide record for a full season", "Gain"],
+        ["Paying a debt you could have evaded", "Gain"],
+        ["Falsifying an assay, in either direction", "Lose all"],
+        ["Breaking a written agreement", "Lose"],
+        ["Cruelty, piety, temple attendance", "No effect"]
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

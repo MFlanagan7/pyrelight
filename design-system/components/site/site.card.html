@@ -1,0 +1,49 @@
+<!-- @dsCard group="Components" viewport="700x380" subtitle="Content card, product card, list row, newsletter, socials" name="Site composites" -->
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<style>
+ body { margin:0; padding:20px; background:var(--surface-page); }
+ .well { background:var(--surface-well); background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.07) 0 8px,rgba(235,203,110,0) 8px 16px); }
+</style></head><body>
+<div style="display:grid;grid-template-columns:1.1fr .7fr 1.4fr;gap:14px;align-items:start">
+  <a style="display:flex;flex-direction:column;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);overflow:hidden;background:var(--surface-card);text-decoration:none">
+    <div class="well" style="aspect-ratio:16/9;position:relative"><div style="position:absolute;inset:0;background:var(--sf-scrim-card)"></div></div>
+    <div style="display:flex;flex-direction:column;gap:.5rem;padding:1.15rem 1.25rem 1.35rem">
+      <div style="display:flex;justify-content:space-between;gap:1rem;align-items:baseline">
+        <h3 style="min-width:0;font-family:var(--sf-font-heading);font-weight:500;font-size:1.05rem;letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-heading)">The Sea</h3>
+        <span style="flex:none;white-space:nowrap;font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:.12em;text-transform:uppercase;color:var(--text-meta)">11 articles</span>
+      </div>
+      <p style="font-size:.93rem;line-height:1.55;color:var(--text-body-card)">Tides, wrecks, the cartel, and what still moves down there.</p>
+    </div>
+  </a>
+  <a style="display:flex;flex-direction:column;gap:.8rem;text-decoration:none">
+    <div style="padding:1px;border-radius:var(--sf-radius-cover);background:linear-gradient(160deg,rgba(235,203,110,.5),rgba(162,156,196,.14));box-shadow:var(--sf-shadow-cover)">
+      <div class="well" style="position:relative;aspect-ratio:2/3;border-radius:9px;overflow:hidden">
+        <span style="position:absolute;top:.6rem;left:.6rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--sf-status-free);background:rgba(13,12,27,.7);border:1px solid rgba(155,211,168,.6);padding:.25rem .6rem;border-radius:999px">Free</span>
+      </div>
+    </div>
+    <div><h3 style="font-family:var(--sf-font-display);font-size:var(--sf-text-lg);line-height:1.2;color:var(--text-heading)">Quickstart &amp; Free Map</h3>
+    <p style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-label)">PDF · Free</p></div>
+  </a>
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <div style="display:flex;flex-direction:column;gap:1px;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);overflow:hidden;background:rgba(162,156,196,.14)">
+      <a style="display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;background:var(--surface-card);text-decoration:none">
+        <span class="well" style="flex:none;width:3rem;height:4rem;border-radius:var(--sf-radius-chip);border:1px solid rgba(235,203,110,.25)"></span>
+        <span style="flex:1"><span style="display:block;font-family:var(--sf-font-display);font-size:var(--sf-text-lg);line-height:1.2;color:var(--text-heading)">Salt & Sovereignty</span></span>
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">Levels 1–4</span>
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-accent)">$12</span></a><a style="display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;background:var(--surface-card);text-decoration:none">
+        <span class="well" style="flex:none;width:3rem;height:4rem;border-radius:var(--sf-radius-chip);border:1px solid rgba(235,203,110,.25)"></span>
+        <span style="flex:1"><span style="display:block;font-family:var(--sf-font-display);font-size:var(--sf-text-lg);line-height:1.2;color:var(--text-heading)">The Quiet Twin’s Debt</span></span>
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--text-meta)">Levels 5–7</span>
+        <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-accent)">$14</span></a>
+    </div>
+    <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+      <input placeholder="you@example.com" style="flex:1 1 10rem;padding:.85rem 1.1rem;border:1px solid rgba(162,156,196,.4);border-radius:999px;background:rgba(239,236,246,.06);color:var(--text-heading);font-family:var(--sf-font-body)">
+      <button style="font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:.13em;text-transform:uppercase;color:var(--action-primary-ink);background:var(--action-primary-bg);border:0;padding:.85rem 1.6rem;border-radius:999px">Join</button>
+    </div>
+    <div style="display:flex;gap:.6rem">
+      <span style="display:flex;align-items:center;justify-content:center;width:2.35rem;height:2.35rem;border:1px solid var(--sf-line-strong);border-radius:999px;color:var(--sf-ink-300);background:var(--tint-violet)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Zm0 1.8A2.2 2.2 0 0 0 4.8 7v10A2.2 2.2 0 0 0 7 19.2h10A2.2 2.2 0 0 0 19.2 17V7A2.2 2.2 0 0 0 17 4.8ZM12 7.6A4.4 4.4 0 1 1 7.6 12A4.4 4.4 0 0 1 12 7.6Zm0 1.8A2.6 2.6 0 1 0 14.6 12A2.6 2.6 0 0 0 12 9.4Z" fill="currentColor" fill-rule="evenodd"/></svg></span><span style="display:flex;align-items:center;justify-content:center;width:2.35rem;height:2.35rem;border:1px solid var(--sf-line-strong);border-radius:999px;color:var(--sf-ink-300);background:var(--tint-violet)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M21.6 7.4c-.2-.9-.9-1.6-1.8-1.8C18 5.2 12 5.2 12 5.2s-6 0-7.8.4c-.9.2-1.6.9-1.8 1.8A25 25 0 0 0 2 12a25 25 0 0 0 .4 4.6c.2.9.9 1.6 1.8 1.8c1.8.4 7.8.4 7.8.4s6 0 7.8-.4c.9-.2 1.6-.9 1.8-1.8A25 25 0 0 0 22 12a25 25 0 0 0-.4-4.6ZM10.1 15.2V8.8L15.6 12Z" fill="currentColor" fill-rule="evenodd"/></svg></span><span style="display:flex;align-items:center;justify-content:center;width:2.35rem;height:2.35rem;border:1px solid var(--sf-line-strong);border-radius:999px;color:var(--sf-ink-300);background:var(--tint-violet)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 2.2 20.6 7v10L12 21.8L3.4 17V7Zm0 2.1L5.4 8.1v7.8L12 19.7l6.6-3.8V8.1Z" fill="currentColor" fill-rule="evenodd"/></svg></span>
+    </div>
+  </div>
+</div>
+</body></html>

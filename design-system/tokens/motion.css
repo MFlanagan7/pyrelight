@@ -1,0 +1,23 @@
+:root {
+  --sf-ease: cubic-bezier(.4, 0, .2, 1); /* @kind other */
+  --sf-dur-press: .12s; /* @kind other */  /* transform on :active */
+  --sf-dur-hover: .25s; /* @kind other */  /* border, background, color */
+  --sf-dur-lift: .3s; /* @kind other */  /* translateY + shadow */
+  --sf-dur-chrome: .35s; /* @kind other */  /* nav solidify on scroll */
+
+  --sf-lift-card: translateY(-4px); /* @kind other */
+  --sf-lift-cover: translateY(-6px); /* @kind other */
+  --sf-press: translateY(1px); /* @kind other */
+
+  /* Ambient loops. Nothing else on the page moves. */
+  /* star twinkle duration is randomised per star between 4s and 11s */
+  --sf-parallax-far: .12; /* @kind other */  /* multiplier on scrollY */
+  --sf-parallax-near: .3; /* @kind other */
+}
+
+@keyframes sf-twinkle { 0%, 100% { opacity: .2 } 50% { opacity: .95 } }
+@keyframes sf-cue { 0%, 100% { transform: translateY(0); opacity: .5 } 50% { transform: translateY(6px); opacity: 1 } }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition-duration: .01ms !important; }
+}

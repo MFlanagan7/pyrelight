@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Community hub" description="Where to find other players: chat and forum links, code of conduct summary, ways to contribute, and a community creations shelf." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>body{margin:0;background:var(--surface-page);color:var(--text-body)}*{box-sizing:border-box}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}@media (max-width:960px){#comm-grid{grid-template-columns:minmax(0,1fr)!important}}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="#" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"></path></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">World</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Wiki</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a>
+    <a href="#" style="color:var(--sf-ink-300);text-decoration:none">Shop</a>
+    <a href="#" style="color:var(--text-accent);text-decoration:none">Community</a>
+    <a href="#" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25);text-decoration:none">Newsletter</a>
+  </div>
+</nav>
+
+<header style="position:relative;padding:4rem 1.75rem 3.25rem;overflow:hidden;background:var(--surface-hero);border-bottom:1px solid var(--sf-line)">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-top)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-vignette)"></div>
+  <div style="position:relative;max-width:var(--sf-container);margin:0 auto;display:flex;flex-direction:column;gap:1.15rem">
+    <p style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">Players &amp; GMs</p>
+    <h1 style="font-family:var(--sf-font-display);font-size:var(--sf-text-3xl);line-height:var(--sf-leading-tight);color:var(--text-heading)">Community</h1>
+    <p style="max-width:58ch;font-size:1.12rem;line-height:1.65;color:var(--text-over-image)">Find a table, ask a rules question, show what you made. Small, friendly, moderated by people who answer.</p>
+  </div>
+</header>
+
+<section style="padding:0 1.75rem;background:var(--surface-page)">
+  <div style="max-width:var(--sf-container);margin:-2.5rem auto 0;position:relative">
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.StartHereStrip" items="{{ entryPoints }}" hint-size="100%,180px"></x-import>
+  </div>
+</section>
+
+<div id="comm-grid" style="max-width:var(--sf-container);margin:0 auto;padding:3rem 1.75rem 5rem;display:grid;grid-template-columns:minmax(0,1fr) 21rem;gap:3.5rem;align-items:start">
+
+  <main style="display:flex;flex-direction:column;gap:2.25rem;min-width:0">
+
+    <section style="display:flex;flex-direction:column;gap:1.25rem">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-xl);line-height:1.2;color:var(--text-heading)">Where people talk</h2>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListGroup" hint-size="100%,320px">
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="The chat server" body="Rules questions, table-finding, and a channel where people post what their party did last night." meta="Chat" trailing="~2,400" href="#" display="{{ true }}" hint-size="100%,80px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="The forum" body="Longer threads that stay findable: homebrew, campaign journals, questions with real answers." meta="Forum" trailing="Public" href="#" display="{{ true }}" hint-size="100%,80px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Looking for a group" body="A single board for players and GMs to find each other, online or in person." meta="LFG" trailing="Weekly" href="#" display="{{ true }}" hint-size="100%,80px"></x-import>
+        <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ListRow" title="Errata reports" body="Found a mistake in a book? This is the fastest way to get it fixed and credited." meta="Reports" trailing="Open" href="#" display="{{ true }}" hint-size="100%,80px"></x-import>
+      </x-import>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:1.25rem">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-xl);line-height:1.2;color:var(--text-heading)">House rules</h2>
+      <p style="max-width:64ch;font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body)">The full code of conduct is one page and worth reading, but it comes down to four things.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:var(--sf-gap-card)">
+        <sc-for list="{{ conduct }}" as="c" hint-placeholder-count="4">
+          <div style="display:flex;flex-direction:column;gap:.55rem;padding:1.3rem 1.4rem;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);background:var(--surface-card)">
+            <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">{{ c.rule }}</span>
+            <p style="font-size:.98rem;line-height:1.6;color:var(--text-body-card)">{{ c.detail }}</p>
+          </div>
+        </sc-for>
+      </div>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="note" label="Moderation" hint-size="100%,170px">
+        Two of us moderate and we are not neutral about the fourth rule. Reports go to hello@pyrelightpress.com and are read by a person, not a queue. We will tell you what we did.
+      </x-import>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="quiet" href="#" hint-size="auto,32px">Read the full code of conduct →</x-import>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:1.25rem">
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-xl);line-height:1.2;color:var(--text-heading)">Made by the community</h2>
+      <p style="max-width:64ch;font-size:1.05rem;line-height:var(--sf-leading-body);color:var(--text-body)">Fan work, hosted and sold by the people who made it. We did not commission any of this and we do not take a cut — the content licence lets anyone publish for Starfall.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(var(--sf-col-min-card),1fr));gap:var(--sf-gap-card)">
+        <sc-for list="{{ creations }}" as="c" hint-placeholder-count="3">
+          <x-import component-from-global-scope="StarfallDesignSystem_6487a4.ContentCard" title="{{ c.title }}" body="{{ c.body }}" tag="{{ c.tag }}" count="{{ c.by }}" href="#" image="{{ art }}" hint-size="100%,300px"></x-import>
+        </sc-for>
+      </div>
+      <p style="font-size:var(--sf-text-xs);line-height:1.6;color:var(--text-legal)">Unofficial fan content. Not created or endorsed by Pyrelight Press. Listed here because we liked it.</p>
+    </section>
+  </main>
+
+  <aside style="display:flex;flex-direction:column;gap:1.5rem">
+    <div style="display:flex;flex-direction:column;gap:1.1rem;padding:1.5rem 1.6rem;border-top:2px solid var(--sf-gold-400);border-radius:0 0 var(--sf-radius-card) var(--sf-radius-card);background:var(--surface-raised);box-shadow:var(--sf-shadow-card)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-accent)">Publishing for Starfall</span>
+      <p style="font-size:.95rem;line-height:1.6;color:var(--text-body-card)">You may write and sell your own Starfall material. No royalty, no revenue threshold, one line of credit.</p>
+      <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Button" variant="ghost" size="sm" href="#" hint-size="100%,40px">The content licence</x-import>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:.8rem;padding:1.35rem 1.45rem;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);background:var(--surface-card)">
+      <span style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-label);text-transform:uppercase;color:var(--text-meta)">Useful for GMs</span>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Tools &amp; generators →</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">VTT assets →</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Free downloads →</a>
+      <a href="#" style="font-size:.93rem;text-decoration:none">Errata &amp; changelog →</a>
+    </div>
+
+    <x-import component-from-global-scope="StarfallDesignSystem_6487a4.Callout" tone="lore" label="On running games for money" hint-size="100%,150px">
+      Charge what your time is worth. That is your labour, not ours, and the licence says so in writing.
+    </x-import>
+  </aside>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      entryPoints: [
+        { kicker: "Talk", title: "Chat server", body: "Rules questions, answered fast.", href: "#" },
+        { kicker: "Read", title: "The forum", body: "Threads that stay findable.", href: "#" },
+        { kicker: "Play", title: "Find a group", body: "Players and GMs, one board.", href: "#" },
+        { kicker: "Build", title: "Publish your own", body: "The licence is generous.", href: "#" }
+      ],
+      conduct: [
+        { rule: "Spoilers get tagged", detail: "Adventures are published across years and people run them at different speeds. Tag anything past the first act." },
+        { rule: "No pirated files", detail: "Do not post our PDFs or anyone else's. The free ones are free from us, which makes this an easy rule." },
+        { rule: "Table talk stays kind", detail: "Argue about rules as much as you like. Do not make it about the person asking." },
+        { rule: "No bigotry, at all", detail: "Racism, transphobia, antisemitism and the rest get you removed on the first instance rather than the third." }
+      ],
+      creations: [
+        { title: "The Ashen Reach Companion", by: "$4", tag: "Supplement", body: "Forty pages on the mining north, written by a GM who ran it for two years." },
+        { title: "Tidewalker's Reckoning", by: "Free", tag: "Adventure", body: "A levels 4–6 arc about a tide record that predicts something it should not." },
+        { title: "Starfall Foundry Suite", by: "Free", tag: "VTT", body: "Community-maintained Foundry module: essence tracking, tide clock, toll automation." }
+      ],
+      art: React.createElement("div", { "aria-hidden": "true", style: {
+        width: "100%", height: "100%",
+        background: "var(--surface-well)",
+        backgroundImage: "repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"
+      }})
+    };
+  }
+}
+
+</script>
+</body>
+</html>

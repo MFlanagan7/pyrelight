@@ -1,0 +1,211 @@
+<!-- @dsCard group="Starfall site" viewport="1280x900" subtitle="Quickstart path: free map, first session, what to buy next" name="Start playing" -->
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Starfall — start playing</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  .container { max-width: var(--sf-container); margin: 0 auto; }
+  .read { max-width: var(--sf-measure-reading); }
+  a { color: var(--text-link); }
+  a:hover { color: var(--text-link-hover); }
+  .caps { font-family:var(--sf-font-heading); letter-spacing:var(--sf-track-label); text-transform:uppercase; font-size:var(--sf-text-xs); }
+  .grid-card { display:grid; grid-template-columns:repeat(auto-fit,minmax(var(--sf-col-min-card),1fr)); gap:var(--sf-gap-card); }
+  .grid-cover { display:grid; grid-template-columns:repeat(auto-fit,minmax(var(--sf-col-min-cover),1fr)); gap:var(--sf-gap-cover); }
+  .body p { font-size:1.05rem; line-height:var(--sf-leading-body); color:var(--text-body); text-wrap:pretty; }
+  .body h2 { font-family:var(--sf-font-display); font-size:var(--sf-text-2xl); line-height:1.15; color:var(--text-heading); }
+  .body h3 { font-family:var(--sf-font-heading); font-weight:500; font-size:1.05rem; letter-spacing:var(--sf-track-caps); text-transform:uppercase; color:var(--text-heading); }
+</style></head>
+<body>
+<nav style="position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.8rem 1.75rem;background:rgba(13,12,27,.9);border-bottom:1px solid var(--sf-line);backdrop-filter:blur(16px) saturate(140%)">
+  <a href="index.html" style="display:flex;align-items:center;gap:.6rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="color:var(--sf-gold-400);filter:var(--sf-glow-mark)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"/></svg>Starfall</a>
+  <div style="display:flex;align-items:center;gap:1.35rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+    <a href="what-is-starfall.html" style="color:var(--text-accent);text-decoration:none">World</a><a href="#" style="color:var(--sf-ink-300);text-decoration:none">Wiki</a><a href="#" style="color:var(--sf-ink-300);text-decoration:none">Adventures</a><a href="#" style="color:var(--sf-ink-300);text-decoration:none">Shop</a><a href="#" style="color:var(--sf-ink-300);text-decoration:none">Tools</a><a href="#" style="color:var(--sf-ink-300);text-decoration:none">Gallery</a>
+    <a href="newsletter.html" style="color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 0 18px rgba(235,203,110,.25);text-decoration:none">Newsletter</a>
+  </div>
+</nav>
+<header style="position:relative;padding:9.5rem var(--sf-section-pad-x) 4.5rem;overflow:hidden;background:var(--surface-hero)">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-top)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-bottom)"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-scrim-vignette)"></div>
+  <div class="container" style="position:relative;display:flex;flex-direction:column;gap:1.15rem;max-width:var(--sf-container)">
+    <p class="caps" style="color:var(--text-accent)">Start playing</p>
+    <h1 style="max-width:34ch;font-family:var(--sf-font-display);font-size:var(--sf-text-3xl);line-height:var(--sf-leading-tight);color:var(--text-heading)">You have the book. Here is your first session</h1>
+    <p style="max-width:52ch;font-size:1.15rem;line-height:1.6;color:var(--text-over-image)">Four steps, about an hour of prep, nothing to buy. The free quickstart and the player map do the work.</p>
+  </div>
+</header>
+
+<section style="padding:0 var(--sf-section-pad-x);background:var(--surface-page)">
+  <div style="max-width:var(--sf-container);margin:-3.25rem auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1px;background:var(--sf-line);border:1px solid var(--sf-line);border-radius:var(--sf-radius-card);overflow:hidden;box-shadow:var(--sf-shadow-strip)">
+  <div style="display:flex;flex-direction:column;gap:.4rem;padding:1.35rem 1.4rem;background:var(--surface-card)">
+    <span class="caps" style="color:var(--text-accent)">Step 01</span>
+    <span style="font-family:var(--sf-font-display);font-size:1.35rem;line-height:1.2;color:var(--text-heading)">Read four pages</span>
+    <span style="font-size:var(--sf-text-sm);line-height:1.5;color:var(--text-body-card)">The quickstart opens with the premise, the essence rules, and one port. That is everything you need to sit down.</span></div><div style="display:flex;flex-direction:column;gap:.4rem;padding:1.35rem 1.4rem;background:var(--surface-card)">
+    <span class="caps" style="color:var(--text-accent)">Step 02</span>
+    <span style="font-family:var(--sf-font-display);font-size:1.35rem;line-height:1.2;color:var(--text-heading)">Print the map</span>
+    <span style="font-size:var(--sf-text-sm);line-height:1.5;color:var(--text-body-card)">The Drowned Coast, player-safe. No secrets marked, so you can put it on the table.</span></div><div style="display:flex;flex-direction:column;gap:.4rem;padding:1.35rem 1.4rem;background:var(--surface-card)">
+    <span class="caps" style="color:var(--text-accent)">Step 03</span>
+    <span style="font-family:var(--sf-font-display);font-size:1.35rem;line-height:1.2;color:var(--text-heading)">Make characters</span>
+    <span style="font-size:var(--sf-text-sm);line-height:1.5;color:var(--text-body-card)">Any 5e character works as written. Two extra questions at the bottom of the quickstart tie them to a house or a debt.</span></div><div style="display:flex;flex-direction:column;gap:.4rem;padding:1.35rem 1.4rem;background:var(--surface-card)">
+    <span class="caps" style="color:var(--text-accent)">Step 04</span>
+    <span style="font-family:var(--sf-font-display);font-size:1.35rem;line-height:1.2;color:var(--text-heading)">Run the first session</span>
+    <span style="font-size:var(--sf-text-sm);line-height:1.5;color:var(--text-body-card)">A salvage job at Marrow Bay, written for three hours and one table of five.</span></div>
+  </div>
+</section>
+
+<section style="padding:var(--sf-section-pad-y-tight) var(--sf-section-pad-x);background:var(--surface-page)">
+  <div class="container" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(20rem,1fr));gap:var(--sf-gap-card)">
+    <div style="display:flex;flex-direction:column;gap:1rem;padding:1.6rem 1.7rem;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);background:var(--surface-card)">
+      <div style="display:flex;align-items:center;gap:.7rem">
+        <span class="caps" style="color:var(--sf-status-free);border:1px solid rgba(155,211,168,.6);background:rgba(13,12,27,.7);padding:.25rem .6rem;border-radius:999px;letter-spacing:var(--sf-track-caps)">Free</span>
+        <span class="caps" style="color:var(--text-meta)">PDF · 18 pages</span>
+      </div>
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-xl);line-height:1.2;color:var(--text-heading)">The Starfall Quickstart</h2>
+      <p style="font-size:1rem;line-height:1.65;color:var(--text-body-card)">Premise, essence rules, the port of Marrow Bay, and a first adventure for levels 1–2. Everything a GM needs for session one.</p>
+      <a href="#" style="align-self:flex-start;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:.13em;text-transform:uppercase;color:var(--action-primary-ink);background:var(--action-primary-bg);padding:.8rem 1.7rem;border-radius:999px;text-decoration:none;box-shadow:var(--sf-glow-button)">Download quickstart</a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1rem;padding:1.6rem 1.7rem;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);background:var(--surface-card)">
+      <div style="display:flex;align-items:center;gap:.7rem">
+        <span class="caps" style="color:var(--sf-status-free);border:1px solid rgba(155,211,168,.6);background:rgba(13,12,27,.7);padding:.25rem .6rem;border-radius:999px;letter-spacing:var(--sf-track-caps)">Free</span>
+        <span class="caps" style="color:var(--text-meta)">PDF + PNG · print at A3</span>
+      </div>
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-xl);line-height:1.2;color:var(--text-heading)">The Drowned Coast map</h2>
+      <p style="font-size:1rem;line-height:1.65;color:var(--text-body-card)">Player-safe: ports, tides and house borders, no secrets. A GM edition with the wreck sites marked ships with the setting book.</p>
+      <a href="#" style="align-self:flex-start;font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:.13em;text-transform:uppercase;color:var(--sf-ink-100);border:1px solid var(--action-ghost-border);background:var(--action-ghost-bg);padding:.8rem 1.7rem;border-radius:999px;text-decoration:none">Download map</a>
+    </div>
+  </div>
+</section>
+
+<section style="position:relative;padding:var(--sf-section-pad-y-tight) var(--sf-section-pad-x);background:var(--surface-page);overflow:hidden">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-ambient-violet)"></div>
+  <div class="container" style="position:relative;display:grid;grid-template-columns:minmax(0,1fr) 20rem;gap:3.5rem;align-items:start">
+    <div class="body" style="display:flex;flex-direction:column;gap:1.5rem;max-width:44rem">
+      <div style="display:flex;flex-direction:column;gap:.55rem">
+        <p class="caps" style="color:var(--text-accent)">Session one</p>
+        <h2>Running the salvage job</h2>
+      </div>
+      <p>The opening adventure gives you a tide table, a wreck, and three parties who want what is in it. It is deliberately small: one port, one night, one decision that the players cannot make cleanly.</p>
+      <h3>What to prep</h3>
+      <p>Read the tide table and pick which house is waiting on the dock. That is the whole prep. The adventure carries the rest, including the two NPCs your players will remember and the one who will be lying to them.</p>
+      <h3>What to say at the table</h3>
+      <p>Open with the smell of the bay and the price of essence chalked on a board. Starfall lands when money and divinity are in the same sentence, so put them there in the first minute.</p>
+      <aside style="display:flex;flex-direction:column;gap:.6rem;padding:1.15rem 1.25rem;border-left:2px solid var(--sf-line-gold);border-radius:0 var(--sf-radius-card) var(--sf-radius-card) 0;background:var(--tint-gold)">
+        <span class="caps" style="color:var(--sf-gold-400)">From the Ledger</span>
+        <p style="font-size:.98rem;line-height:1.65;color:var(--text-over-image)">Essence is weighed in grains, sold in vials, and taxed in whatever the local house can enforce. If your players ask what a grain is worth, the answer is always "here, today, this much".</p>
+      </aside>
+      <h3>Safety and tone</h3>
+      <p>The quickstart includes a one-page tone sheet: what the setting does with debt, drowning and religious pressure, and how to dial each one down. Use it in session zero. It exists so nobody has to guess.</p>
+    </div>
+    <aside style="display:flex;flex-direction:column;gap:1.25rem;padding:1.4rem 1.5rem;border-top:2px solid var(--sf-gold-400);border-radius:0 0 var(--sf-radius-card) var(--sf-radius-card);background:var(--surface-raised);box-shadow:var(--sf-shadow-card)">
+      <span class="caps" style="color:var(--text-accent)">First session checklist</span>
+      <div style="display:flex;flex-direction:column;gap:.8rem">
+      <label style="display:flex;align-items:flex-start;gap:.7rem;font-size:.95rem;line-height:1.5;color:var(--text-body-card);cursor:pointer"><input type="checkbox" style="margin-top:.2rem;accent-color:var(--sf-gold-400)">Quickstart, pages 3–7</label><label style="display:flex;align-items:flex-start;gap:.7rem;font-size:.95rem;line-height:1.5;color:var(--text-body-card);cursor:pointer"><input type="checkbox" style="margin-top:.2rem;accent-color:var(--sf-gold-400)">Player map, printed</label><label style="display:flex;align-items:flex-start;gap:.7rem;font-size:.95rem;line-height:1.5;color:var(--text-body-card);cursor:pointer"><input type="checkbox" style="margin-top:.2rem;accent-color:var(--sf-gold-400)">Tide table for the night</label><label style="display:flex;align-items:flex-start;gap:.7rem;font-size:.95rem;line-height:1.5;color:var(--text-body-card);cursor:pointer"><input type="checkbox" style="margin-top:.2rem;accent-color:var(--sf-gold-400)">One house waiting on the dock</label><label style="display:flex;align-items:flex-start;gap:.7rem;font-size:.95rem;line-height:1.5;color:var(--text-body-card);cursor:pointer"><input type="checkbox" style="margin-top:.2rem;accent-color:var(--sf-gold-400)">Session-zero tone sheet</label><label style="display:flex;align-items:flex-start;gap:.7rem;font-size:.95rem;line-height:1.5;color:var(--text-body-card);cursor:pointer"><input type="checkbox" style="margin-top:.2rem;accent-color:var(--sf-gold-400)">Five index cards for essence vials</label>
+      </div>
+      <a href="#" style="font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-link);text-decoration:none">Printable version →</a>
+    </aside>
+  </div>
+</section>
+
+<section style="position:relative;padding:var(--sf-section-pad-y-tight) var(--sf-section-pad-x);background:linear-gradient(180deg,var(--sf-navy-850),var(--sf-navy-750) 48%,var(--sf-navy-850));overflow:hidden">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:var(--sf-ambient-gold-top)"></div>
+  <div class="container" style="position:relative;display:flex;flex-direction:column;gap:2.5rem">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:.55rem">
+        <p class="caps" style="color:var(--text-label)">When you want more</p>
+        <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-accent)">What to read next</h2>
+      </div>
+      <a href="#" style="font-family:var(--sf-font-heading);font-size:var(--sf-text-sm);letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-link);text-decoration:none">All products →</a>
+    </div>
+    <div class="grid-cover">
+    <a href="#" style="display:flex;flex-direction:column;gap:1rem;text-decoration:none;color:inherit">
+      <div style="padding:1px;border-radius:var(--sf-radius-cover);background:linear-gradient(160deg,rgba(235,203,110,.5),rgba(162,156,196,.14));box-shadow:var(--sf-shadow-cover)">
+        <div style="position:relative;aspect-ratio:2/3;border-radius:9px;overflow:hidden;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)">
+          <span style="position:absolute;top:.65rem;left:.65rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--action-primary-ink);background:rgba(235,203,110,.92);border:1px solid var(--sf-gold-400);padding:.25rem .6rem;border-radius:999px">Premium</span>
+        </div></div>
+      <div style="display:flex;flex-direction:column;gap:.35rem">
+        <h3 style="font-family:var(--sf-font-display);font-size:var(--sf-text-lg);line-height:1.2;color:var(--text-heading)">The Starfall Setting</h3>
+        <p class="caps" style="letter-spacing:var(--sf-track-nav);color:var(--text-label)">Hardcover + PDF · $24</p>
+      </div></a><a href="#" style="display:flex;flex-direction:column;gap:1rem;text-decoration:none;color:inherit">
+      <div style="padding:1px;border-radius:var(--sf-radius-cover);background:linear-gradient(160deg,rgba(235,203,110,.5),rgba(162,156,196,.14));box-shadow:var(--sf-shadow-cover)">
+        <div style="position:relative;aspect-ratio:2/3;border-radius:9px;overflow:hidden;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)">
+          <span style="position:absolute;top:.65rem;left:.65rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--action-primary-ink);background:rgba(235,203,110,.92);border:1px solid var(--sf-gold-400);padding:.25rem .6rem;border-radius:999px">Premium</span>
+        </div></div>
+      <div style="display:flex;flex-direction:column;gap:.35rem">
+        <h3 style="font-family:var(--sf-font-display);font-size:var(--sf-text-lg);line-height:1.2;color:var(--text-heading)">The Essence Ledger</h3>
+        <p class="caps" style="letter-spacing:var(--sf-track-nav);color:var(--text-label)">GM toolkit · $8</p>
+      </div></a><a href="#" style="display:flex;flex-direction:column;gap:1rem;text-decoration:none;color:inherit">
+      <div style="padding:1px;border-radius:var(--sf-radius-cover);background:linear-gradient(160deg,rgba(235,203,110,.5),rgba(162,156,196,.14));box-shadow:var(--sf-shadow-cover)">
+        <div style="position:relative;aspect-ratio:2/3;border-radius:9px;overflow:hidden;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)">
+          <span style="position:absolute;top:.65rem;left:.65rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--sf-status-free);background:rgba(13,12,27,.7);border:1px solid rgba(155,211,168,.6);padding:.25rem .6rem;border-radius:999px">Free</span>
+        </div></div>
+      <div style="display:flex;flex-direction:column;gap:.35rem">
+        <h3 style="font-family:var(--sf-font-display);font-size:var(--sf-text-lg);line-height:1.2;color:var(--text-heading)">House &amp; Faction Sheets</h3>
+        <p class="caps" style="letter-spacing:var(--sf-track-nav);color:var(--text-label)">Printable · Free</p>
+      </div></a><a href="#" style="display:flex;flex-direction:column;gap:1rem;text-decoration:none;color:inherit">
+      <div style="padding:1px;border-radius:var(--sf-radius-cover);background:linear-gradient(160deg,rgba(235,203,110,.5),rgba(162,156,196,.14));box-shadow:var(--sf-shadow-cover)">
+        <div style="position:relative;aspect-ratio:2/3;border-radius:9px;overflow:hidden;background:var(--surface-well);background-image:repeating-linear-gradient(135deg,rgba(235,203,110,.06) 0 10px,rgba(235,203,110,0) 10px 20px)">
+          <span style="position:absolute;top:.65rem;left:.65rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-2xs);letter-spacing:var(--sf-track-caps);text-transform:uppercase;color:var(--action-primary-ink);background:rgba(235,203,110,.92);border:1px solid var(--sf-gold-400);padding:.25rem .6rem;border-radius:999px">Premium</span>
+        </div></div>
+      <div style="display:flex;flex-direction:column;gap:.35rem">
+        <h3 style="font-family:var(--sf-font-display);font-size:var(--sf-text-lg);line-height:1.2;color:var(--text-heading)">Tides of Marrow Bay</h3>
+        <p class="caps" style="letter-spacing:var(--sf-track-nav);color:var(--text-label)">Adventure · $6</p>
+      </div></a>
+    </div>
+  </div>
+</section>
+
+<section style="padding:var(--sf-section-pad-y-tight) var(--sf-section-pad-x);background:var(--surface-page)">
+  <div class="container" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(19rem,1fr));gap:3rem;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:.6rem">
+      <p class="caps" style="color:var(--text-accent)">Getting started</p>
+      <h2 style="font-family:var(--sf-font-display);font-size:var(--sf-text-2xl);line-height:1.15;color:var(--text-heading)">Questions GMs actually ask</h2>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1px;border:1px solid var(--border-card);border-radius:var(--sf-radius-card);overflow:hidden;background:rgba(162,156,196,.14)">
+<details open style="background:var(--surface-card)">
+  <summary style="display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.1rem 1.3rem;cursor:pointer;list-style:none;font-family:var(--sf-font-heading);font-size:1rem;letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-heading)">Do my players need to buy anything?
+    <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="flex:none;color:var(--text-meta)"><path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+  <div style="padding:0 1.3rem 1.3rem;font-size:.98rem;line-height:1.65;color:var(--text-body)">No. Players need a 5e character and the free map. Everything GM-facing is in the quickstart.</div></details><details style="background:var(--surface-card)">
+  <summary style="display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.1rem 1.3rem;cursor:pointer;list-style:none;font-family:var(--sf-font-heading);font-size:1rem;letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-heading)">I bought the PDF — where is it?
+    <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="flex:none;color:var(--text-meta)"><path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+  <div style="padding:0 1.3rem 1.3rem;font-size:.98rem;line-height:1.65;color:var(--text-body)">In the email from your order, and permanently in your download library. Premium PDFs are updated in place, so the link always gives you the current edition.</div></details><details style="background:var(--surface-card)">
+  <summary style="display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.1rem 1.3rem;cursor:pointer;list-style:none;font-family:var(--sf-font-heading);font-size:1rem;letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-heading)">Can I run this without the setting book?
+    <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="flex:none;color:var(--text-meta)"><path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+  <div style="padding:0 1.3rem 1.3rem;font-size:.98rem;line-height:1.65;color:var(--text-body)">Yes, for several sessions. The quickstart covers one port and the essence rules; the book is what you want once players start asking about the interior.</div></details><details style="background:var(--surface-card)">
+  <summary style="display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.1rem 1.3rem;cursor:pointer;list-style:none;font-family:var(--sf-font-heading);font-size:1rem;letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-heading)">Is there a VTT version?
+    <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="flex:none;color:var(--text-meta)"><path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+  <div style="padding:0 1.3rem 1.3rem;font-size:.98rem;line-height:1.65;color:var(--text-body)">Map packs for Foundry and Roll20 ship with each adventure. The player map is a plain PNG at 100 px per hex.</div></details><details style="background:var(--surface-card)">
+  <summary style="display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.1rem 1.3rem;cursor:pointer;list-style:none;font-family:var(--sf-font-heading);font-size:1rem;letter-spacing:var(--sf-track-nav);text-transform:uppercase;color:var(--text-heading)">How long is the first session?
+    <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="flex:none;color:var(--text-meta)"><path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+  <div style="padding:0 1.3rem 1.3rem;font-size:.98rem;line-height:1.65;color:var(--text-body)">Three hours for five players, including character questions. It shortens cleanly by cutting the second buyer on the dock.</div></details>
+</div>
+  </div>
+</section>
+<footer style="padding:4rem var(--sf-section-pad-x) 2rem;background:var(--surface-footer);border-top:1px solid var(--sf-line)">
+  <div class="container" style="display:flex;flex-direction:column;gap:2.5rem">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:2rem">
+      <div style="display:flex;flex-direction:column;gap:.9rem">
+        <a href="index.html" style="display:flex;align-items:center;gap:.55rem;font-family:var(--sf-font-display);font-size:var(--sf-text-md);letter-spacing:.07em;color:var(--text-accent);text-decoration:none">
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="color:var(--sf-gold-400)"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor"/></svg>Starfall</a>
+        <a href="#" style="display:flex;align-items:center;gap:.6rem;color:var(--text-label);text-decoration:none">
+          <svg viewBox="0 0 24 24" width="14" height="18" aria-hidden="true" style="color:var(--sf-gold-400)"><path d="M12 2 C15 8 19 10 19 15 A7 7 0 0 1 5 15 C5 10 9 8 12 2 Z" fill="currentColor"/></svg>
+          <span style="font-family:var(--sf-font-body);font-style:italic;font-size:.9rem">a Pyrelight Press project</span></a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.7rem">
+        <span class="caps" style="color:var(--text-heading)">The world</span>
+        <a href="what-is-starfall.html" style="font-size:.92rem;color:var(--text-label);text-decoration:none">What is Starfall</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Regions</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Gods &amp; pantheon</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Houses &amp; factions</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">The sea</a></div>
+      <div style="display:flex;flex-direction:column;gap:.7rem">
+        <span class="caps" style="color:var(--text-heading)">Play</span>
+        <a href="start-playing.html" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Start playing</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Adventures</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Free downloads</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Tools &amp; generators</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Art gallery</a></div>
+      <div style="display:flex;flex-direction:column;gap:.7rem">
+        <span class="caps" style="color:var(--text-heading)">Studio</span>
+        <a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Pyrelight Press</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Field notes</a><a href="newsletter.html" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Newsletter</a><a href="press-kit.html" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Press kit</a><a href="#" style="font-size:.92rem;color:var(--text-label);text-decoration:none">Contact</a></div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:1rem 1.5rem;align-items:center;justify-content:space-between;padding-top:1.25rem;border-top:1px solid var(--border-section)">
+      <p style="font-size:var(--sf-text-xs);line-height:1.6;color:var(--text-legal);max-width:60ch">© 2024–2026 Pyrelight Press. Starfall and all associated names, sigils and artwork are trademarks of Pyrelight Press. Compatible with fifth edition; not affiliated with or endorsed by Wizards of the Coast.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:1.25rem;font-family:var(--sf-font-heading);font-size:var(--sf-text-xs);letter-spacing:var(--sf-track-nav);text-transform:uppercase">
+        <a href="#" style="color:var(--text-label);text-decoration:none">Privacy</a><a href="#" style="color:var(--text-label);text-decoration:none">Terms</a><a href="#" style="color:var(--text-label);text-decoration:none">Cookies</a><a href="#" style="color:var(--text-label);text-decoration:none">Content licence</a><a href="#" style="color:var(--text-label);text-decoration:none">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body></html>
