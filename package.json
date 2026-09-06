@@ -2,7 +2,7 @@
   "name": "starfall-pub",
   "version": "0.0.0",
   "private": true,
-  "description": "Starfall — a fantasy RPG setting for D&D 5e. Public site and CMS.",
+  "description": "Pyrelight Press — monorepo for the Starfall and Pyrelight sites.",
   "engines": {
     "node": ">=20.0.0 <=26.x.x"
   },
@@ -12,6 +12,6 @@
     "build": "pnpm --filter web build",
     "start": "pnpm --filter web start",
     "lint": "pnpm --filter web lint",
-    "cms": "pnpm --filter cms develop"
+    "cms": "pnpm --filter web payload"
   }
 }
