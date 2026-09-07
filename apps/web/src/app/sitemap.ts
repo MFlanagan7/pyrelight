@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { countDispatchPages, dispatchPageHref } from "@/lib/dispatches";
 import { getPayloadClient, publishedOnly } from "@/lib/payload";
 import { siteUrl } from "@/lib/site";
 
@@ -30,7 +31,7 @@ import { siteUrl } from "@/lib/site";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const payload = await getPayloadClient();
 
-  const [pages, dispatches, legal] = await Promise.all([
+  const [pages, dispatches, legal, dispatchPageCount] = await Promise.all([
     payload.find({
       collection: "pages",
       where: publishedOnly,
@@ -52,6 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       depth: 0,
       select: { slug: true, updatedAt: true },
     }),
+    countDispatchPages(),
   ]);
 
   const entry = (
@@ -76,6 +78,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Static routes — these must be listed by hand.
     entry("/dispatches", undefined, 0.7, "weekly"),
+
+    // Paginated index pages, 2..N. Page 1 is /dispatches above, so it is not
+    // repeated here — two URLs for one page is duplicate content.
+    ...Array.from({ length: Math.max(0, dispatchPageCount - 1) }, (_, i) =>
+      entry(dispatchPageHref(i + 2), undefined, 0.4, "weekly"),
+    ),
 
     ...dispatches.docs.map((d) => entry(`/dispatches/${d.slug}`, d.updatedAt, 0.6)),
     ...legal.docs.map((l) => entry(`/${l.slug}`, l.updatedAt, 0.3, "yearly")),

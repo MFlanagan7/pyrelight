@@ -12,7 +12,7 @@ const toSlug = (value: string): string =>
  * Kept editable because a published URL should not silently change when someone
  * fixes a typo in a title.
  */
-export const slugField = (from = "title"): Field => ({
+export const slugField = (from = "title", reserved: string[] = []): Field => ({
   name: "slug",
   type: "text",
   required: true,
@@ -21,6 +21,13 @@ export const slugField = (from = "title"): Field => ({
   admin: {
     position: "sidebar",
     description: "Generated from the title on first save. Changing it breaks existing links.",
+  },
+  validate: (value: string | null | undefined) => {
+    if (!value) return "A slug is required.";
+    if (reserved.includes(value)) {
+      return `"${value}" is reserved by a route on this collection. Choose another slug.`;
+    }
+    return true;
   },
   hooks: {
     beforeValidate: [

@@ -1,0 +1,61 @@
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.35rem;
+  height: 2.35rem;
+  padding: 0 0.6rem;
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-sm);
+  letter-spacing: var(--sf-track-nav);
+  text-transform: uppercase;
+  border-radius: var(--sf-radius-pill);
+  text-decoration: none;
+  border: 1px solid var(--sf-line);
+  color: var(--sf-ink-300);
+  background: var(--tint-violet);
+  transition:
+    border-color var(--sf-dur-hover) var(--sf-ease),
+    color var(--sf-dur-hover) var(--sf-ease);
+}
+
+/* The hover the design system specifies. The inline-styled original declared
+   the transition but had no rule that could trigger it. */
+a.cell:hover {
+  border-color: var(--border-card-hover);
+  color: var(--text-link-hover);
+}
+
+.current {
+  border-color: var(--sf-gold-400);
+  color: var(--action-primary-ink);
+  background: var(--sf-gold-400);
+}
+
+a.current:hover {
+  color: var(--action-primary-ink);
+}
+
+/* Rendered as a span rather than a link, so it is neither focusable nor
+   announced as a control. Opacity alone would leave a keyboard trap. */
+.disabled {
+  opacity: 0.4;
+}
+
+.ellipsis {
+  color: var(--text-meta);
+  padding: 0 0.25rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cell {
+    transition: none;
+  }
+}

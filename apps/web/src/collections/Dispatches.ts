@@ -20,7 +20,9 @@ export const Dispatches: CollectionConfig = {
   hooks: revalidateCollection("/dispatches", "/dispatches"),
   fields: [
     { name: "title", type: "text", required: true },
-    slugField(),
+    // "page" is reserved: /dispatches/page/N is the pagination route, so a
+    // dispatch slugged "page" would be permanently unreachable.
+    slugField("title", ["page"]),
     {
       name: "excerpt",
       type: "textarea",
