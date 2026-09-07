@@ -98,6 +98,25 @@ export default buildConfig({
             endpoint: process.env.S3_ENDPOINT,
             region: process.env.S3_REGION,
             forcePathStyle: true,
+            /**
+             * Above the SDK default of 3.
+             *
+             * Measured against this bucket, single-attempt uploads of 256KB
+             * failed roughly a third of the time with TLS "bad record mac" and
+             * ECONNRESET — wire-level corruption, not a rejection by Supabase.
+             * Failures come in bursts rather than independently, so 3 attempts
+             * still lost 3 of 12 while 8 lost none.
+             *
+             * Retrying is safe: an S3 PUT is idempotent, and the body Payload
+             * passes is a buffer, so it can actually be replayed — a stream
+             * could not be.
+             *
+             * This masks a flaky local network path rather than fixing it. It
+             * is kept because the same resilience is worth having in
+             * production, where a transient upload failure means a lost editor
+             * upload with no obvious cause.
+             */
+            maxAttempts: 8,
             credentials: {
               accessKeyId: process.env.S3_ACCESS_KEY_ID || "",
               secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || "",
