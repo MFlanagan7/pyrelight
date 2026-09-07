@@ -1,0 +1,102 @@
+/* Reads as a printed sidebar: gold rule on top, lifted surface. */
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1.4rem 1.5rem;
+  border-top: 2px solid var(--sf-gold-400);
+  border-radius: 0 0 var(--sf-radius-card) var(--sf-radius-card);
+  background: var(--surface-raised);
+  box-shadow: var(--sf-shadow-card);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.name {
+  font-family: var(--sf-font-display);
+  font-size: var(--sf-text-xl);
+  line-height: 1.15;
+  color: var(--text-accent);
+}
+
+.kind {
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--text-body-card);
+}
+
+.abilities {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(3.5rem, 1fr));
+  gap: 0.6rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--sf-line-gold);
+  border-bottom: 1px solid var(--sf-line-gold);
+}
+
+.ability {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.abilityLabel {
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-xs);
+  letter-spacing: var(--sf-track-caps);
+  text-transform: uppercase;
+  color: var(--text-meta);
+}
+
+.abilityValue {
+  font-family: var(--sf-font-display);
+  font-size: var(--sf-text-md);
+  color: var(--text-heading);
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.row {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text-body);
+}
+
+.rowLabel {
+  font-family: var(--sf-font-heading);
+  font-weight: var(--sf-weight-heading);
+  letter-spacing: var(--sf-track-nav);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--text-heading);
+}
+
+.traits {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-top: 0.3rem;
+  border-top: 1px solid var(--border-section);
+}
+
+.trait {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-body);
+}
+
+.traitName {
+  font-family: var(--sf-font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--text-heading);
+}

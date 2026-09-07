@@ -1,0 +1,31 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 3.5rem 1.5rem;
+  text-align: center;
+  border: 1px dashed var(--sf-line-strong);
+  border-radius: var(--sf-radius-card);
+  background: var(--tint-violet);
+}
+
+/* The eight-point falling star, the world's repeatable motif. */
+.mark {
+  color: var(--sf-lilac-400);
+  opacity: 0.7;
+}
+
+.title {
+  font-family: var(--sf-font-display);
+  font-size: var(--sf-text-lg);
+  line-height: 1.2;
+  color: var(--text-heading);
+}
+
+.body {
+  max-width: 44ch;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--text-body-card);
+}
