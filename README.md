@@ -60,6 +60,24 @@ where Strapi version upgrades stop being manual work, and it required a second
 server to maintain. Payload is MIT-licensed with no per-seat ceiling, and
 upgrades are a dependency bump in a repo that already deploys.
 
+**Schema changes go through migrations, never dev push.** Payload's push mode
+introspects the whole database on boot. That exhausts Supabase's 15-client
+session pooler cap, fails partway, and leaves the schema half-applied; the next
+boot then blocks the dev server on an interactive stdin prompt asking whether a
+renamed field is a new column, with no visible cause. The connection pool is
+capped at `max: 5` for the same reason. Serverless deploys should use the
+transaction pooler (6543) with `max: 1`.
+
+After changing any collection:
+
+```bash
+pnpm migrate:create <name>   # generates a reviewable SQL migration
+pnpm migrate                 # applies it
+```
+
+Commit the generated files. Production runs `pnpm migrate` on deploy — Payload
+disables push when NODE_ENV=production, so this is required, not optional.
+
 **Supabase provides Postgres and Storage, not auth.** Nothing on the site logs
 in until the shop ships, and Payload brings its own editor auth. The Supabase
 auth wiring was removed rather than left as dead code implying a decision that
@@ -101,3 +119,6 @@ pnpm dev                                        # http://localhost:3000
 | `pnpm dev` | Next.js dev server |
 | `pnpm build` | Production build |
 | `pnpm lint` | ESLint over `apps/web` |
+| `pnpm cms` | Payload CLI |
+| `pnpm migrate:create <name>` | Generate a migration after a schema change |
+| `pnpm migrate` | Apply pending migrations |
