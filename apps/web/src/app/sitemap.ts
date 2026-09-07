@@ -1,0 +1,83 @@
+import type { MetadataRoute } from "next";
+import { getPayloadClient, publishedOnly } from "@/lib/payload";
+import { siteUrl } from "@/lib/site";
+
+/**
+ * XML sitemap.
+ *
+ * ┌─────────────────────────────────────────────────────────────────────────┐
+ * │ MAINTENANCE — READ BEFORE ADDING A COLLECTION                           │
+ * │                                                                         │
+ * │ New Pages and Dispatches appear here automatically; nothing to do.      │
+ * │                                                                         │
+ * │ A new COLLECTION does not. This function names each one explicitly, so  │
+ * │ anything not listed below is invisible to search engines with no error  │
+ * │ to warn you. Add a query and a mapping here when you add:               │
+ * │                                                                         │
+ * │   - Products        -> /shop/<slug>                                     │
+ * │   - Wiki articles   -> /wiki/<slug>                                     │
+ * │   - Wiki regions    -> /wiki/regions/<slug>                             │
+ * │   - Wiki factions   -> /wiki/factions/<slug>                            │
+ * │   - Wiki gods       -> /wiki/gods/<slug>                                │
+ * │                                                                         │
+ * │ Also add any new static route (a /shop or /wiki index, say) to the      │
+ * │ returned array — static routes are not discovered either.               │
+ * └─────────────────────────────────────────────────────────────────────────┘
+ *
+ * Built from published content only. A sitemap that lists an unpublished URL
+ * points crawlers at a 404, which is worse than omitting it.
+ */
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const payload = await getPayloadClient();
+
+  const [pages, dispatches, legal] = await Promise.all([
+    payload.find({
+      collection: "pages",
+      where: publishedOnly,
+      limit: 500,
+      depth: 0,
+      select: { slug: true, updatedAt: true },
+    }),
+    payload.find({
+      collection: "dispatches",
+      where: publishedOnly,
+      limit: 1000,
+      depth: 0,
+      select: { slug: true, updatedAt: true },
+    }),
+    payload.find({
+      collection: "legal-documents",
+      where: publishedOnly,
+      limit: 10,
+      depth: 0,
+      select: { slug: true, updatedAt: true },
+    }),
+  ]);
+
+  const entry = (
+    path: string,
+    updatedAt?: string | null,
+    priority = 0.5,
+    changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] = "monthly",
+  ) => ({
+    url: new URL(path, siteUrl()).toString(),
+    lastModified: updatedAt ? new Date(updatedAt) : undefined,
+    changeFrequency,
+    priority,
+  });
+
+  return [
+    // Pages: "home" is the site root, everything else is its slug.
+    ...pages.docs.map((p) =>
+      p.slug === "home"
+        ? entry("/", p.updatedAt, 1, "weekly")
+        : entry(`/${p.slug}`, p.updatedAt, 0.8),
+    ),
+
+    // Static routes — these must be listed by hand.
+    entry("/dispatches", undefined, 0.7, "weekly"),
+
+    ...dispatches.docs.map((d) => entry(`/dispatches/${d.slug}`, d.updatedAt, 0.6)),
+    ...legal.docs.map((l) => entry(`/${l.slug}`, l.updatedAt, 0.3, "yearly")),
+  ];
+}

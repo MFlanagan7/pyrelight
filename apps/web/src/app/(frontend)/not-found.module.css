@@ -1,0 +1,40 @@
+.main {
+  max-width: var(--sf-container);
+  margin-inline: auto;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: calc(var(--sf-section-pad-y) + 3rem) var(--sf-section-pad-x)
+    var(--sf-section-pad-y);
+}
+
+.code {
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-xs);
+  letter-spacing: var(--sf-track-label);
+  text-transform: uppercase;
+  color: var(--text-accent);
+}
+
+.title {
+  margin-top: var(--sf-space-4);
+  max-width: 18ch;
+  font-family: var(--sf-font-display);
+  font-size: var(--sf-text-3xl);
+  line-height: var(--sf-leading-tight);
+  color: var(--text-heading);
+}
+
+.body {
+  margin-top: var(--sf-space-5);
+  max-width: var(--sf-measure-body);
+  color: var(--text-body-card);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sf-space-4);
+  margin-top: var(--sf-space-8);
+}
