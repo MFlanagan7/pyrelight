@@ -145,6 +145,9 @@ importers:
         specifier: ^0.35.4
         version: 0.35.4(@types/node@20.19.43)
     devDependencies:
+      '@smithy/types':
+        specifier: ^4.18.0
+        version: 4.18.0
       '@types/node':
         specifier: ^20
         version: 20.19.43

@@ -4,6 +4,8 @@ import { fileURLToPath } from "url";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { resendAdapter } from "@payloadcms/email-resend";
 import { s3Storage } from "@payloadcms/storage-s3";
+
+import { tlsAwareRetryStrategy } from "./lib/s3-retry";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { buildConfig } from "payload";
 import sharp from "sharp";
@@ -99,24 +101,16 @@ export default buildConfig({
             region: process.env.S3_REGION,
             forcePathStyle: true,
             /**
-             * Above the SDK default of 3.
+             * maxAttempts alone was not enough. The SDK never classifies a TLS
+             * integrity failure as retryable, so uploads died after one attempt
+             * regardless of the value — the logs said "attempts": 1 while this
+             * was set to 8. See lib/s3-retry.ts.
              *
-             * Measured against this bucket, single-attempt uploads of 256KB
-             * failed roughly a third of the time with TLS "bad record mac" and
-             * ECONNRESET — wire-level corruption, not a rejection by Supabase.
-             * Failures come in bursts rather than independently, so 3 attempts
-             * still lost 3 of 12 while 8 lost none.
-             *
-             * Retrying is safe: an S3 PUT is idempotent, and the body Payload
-             * passes is a buffer, so it can actually be replayed — a stream
-             * could not be.
-             *
-             * This masks a flaky local network path rather than fixing it. It
-             * is kept because the same resilience is worth having in
-             * production, where a transient upload failure means a lost editor
-             * upload with no obvious cause.
+             * Supplying a strategy replaces the SDK's retry behaviour outright,
+             * so this one re-implements the default retryable conditions
+             * alongside the TLS cases.
              */
-            maxAttempts: 8,
+            retryStrategy: tlsAwareRetryStrategy(8),
             credentials: {
               accessKeyId: process.env.S3_ACCESS_KEY_ID || "",
               secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || "",
