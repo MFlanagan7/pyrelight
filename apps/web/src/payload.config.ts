@@ -134,7 +134,7 @@ export default buildConfig({
         email: resendAdapter({
           apiKey: process.env.RESEND_API_KEY,
           defaultFromAddress:
-            process.env.EMAIL_FROM_ADDRESS || "noreply@pyrelightpress.com",
+            process.env.EMAIL_FROM_ADDRESS || "noreply@mail.pyrelightpress.com",
           defaultFromName: process.env.EMAIL_FROM_NAME || "Pyrelight Press",
         }),
       }
