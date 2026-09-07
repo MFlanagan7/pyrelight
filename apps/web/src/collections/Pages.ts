@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { pageBlocks } from "../blocks";
+import { revalidatePages } from "../hooks/revalidate";
 import { seoField } from "../fields/seo";
 import { slugField } from "../fields/slug";
 
@@ -19,6 +20,7 @@ export const Pages: CollectionConfig = {
   },
   access: { read: () => true },
   versions: { drafts: true },
+  hooks: revalidatePages(),
   fields: [
     { name: "title", type: "text", required: true },
     slugField(),

@@ -1,0 +1,63 @@
+/*
+ * Overlaps the hero by -3.25rem. The wrapping section MUST set
+ * `position: relative; z-index: 1` or the hero's absolutely-positioned scrim
+ * layers paint over the overlapping 52px and clip the cards' tops. The
+ * position/z-index here is what makes that work.
+ */
+.strip {
+  position: relative;
+  z-index: 1;
+  max-width: var(--sf-container);
+  margin: -3.25rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  /* 1px gap over a line-coloured ground draws the dividers. */
+  gap: 1px;
+  background: var(--sf-line);
+  border: 1px solid var(--sf-line);
+  border-radius: var(--sf-radius-card);
+  overflow: hidden;
+  box-shadow: var(--sf-shadow-strip);
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1.35rem 1.4rem;
+  background: var(--surface-card);
+  text-decoration: none;
+  color: inherit;
+  transition: background var(--sf-dur-hover) var(--sf-ease);
+}
+
+.cell:hover {
+  background: var(--surface-card-hover);
+}
+
+.kicker {
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-xs);
+  letter-spacing: var(--sf-track-label);
+  text-transform: uppercase;
+  color: var(--text-accent);
+}
+
+.title {
+  font-family: var(--sf-font-display);
+  font-size: 1.35rem;
+  line-height: 1.2;
+  color: var(--text-heading);
+}
+
+.body {
+  font-size: var(--sf-text-sm);
+  line-height: 1.5;
+  color: var(--text-body-card);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cell {
+    transition: none;
+  }
+}

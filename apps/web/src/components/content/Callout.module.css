@@ -1,0 +1,56 @@
+.callout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.15rem 1.25rem;
+  border-left: 2px solid;
+  border-radius: 0 var(--sf-radius-card) var(--sf-radius-card) 0;
+}
+
+.body {
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--text-over-image);
+}
+
+.label {
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-xs);
+  letter-spacing: var(--sf-track-caps);
+  text-transform: uppercase;
+}
+
+/* In-world lore aside. */
+.lore {
+  border-left-color: var(--sf-line-gold);
+  background: var(--tint-gold);
+}
+.lore .label {
+  color: var(--sf-gold-400);
+}
+
+/* GM-only advice — oxblood, the sacred red. */
+.gm {
+  border-left-color: rgba(107, 43, 43, 0.55);
+  background: rgba(107, 43, 43, 0.18);
+}
+.gm .label {
+  color: #d89a9a;
+}
+
+/* Rules clarification. */
+.rule {
+  border-left-color: var(--sf-line-sea);
+  background: var(--tint-teal);
+}
+.rule .label {
+  color: var(--sf-teal-300);
+}
+
+.note {
+  border-left-color: var(--sf-line);
+  background: var(--tint-violet);
+}
+.note .label {
+  color: var(--text-label);
+}

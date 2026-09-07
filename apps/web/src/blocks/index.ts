@@ -192,13 +192,16 @@ export const CalloutBlock: Block = {
       name: "tone",
       type: "select",
       defaultValue: "note",
+      // Matches the design system's Callout tones exactly. Do not invent new
+      // ones here without a matching style in Callout.module.css.
       options: [
+        { label: "Lore — in-world aside", value: "lore" },
+        { label: "GM — advice for the table", value: "gm" },
+        { label: "Rule — mechanics clarification", value: "rule" },
         { label: "Note", value: "note" },
-        { label: "Warning", value: "warning" },
-        { label: "Table consequence", value: "table" },
       ],
     },
-    { name: "title", type: "text" },
+    { name: "label", type: "text", admin: { description: "Small-caps label above the body." } },
     { name: "body", type: "richText", required: true },
   ],
 };
@@ -252,7 +255,8 @@ export const StartHereBlock: Block = {
       minRows: 2,
       maxRows: 4,
       fields: [
-        { name: "label", type: "text", required: true },
+        { name: "kicker", type: "text", admin: { description: "Small-caps label, e.g. 'New here'." } },
+        { name: "title", type: "text", required: true },
         { name: "body", type: "text" },
         { name: "href", type: "text", required: true },
       ],

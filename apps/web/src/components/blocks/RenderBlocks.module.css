@@ -1,0 +1,67 @@
+/* Section rhythm. The hero is full-bleed and supplies its own padding, so it
+   is rendered outside this wrapper. */
+.section {
+  padding: var(--sf-section-pad-y) var(--sf-section-pad-x);
+}
+
+.tight {
+  padding-block: var(--sf-section-pad-y-tight);
+}
+
+/* StartHereStrip overlaps the hero by -3.25rem and must sit above the hero's
+   absolutely-positioned scrim layers, or its top edge is clipped. */
+.overlap {
+  position: relative;
+  z-index: 1;
+  padding-block: 0;
+}
+
+.inner {
+  max-width: var(--sf-container);
+  margin-inline: auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--sf-col-min-card), 1fr));
+  gap: var(--sf-gap-card);
+}
+
+.coverGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--sf-col-min-cover), 1fr));
+  gap: var(--sf-gap-cover);
+}
+
+.afterHeading {
+  margin-top: var(--sf-space-10);
+}
+
+.caption {
+  margin-top: var(--sf-space-2);
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-xs);
+  letter-spacing: var(--sf-track-caps);
+  text-transform: uppercase;
+  color: var(--text-meta);
+}
+
+.newsletter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sf-space-5);
+  text-align: center;
+}
+
+.newsletterTitle {
+  font-family: var(--sf-font-display);
+  font-size: var(--sf-text-2xl);
+  line-height: var(--sf-leading-heading);
+  color: var(--text-heading);
+}
+
+.newsletterBody {
+  max-width: var(--sf-measure-body);
+  color: var(--text-body-card);
+}

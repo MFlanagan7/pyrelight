@@ -72,6 +72,7 @@ export interface Config {
     products: Product;
     categories: Category;
     media: Media;
+    subscribers: Subscriber;
     users: User;
     'wiki-articles': WikiArticle;
     'wiki-regions': WikiRegion;
@@ -89,6 +90,7 @@ export interface Config {
     products: ProductsSelect<false> | ProductsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'wiki-articles': WikiArticlesSelect<false> | WikiArticlesSelect<true>;
     'wiki-regions': WikiRegionsSelect<false> | WikiRegionsSelect<true>;
@@ -451,7 +453,11 @@ export interface Product {
 export interface StartHereBlock {
   items?:
     | {
-        label: string;
+        /**
+         * Small-caps label, e.g. 'New here'.
+         */
+        kicker?: string | null;
+        title: string;
         body?: string | null;
         href: string;
         id?: string | null;
@@ -506,8 +512,11 @@ export interface QuoteBlock {
  * via the `definition` "CalloutBlock".
  */
 export interface CalloutBlock {
-  tone?: ('note' | 'warning' | 'table') | null;
-  title?: string | null;
+  tone?: ('lore' | 'gm' | 'rule' | 'note') | null;
+  /**
+   * Small-caps label above the body.
+   */
+  label?: string | null;
   body: {
     root: {
       type: string;
@@ -666,6 +675,24 @@ export interface Category {
    * Optional, for nested categories.
    */
   parent?: (number | null) | Category;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers".
+ */
+export interface Subscriber {
+  id: number;
+  email: string;
+  /**
+   * Set only by a confirmed double opt-in. Not yet implemented.
+   */
+  confirmed?: boolean | null;
+  /**
+   * Which page the signup came from.
+   */
+  source?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1093,6 +1120,10 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
+        relationTo: 'subscribers';
+        value: number | Subscriber;
+      } | null)
+    | ({
         relationTo: 'users';
         value: number | User;
       } | null)
@@ -1276,7 +1307,8 @@ export interface StartHereBlockSelect<T extends boolean = true> {
   items?:
     | T
     | {
-        label?: T;
+        kicker?: T;
+        title?: T;
         body?: T;
         href?: T;
         id?: T;
@@ -1311,7 +1343,7 @@ export interface QuoteBlockSelect<T extends boolean = true> {
  */
 export interface CalloutBlockSelect<T extends boolean = true> {
   tone?: T;
-  title?: T;
+  label?: T;
   body?: T;
   id?: T;
   blockName?: T;
@@ -1500,6 +1532,17 @@ export interface MediaSelect<T extends boolean = true> {
               filename?: T;
             };
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers_select".
+ */
+export interface SubscribersSelect<T extends boolean = true> {
+  email?: T;
+  confirmed?: T;
+  source?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

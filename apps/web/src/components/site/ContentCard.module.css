@@ -18,7 +18,7 @@
    trigger them. */
 a.card:hover {
   transform: var(--sf-lift-card);
-  border-color: rgba(235, 203, 110, 0.45);
+  border-color: var(--border-card-hover);
   background: var(--surface-card-hover);
   box-shadow: var(--sf-glow-card-hover);
 }

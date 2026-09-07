@@ -1,0 +1,66 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-4);
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--sf-dur-lift) var(--sf-ease);
+}
+
+/* Covers lift 6px, one further than cards. */
+.card:hover {
+  transform: var(--sf-lift-cover);
+}
+
+.frame {
+  padding: 1px;
+  border-radius: var(--sf-radius-cover);
+  background: linear-gradient(160deg, rgba(235, 203, 110, 0.5), rgba(162, 156, 196, 0.14));
+  box-shadow: var(--sf-shadow-cover);
+}
+
+.well {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  border-radius: 9px;
+  overflow: hidden;
+  background: var(--sf-navy-550);
+}
+
+.badge {
+  position: absolute;
+  top: 0.65rem;
+  left: 0.65rem;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+/* A single product reads as a book, so it gets a Cormorant title — unlike the
+   small-caps titles used across a grid index. */
+.title {
+  font-family: var(--sf-font-display);
+  font-size: var(--sf-text-lg);
+  line-height: 1.2;
+  color: var(--text-heading);
+}
+
+.meta {
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-xs);
+  letter-spacing: var(--sf-track-nav);
+  text-transform: uppercase;
+  color: var(--text-label);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+  .card:hover {
+    transform: none;
+  }
+}

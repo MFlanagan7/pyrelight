@@ -12,6 +12,8 @@
     "build": "pnpm --filter web build",
     "start": "pnpm --filter web start",
     "lint": "pnpm --filter web lint",
-    "cms": "pnpm --filter web payload"
+    "cms": "pnpm --filter web payload",
+    "migrate": "pnpm --filter web migrate",
+    "migrate:create": "pnpm --filter web migrate:create"
   }
 }

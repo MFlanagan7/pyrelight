@@ -1,0 +1,65 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  border: 1px solid var(--border-card);
+  border-radius: var(--sf-radius-card);
+  overflow: hidden;
+  background: rgba(162, 156, 196, 0.14);
+}
+
+.item {
+  background: var(--surface-card);
+}
+
+.trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.3rem;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--sf-font-heading);
+  font-size: 1rem;
+  letter-spacing: var(--sf-track-nav);
+  text-transform: uppercase;
+  color: var(--text-heading);
+  transition: color var(--sf-dur-hover) var(--sf-ease);
+}
+
+.trigger:hover,
+.trigger[aria-expanded="true"] {
+  color: var(--text-accent);
+}
+
+.question {
+  min-width: 0;
+}
+
+.chevron {
+  flex: none;
+  color: var(--text-meta);
+  transition: transform var(--sf-dur-hover) var(--sf-ease);
+}
+
+.trigger[aria-expanded="true"] .chevron {
+  transform: rotate(180deg);
+}
+
+.panel {
+  padding: 0 1.3rem 1.3rem;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--text-body);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trigger,
+  .chevron {
+    transition: none;
+  }
+}

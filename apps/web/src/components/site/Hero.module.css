@@ -1,0 +1,80 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 78vh;
+  padding: calc(var(--sf-section-pad-y) + 4rem) var(--sf-section-pad-x)
+    var(--sf-section-pad-y);
+  background: var(--surface-hero);
+  overflow: hidden;
+}
+
+.art {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/*
+ * The fixed four-layer scrim stack, in the order the design system mandates:
+ * top scrim for nav legibility, bottom fade resolving into the page ground,
+ * edge vignette, then a small gold radial sized to sit behind the wordmark only.
+ */
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    var(--sf-scrim-glow),
+    var(--sf-scrim-vignette),
+    var(--sf-scrim-bottom),
+    var(--sf-scrim-top);
+}
+
+.inner {
+  max-width: var(--sf-container);
+  width: 100%;
+  margin-inline: auto;
+}
+
+.eyebrow {
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-xs);
+  letter-spacing: var(--sf-track-label);
+  text-transform: uppercase;
+  color: var(--text-accent);
+}
+
+.title {
+  margin-top: var(--sf-space-4);
+  max-width: 18ch;
+  font-family: var(--sf-font-display);
+  font-size: var(--sf-text-3xl);
+  line-height: var(--sf-leading-tight);
+  letter-spacing: var(--sf-track-wordmark);
+  color: var(--text-heading);
+  text-shadow: var(--sf-glow-h1);
+}
+
+.lede {
+  margin-top: var(--sf-space-5);
+  max-width: var(--sf-measure-body);
+  font-size: var(--sf-text-lg);
+  color: var(--text-over-image);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sf-space-4);
+  margin-top: var(--sf-space-8);
+}

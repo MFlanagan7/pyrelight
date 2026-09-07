@@ -54,3 +54,34 @@ export const revalidateCollection = (
     },
   ],
 });
+
+/**
+ * Pages are addressed by slug at the site root, with "home" mapping to "/".
+ * A renamed slug purges its old path too.
+ */
+export const revalidatePages = (): {
+  afterChange: CollectionAfterChangeHook[];
+  afterDelete: CollectionAfterDeleteHook[];
+} => {
+  const pathFor = (slug?: string) =>
+    !slug || slug === "home" ? "/" : `/${slug}`;
+
+  return {
+    afterChange: [
+      async ({ doc, previousDoc }) => {
+        const paths = [pathFor(doc?.slug)];
+        if (previousDoc?.slug && previousDoc.slug !== doc?.slug) {
+          paths.push(pathFor(previousDoc.slug));
+        }
+        await purge(paths);
+        return doc;
+      },
+    ],
+    afterDelete: [
+      async ({ doc }) => {
+        await purge([pathFor(doc?.slug)]);
+        return doc;
+      },
+    ],
+  };
+};
