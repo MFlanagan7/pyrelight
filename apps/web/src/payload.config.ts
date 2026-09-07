@@ -132,16 +132,21 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI,
       /**
-       * Supabase's session pooler caps a tenant at 15 concurrent clients.
-       * Drizzle's schema introspection opens connections aggressively and will
-       * exhaust that, failing mid-run and leaving the schema half-applied.
-       * Cap our own pool well under the ceiling.
+       * Pool size differs by runtime, and getting it wrong exhausts the
+       * database rather than merely slowing things down.
        *
-       * On Vercel's serverless runtime use the transaction pooler (6543) and
-       * max: 1 instead — each invocation is its own short-lived process.
+       * Serverless: every invocation is its own short-lived process with its
+       * own pool, so a pool of N becomes N x (concurrent invocations). One
+       * connection each, released promptly, is the only shape that scales.
+       * Point DATABASE_URI at Supabase's TRANSACTION pooler (port 6543) in
+       * production — it is built for many brief clients.
+       *
+       * Local dev: one long-lived process against the SESSION pooler (5432),
+       * which caps a tenant at 15 clients. Five leaves room for the migration
+       * CLI to run alongside a dev server.
        */
-      max: 5,
-      idleTimeoutMillis: 10_000,
+      max: process.env.VERCEL ? 1 : 5,
+      idleTimeoutMillis: process.env.VERCEL ? 5_000 : 10_000,
     },
 
     /**
