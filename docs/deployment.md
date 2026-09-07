@@ -19,7 +19,7 @@ second server: Payload's admin and API are routes inside `apps/web`.
 
 | Variable | Production value | Notes |
 | --- | --- | --- |
-| `DATABASE_URI` | Supabase **transaction** pooler, port **6543** | Not the session pooler used locally — see below |
+| `DATABASE_URI` | Supabase **transaction** pooler, port **6543** | Use it locally too — see below |
 | `PAYLOAD_SECRET` | 32+ random bytes | Changing it invalidates every admin session |
 | `NEXT_PUBLIC_SITE_URL` | `https://starfall.pyrelightpress.com` | Inlined at build time; changing it needs a redeploy |
 | `RESEND_API_KEY` | from Resend | Without it, password resets go to a log nobody reads |
@@ -38,14 +38,29 @@ secret behind that prefix.
 ## Why the transaction pooler in production
 
 Each serverless invocation is its own process with its own connection pool, so a
-pool of N becomes N × concurrent invocations. `payload.config.ts` already drops
-`max` to 1 when `process.env.VERCEL` is set, but the connection string has to
-match: the **transaction** pooler (6543) is built for many brief clients, while
-the **session** pooler (5432) caps a tenant at 15 and is right for one
-long-lived dev process.
+pool of N becomes N × concurrent invocations. The **transaction** pooler (6543)
+is built for exactly that: many short-lived clients.
 
-Getting this backwards exhausts the database under mild traffic rather than
-failing loudly at deploy time.
+Pool size is set by role rather than environment, and the distinction matters:
+
+| Context | `max` | Why |
+| --- | --- | --- |
+| Serverless runtime | 1 | Many processes, one connection each |
+| Production build | 5 | One process prerendering many pages *concurrently* |
+| Local dev | 5 | One long-lived process |
+
+A build is the opposite of serverless. Each prerender worker renders pages in
+parallel within one process, and they all queue on the pool — set `max` to 1
+there and the queue exceeds `connectionTimeoutMillis`, failing with "timeout
+exceeded when trying to connect". That reads like a network fault but is pure
+self-contention. Vercel sets `VERCEL` during its build too, so the build-phase
+check has to be evaluated first.
+
+**Use the transaction pooler locally as well.** The session pooler (5432) caps a
+tenant at 15 clients, which a build's workers plus a running dev server plus any
+connections leaked by killed processes will exceed. Transaction mode handles
+migrations, transactions, and session parameters correctly — verified against
+this project.
 
 ## Migrations
 

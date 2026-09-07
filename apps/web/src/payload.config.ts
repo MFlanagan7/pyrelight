@@ -140,22 +140,26 @@ export default buildConfig({
        * CLI to run alongside a dev server.
        */
       /**
-       * One connection per process everywhere except a local dev server.
+       * Pool size by role, not by environment.
        *
-       * Next prerenders with a worker pool — eleven processes on this machine —
-       * and each worker builds its own Payload instance with its own pool. At
-       * max 5 that is 55 connections against Supabase's 15-client session
-       * limit, and the build dies with a FATAL XX000 partway through
-       * prerendering. Serverless has the same shape for the same reason: many
-       * short-lived processes, one connection each.
+       * Serverless RUNTIME wants exactly one: each invocation is its own
+       * short-lived process, so a pool of N becomes N x concurrent
+       * invocations.
        *
-       * Only the dev server is a single long-lived process that benefits from
-       * a real pool, and 5 leaves room for the migration CLI alongside it.
+       * A BUILD is the opposite. Each prerender worker renders many pages
+       * concurrently in one process, and they all queue on the pool — with a
+       * pool of 1 that queue exceeds connectionTimeoutMillis and the build
+       * fails with "timeout exceeded when trying to connect", which reads like
+       * a network fault but is pure self-contention. Vercel sets VERCEL during
+       * its build too, so the phase check has to come first.
+       *
+       * Point DATABASE_URI at Supabase's TRANSACTION pooler (6543) rather than
+       * the session pooler (5432). The session pooler caps a tenant at 15
+       * clients, which a build's workers plus a dev server exceed; transaction
+       * mode is built for many short-lived clients and handles migrations and
+       * transactions fine.
        */
-      max:
-        process.env.VERCEL || process.env.NEXT_PHASE === "phase-production-build"
-          ? 1
-          : 5,
+      max: process.env.NEXT_PHASE === "phase-production-build" ? 5 : process.env.VERCEL ? 1 : 5,
       idleTimeoutMillis: process.env.VERCEL ? 5_000 : 10_000,
 
       /**
