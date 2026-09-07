@@ -67,7 +67,32 @@ export default buildConfig({
   plugins: process.env.S3_BUCKET
     ? [
         s3Storage({
-          collections: { media: true },
+          collections: {
+            media: {
+              /**
+               * When the bucket is public, serve objects straight from
+               * Supabase's CDN instead of streaming every image through a
+               * serverless function.
+               *
+               * disablePayloadAccessControl is what actually stops the
+               * proxying — without it Payload keeps serving files through its
+               * own access-controlled route and generateFileURL is ignored. It
+               * also means Payload no longer gates file reads, which is fine
+               * for public site imagery and precisely why paid downloads must
+               * live in a separate private bucket.
+               */
+              ...(process.env.S3_PUBLIC_BUCKET === "true"
+                ? {
+                    disablePayloadAccessControl: true as const,
+                    generateFileURL: ({ filename, prefix }: { filename: string; prefix?: string }) => {
+                      const ref = new URL(process.env.S3_ENDPOINT!).hostname.split(".")[0];
+                      const key = [prefix, filename].filter(Boolean).join("/");
+                      return `https://${ref}.supabase.co/storage/v1/object/public/${process.env.S3_BUCKET}/${key}`;
+                    },
+                  }
+                : {}),
+            },
+          },
           bucket: process.env.S3_BUCKET,
           config: {
             endpoint: process.env.S3_ENDPOINT,
