@@ -85,3 +85,26 @@ export const revalidatePages = (): {
     ],
   };
 };
+
+/** Legal documents live at fixed routes named by their slug. */
+export const revalidateLegal = (): {
+  afterChange: CollectionAfterChangeHook[];
+  afterDelete: CollectionAfterDeleteHook[];
+} => ({
+  afterChange: [
+    async ({ doc, previousDoc }) => {
+      const paths = [`/${doc?.slug}`];
+      if (previousDoc?.slug && previousDoc.slug !== doc?.slug) {
+        paths.push(`/${previousDoc.slug}`);
+      }
+      await purge(paths);
+      return doc;
+    },
+  ],
+  afterDelete: [
+    async ({ doc }) => {
+      await purge([`/${doc?.slug}`]);
+      return doc;
+    },
+  ],
+});

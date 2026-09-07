@@ -1,0 +1,48 @@
+.notices {
+  margin-top: var(--sf-space-12);
+  padding-top: var(--sf-space-8);
+  border-top: 1px solid var(--sf-line);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-6);
+}
+
+.heading {
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-xs);
+  letter-spacing: var(--sf-track-label);
+  text-transform: uppercase;
+  color: var(--text-accent);
+}
+
+.lede {
+  max-width: var(--sf-measure-reading);
+  font-size: var(--sf-text-sm);
+  color: var(--text-meta);
+}
+
+.notice {
+  max-width: var(--sf-measure-reading);
+  padding: var(--sf-space-5);
+  border: 1px solid var(--sf-line-faint);
+  border-radius: var(--sf-radius-card);
+  background: var(--surface-card);
+}
+
+.label {
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-2xs);
+  letter-spacing: var(--sf-track-caps);
+  text-transform: uppercase;
+  color: var(--text-meta);
+}
+
+/* Legal-weight ink, per the design system: the copyright ramp step. */
+.text {
+  margin-top: var(--sf-space-3);
+  font-size: var(--sf-text-sm);
+  line-height: 1.7;
+  color: var(--text-legal);
+  /* Attribution strings contain long unbroken URLs. */
+  overflow-wrap: anywhere;
+}

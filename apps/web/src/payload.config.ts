@@ -3,12 +3,14 @@ import { fileURLToPath } from "url";
 
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { resendAdapter } from "@payloadcms/email-resend";
+import { s3Storage } from "@payloadcms/storage-s3";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { buildConfig } from "payload";
 import sharp from "sharp";
 
 import { Categories } from "./collections/Categories";
 import { Dispatches } from "./collections/Dispatches";
+import { LegalDocuments } from "./collections/LegalDocuments";
 import { Media } from "./collections/Media";
 import { Pages } from "./collections/Pages";
 import { Products } from "./collections/Products";
@@ -37,6 +39,7 @@ export default buildConfig({
     Dispatches,
     Products,
     Categories,
+    LegalDocuments,
     Media,
     Subscribers,
     Users,
@@ -48,6 +51,36 @@ export default buildConfig({
   ],
 
   globals: [SiteSettings],
+
+  /**
+   * Media storage.
+   *
+   * Enabled only when the S3 credentials are present, so a fresh clone still
+   * runs against local disk. In production it is mandatory: Vercel's serverless
+   * runtime has no persistent filesystem, and uploads written to disk vanish
+   * between invocations.
+   *
+   * Supabase Storage speaks the S3 protocol, so this uses Payload's official
+   * S3 adapter rather than a community Supabase provider. forcePathStyle is
+   * required — Supabase addresses buckets by path, not by virtual host.
+   */
+  plugins: process.env.S3_BUCKET
+    ? [
+        s3Storage({
+          collections: { media: true },
+          bucket: process.env.S3_BUCKET,
+          config: {
+            endpoint: process.env.S3_ENDPOINT,
+            region: process.env.S3_REGION,
+            forcePathStyle: true,
+            credentials: {
+              accessKeyId: process.env.S3_ACCESS_KEY_ID || "",
+              secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || "",
+            },
+          },
+        }),
+      ]
+    : [],
 
   editor: lexicalEditor(),
 

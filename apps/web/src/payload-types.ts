@@ -71,6 +71,7 @@ export interface Config {
     dispatches: Dispatch;
     products: Product;
     categories: Category;
+    'legal-documents': LegalDocument;
     media: Media;
     subscribers: Subscriber;
     users: User;
@@ -89,6 +90,7 @@ export interface Config {
     dispatches: DispatchesSelect<false> | DispatchesSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    'legal-documents': LegalDocumentsSelect<false> | LegalDocumentsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -680,6 +682,65 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "legal-documents".
+ */
+export interface LegalDocument {
+  id: number;
+  title: string;
+  /**
+   * Which route this document fills. One document per route.
+   */
+  slug: 'legal' | 'privacy' | 'content-licence';
+  /**
+   * Shown on the page so readers know how current the terms are.
+   */
+  lastReviewed?: string | null;
+  /**
+   * One or two sentences beneath the heading.
+   */
+  intro?: string | null;
+  /**
+   * Your own explanation. The licence notices are appended automatically and cannot be edited here.
+   */
+  body?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  seo?: {
+    /**
+     * Overrides the browser tab and search result title.
+     */
+    title?: string | null;
+    /**
+     * Search result snippet. Around 155 characters reads best.
+     */
+    description?: string | null;
+    /**
+     * Social share card. 1200×630 or larger.
+     */
+    image?: (number | null) | Media;
+    /**
+     * Hide from search engines.
+     */
+    noIndex?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "subscribers".
  */
 export interface Subscriber {
@@ -1116,6 +1177,10 @@ export interface PayloadLockedDocument {
         value: number | Category;
       } | null)
     | ({
+        relationTo: 'legal-documents';
+        value: number | LegalDocument;
+      } | null)
+    | ({
         relationTo: 'media';
         value: number | Media;
       } | null)
@@ -1469,6 +1534,28 @@ export interface CategoriesSelect<T extends boolean = true> {
   parent?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "legal-documents_select".
+ */
+export interface LegalDocumentsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  lastReviewed?: T;
+  intro?: T;
+  body?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        noIndex?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

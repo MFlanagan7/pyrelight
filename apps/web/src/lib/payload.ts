@@ -12,3 +12,15 @@ export const getPayloadClient = async () => getPayload({ config: configPromise }
 
 /** Published entries only. Drafts must never leak onto the public site. */
 export const publishedOnly = { _status: { equals: "published" } } as const;
+
+/** Fetch a legal document by its fixed slug. Returns null if not yet authored. */
+export const getLegalDocument = async (slug: string) => {
+  const payload = await getPayloadClient();
+  const { docs } = await payload.find({
+    collection: "legal-documents",
+    where: { ...publishedOnly, slug: { equals: slug } },
+    limit: 1,
+    depth: 0,
+  });
+  return docs[0] ?? null;
+};
