@@ -139,8 +139,46 @@ export default buildConfig({
        * which caps a tenant at 15 clients. Five leaves room for the migration
        * CLI to run alongside a dev server.
        */
-      max: process.env.VERCEL ? 1 : 5,
+      /**
+       * One connection per process everywhere except a local dev server.
+       *
+       * Next prerenders with a worker pool — eleven processes on this machine —
+       * and each worker builds its own Payload instance with its own pool. At
+       * max 5 that is 55 connections against Supabase's 15-client session
+       * limit, and the build dies with a FATAL XX000 partway through
+       * prerendering. Serverless has the same shape for the same reason: many
+       * short-lived processes, one connection each.
+       *
+       * Only the dev server is a single long-lived process that benefits from
+       * a real pool, and 5 leaves room for the migration CLI alongside it.
+       */
+      max:
+        process.env.VERCEL || process.env.NEXT_PHASE === "phase-production-build"
+          ? 1
+          : 5,
       idleTimeoutMillis: process.env.VERCEL ? 5_000 : 10_000,
+
+      /**
+       * Fail fast on a dead connection instead of hanging on one.
+       *
+       * Without these, a socket that dies without a clean close — which this
+       * network does — stays in the pool looking healthy. The next query sent
+       * over it blocks until the OS gives up on the TCP connection, which is
+       * where the 31s list and 94s bulk delete came from. The same queries run
+       * in well under a second from a fresh process.
+       *
+       * keepAlive makes the OS probe idle sockets so a dead one is detected and
+       * discarded rather than handed out. The timeouts bound the damage when
+       * one slips through: a request fails in seconds with a real error instead
+       * of appearing to hang forever.
+       */
+      keepAlive: true,
+      keepAliveInitialDelayMillis: 10_000,
+      connectionTimeoutMillis: 15_000,
+      // Client-side ceiling, and its server-side counterpart so an abandoned
+      // query does not keep holding locks after the client has given up.
+      query_timeout: 30_000,
+      statement_timeout: 30_000,
     },
 
     /**

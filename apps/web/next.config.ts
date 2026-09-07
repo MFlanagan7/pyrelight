@@ -21,6 +21,22 @@ const supabaseHost = (): string | null => {
 const host = supabaseHost();
 
 const nextConfig: NextConfig = {
+  /**
+   * Bound the prerender worker pool.
+   *
+   * Next defaults to one worker per core — eleven on this machine — and each
+   * builds its own Payload instance with its own database pool. Against
+   * Supabase's 15-client session limit that exhausts connections partway
+   * through prerendering and fails the build with a FATAL XX000, worse when a
+   * dev server is running and holding its own pool.
+   *
+   * Four workers is still comfortably parallel for a site this size, and
+   * leaves headroom for a dev server alongside a build. Payload's own pool
+   * drops to one connection per process during the build phase; both limits
+   * are needed, since either alone still exceeds the cap.
+   */
+  experimental: { cpus: 4 },
+
   images: {
     // next/image refuses remote sources that are not explicitly allowed.
     // Without this, every CMS image 400s the moment the bucket serves public
