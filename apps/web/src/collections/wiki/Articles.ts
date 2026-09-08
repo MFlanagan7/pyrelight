@@ -3,6 +3,7 @@ import { articleBlocks } from "../../blocks";
 import { licensingFields, validateLicensing } from "../../fields/licensing";
 import { searchTextField } from "../../fields/searchText";
 import { seoField } from "../../fields/seo";
+import { RESERVED_WIKI_SLUGS } from "../../lib/wiki";
 import { slugField } from "../../fields/slug";
 
 /**
@@ -22,7 +23,9 @@ export const WikiArticles: CollectionConfig = {
   versions: { drafts: true },
   fields: [
     { name: "title", type: "text", required: true },
-    slugField(),
+    // Pillars live at /wiki/<pillar> and entries at /wiki/<slug>, so an entry
+    // may not take a pillar's name.
+    slugField("title", RESERVED_WIKI_SLUGS),
     { name: "summary", type: "textarea", admin: { description: "One paragraph. Shown in search results and category listings." } },
     { name: "category", type: "relationship", relationTo: "categories", admin: { position: "sidebar" } },
     { name: "body", type: "richText" },

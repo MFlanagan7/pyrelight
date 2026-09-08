@@ -1,6 +1,7 @@
 import * as migration_20260907_002408_initial from './20260907_002408_initial';
 import * as migration_20260907_141055_legal_documents from './20260907_141055_legal_documents';
 import * as migration_20260907_232552_search_text from './20260907_232552_search_text';
+import * as migration_20260908_124317_content_license_spelling from './20260908_124317_content_license_spelling';
 
 export const migrations = [
   {
@@ -16,6 +17,11 @@ export const migrations = [
   {
     up: migration_20260907_232552_search_text.up,
     down: migration_20260907_232552_search_text.down,
-    name: '20260907_232552_search_text'
+    name: '20260907_232552_search_text',
+  },
+  {
+    up: migration_20260908_124317_content_license_spelling.up,
+    down: migration_20260908_124317_content_license_spelling.down,
+    name: '20260908_124317_content_license_spelling'
   },
 ];

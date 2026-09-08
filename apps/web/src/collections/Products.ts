@@ -14,7 +14,7 @@ export const Products: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     defaultColumns: ["title", "tier", "gameSystem", "_status"],
-    livePreview: { url: ({ data }) => `/shop/${data?.slug ?? ""}` },
+    livePreview: { url: ({ data }) => `/products/${data?.slug ?? ""}` },
   },
   access: { read: () => true },
   versions: { drafts: true },

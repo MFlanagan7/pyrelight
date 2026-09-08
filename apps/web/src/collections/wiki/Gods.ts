@@ -2,6 +2,7 @@ import type { CollectionConfig } from "payload";
 import { licensingFields, validateLicensing } from "../../fields/licensing";
 import { searchTextField } from "../../fields/searchText";
 import { seoField } from "../../fields/seo";
+import { RESERVED_WIKI_SLUGS } from "../../lib/wiki";
 import { slugField } from "../../fields/slug";
 
 /** The pantheon. Status matters to the setting: divinity fell and got stranded. */
@@ -18,7 +19,9 @@ export const WikiGods: CollectionConfig = {
   versions: { drafts: true },
   fields: [
     { name: "title", type: "text", required: true, label: "Name" },
-    slugField(),
+    // Pillars live at /wiki/<pillar> and entries at /wiki/<slug>, so an entry
+    // may not take a pillar's name.
+    slugField("title", RESERVED_WIKI_SLUGS),
     { name: "epithet", type: "text", admin: { description: "The name mortals use. 'The Drowned Lantern'." } },
     {
       // NOT "status": Payload's drafts feature adds a _status column whose enum is

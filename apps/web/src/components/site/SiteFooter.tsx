@@ -10,7 +10,7 @@ export type FooterColumn = {
 const LEGAL_LINKS = [
   { label: "Legal", href: "/legal" },
   { label: "Privacy", href: "/privacy" },
-  { label: "Content licence", href: "/content-licence" },
+  { label: "Content license", href: "/content-license" },
 ];
 
 /**

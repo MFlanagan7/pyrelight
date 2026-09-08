@@ -690,7 +690,7 @@ export interface LegalDocument {
   /**
    * Which route this document fills. One document per route.
    */
-  slug: 'legal' | 'privacy' | 'content-licence';
+  slug: 'legal' | 'privacy' | 'content-license';
   /**
    * Shown on the page so readers know how current the terms are.
    */

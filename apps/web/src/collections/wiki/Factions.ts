@@ -2,6 +2,7 @@ import type { CollectionConfig } from "payload";
 import { licensingFields, validateLicensing } from "../../fields/licensing";
 import { searchTextField } from "../../fields/searchText";
 import { seoField } from "../../fields/seo";
+import { RESERVED_WIKI_SLUGS } from "../../lib/wiki";
 import { slugField } from "../../fields/slug";
 
 /** Noble houses, orders, and other organised powers. */
@@ -18,7 +19,9 @@ export const WikiFactions: CollectionConfig = {
   versions: { drafts: true },
   fields: [
     { name: "title", type: "text", required: true, label: "Name" },
-    slugField(),
+    // Pillars live at /wiki/<pillar> and entries at /wiki/<slug>, so an entry
+    // may not take a pillar's name.
+    slugField("title", RESERVED_WIKI_SLUGS),
     {
       name: "kind",
       type: "select",

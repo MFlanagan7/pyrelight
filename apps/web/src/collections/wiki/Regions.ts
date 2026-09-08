@@ -2,6 +2,7 @@ import type { CollectionConfig } from "payload";
 import { licensingFields, validateLicensing } from "../../fields/licensing";
 import { searchTextField } from "../../fields/searchText";
 import { seoField } from "../../fields/seo";
+import { RESERVED_WIKI_SLUGS } from "../../lib/wiki";
 import { slugField } from "../../fields/slug";
 
 /** Places. The setting counts four, but the model does not enforce that. */
@@ -18,7 +19,9 @@ export const WikiRegions: CollectionConfig = {
   versions: { drafts: true },
   fields: [
     { name: "title", type: "text", required: true, label: "Name" },
-    slugField(),
+    // Pillars live at /wiki/<pillar> and entries at /wiki/<slug>, so an entry
+    // may not take a pillar's name.
+    slugField("title", RESERVED_WIKI_SLUGS),
     { name: "terrain", type: "text", admin: { description: "'Drowned coast', 'Ashen steppe'." } },
     { name: "map", type: "upload", relationTo: "media" },
     { name: "summary", type: "textarea" },

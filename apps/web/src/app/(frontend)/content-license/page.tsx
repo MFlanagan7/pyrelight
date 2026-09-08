@@ -3,7 +3,7 @@ import { LegalDocument } from "@/components/legal";
 import { getLegalDocument } from "@/lib/payload";
 
 export const metadata: Metadata = {
-  title: "Content licence",
+  title: "Content license",
   description: "What you may do with Starfall's setting material.",
 };
 
@@ -13,12 +13,12 @@ export const metadata: Metadata = {
  * notice appears here because this page is about use of the marks.
  */
 export default async function ContentLicencePage() {
-  const doc = await getLegalDocument("content-licence");
+  const doc = await getLegalDocument("content-license");
 
   return (
     <LegalDocument
       doc={doc}
-      fallbackTitle="Content licence"
+      fallbackTitle="Content license"
       notices={["trademark"]}
     />
   );

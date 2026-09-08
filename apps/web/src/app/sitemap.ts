@@ -15,7 +15,7 @@ import { siteUrl } from "@/lib/site";
  * │ anything not listed below is invisible to search engines with no error  │
  * │ to warn you. Add a query and a mapping here when you add:               │
  * │                                                                         │
- * │   - Products        -> /shop/<slug>                                     │
+ * │   - Products        -> /products/<slug>                                     │
  * │   - Wiki articles   -> /wiki/<slug>                                     │
  * │   - Wiki regions    -> /wiki/regions/<slug>                             │
  * │   - Wiki factions   -> /wiki/factions/<slug>                            │

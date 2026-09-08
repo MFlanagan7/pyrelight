@@ -36,7 +36,7 @@ export const LegalDocuments: CollectionConfig = {
       options: [
         { label: "/legal", value: "legal" },
         { label: "/privacy", value: "privacy" },
-        { label: "/content-licence", value: "content-licence" },
+        { label: "/content-license", value: "content-license" },
       ],
       admin: {
         position: "sidebar",

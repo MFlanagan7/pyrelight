@@ -139,7 +139,7 @@ function RenderBlock({ block }: { block: Block }) {
                 return (
                   <ProductCard
                     key={p.id}
-                    href={`/shop/${p.slug}`}
+                    href={`/products/${p.slug}`}
                     title={p.title}
                     meta={TIER_LABEL[p.tier] ?? undefined}
                     tone={p.tier === "free" ? "free" : "premium"}
