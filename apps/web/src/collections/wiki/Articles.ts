@@ -1,6 +1,7 @@
 import type { CollectionConfig } from "payload";
 import { articleBlocks } from "../../blocks";
 import { licensingFields, validateLicensing } from "../../fields/licensing";
+import { searchTextField } from "../../fields/searchText";
 import { seoField } from "../../fields/seo";
 import { slugField } from "../../fields/slug";
 
@@ -44,6 +45,7 @@ export const WikiArticles: CollectionConfig = {
       defaultValue: false,
       admin: { position: "sidebar", description: "Renders behind a spoiler block." },
     },
+    searchTextField({ text: ["title", "summary"], rich: ["body"] }),
     ...licensingFields,
     seoField,
   ],

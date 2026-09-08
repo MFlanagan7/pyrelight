@@ -1,5 +1,6 @@
 import type { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 import type { TocItem } from "@/components/navigation";
+import { nodeText, type LexicalNode } from "./lexical-text";
 
 /**
  * Heading anchors for long-form content.
@@ -8,19 +9,6 @@ import type { TocItem } from "@/components/navigation";
  * the links go nowhere. Both derive them from this module by walking the same
  * document in the same order, so the two cannot drift.
  */
-
-type LexicalNode = {
-  type?: string;
-  tag?: string;
-  text?: string;
-  children?: LexicalNode[];
-};
-
-/** Concatenated text of a node and everything beneath it. */
-const textOf = (node: LexicalNode): string => {
-  if (typeof node.text === "string") return node.text;
-  return (node.children ?? []).map(textOf).join("");
-};
 
 const slugify = (value: string): string =>
   value
@@ -56,7 +44,7 @@ export const extractToc = (data: SerializedEditorState | null | undefined): TocI
   const walk = (nodes: LexicalNode[]) => {
     for (const node of nodes) {
       if (node.type === "heading") {
-        const label = textOf(node).trim();
+        const label = nodeText(node).trim();
         // A heading with no text has nothing to link to or label.
         if (label) {
           // Every heading consumes an id, not just the ones listed, because the

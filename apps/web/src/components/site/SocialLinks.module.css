@@ -1,0 +1,33 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border: 1px solid var(--sf-line-strong);
+  border-radius: var(--sf-radius-pill);
+  color: var(--sf-ink-300);
+  background: var(--tint-violet);
+  transition:
+    color var(--sf-dur-hover) var(--sf-ease),
+    background var(--sf-dur-hover) var(--sf-ease),
+    border-color var(--sf-dur-hover) var(--sf-ease);
+}
+
+.link:hover {
+  color: var(--text-accent);
+  border-color: var(--border-card-hover);
+  background: var(--tint-gold);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link {
+    transition: none;
+  }
+}

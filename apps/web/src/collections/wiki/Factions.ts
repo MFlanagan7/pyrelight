@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { licensingFields, validateLicensing } from "../../fields/licensing";
+import { searchTextField } from "../../fields/searchText";
 import { seoField } from "../../fields/seo";
 import { slugField } from "../../fields/slug";
 
@@ -38,6 +39,7 @@ export const WikiFactions: CollectionConfig = {
     { name: "summary", type: "textarea" },
     { name: "body", type: "richText" },
     { name: "related", type: "relationship", relationTo: ["wiki-articles", "wiki-factions", "wiki-gods", "wiki-regions"], hasMany: true, admin: { position: "sidebar" } },
+    searchTextField({ text: ["title", "motto", "seat", "summary"], rich: ["body"] }),
     ...licensingFields,
     seoField,
   ],

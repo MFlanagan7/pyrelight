@@ -843,6 +843,10 @@ export interface WikiArticle {
    * Renders behind a spoiler block.
    */
   spoiler?: boolean | null;
+  /**
+   * Generated from the entry's text on save. Not edited directly.
+   */
+  searchText?: string | null;
   contentKind: 'lore' | 'crunch';
   gameSystem: 'system-neutral' | '5e-2014' | '5e-2024' | 'pf2e' | 'sf2e';
   /**
@@ -926,6 +930,10 @@ export interface WikiFaction {
           }
       )[]
     | null;
+  /**
+   * Generated from the entry's text on save. Not edited directly.
+   */
+  searchText?: string | null;
   contentKind: 'lore' | 'crunch';
   gameSystem: 'system-neutral' | '5e-2014' | '5e-2024' | 'pf2e' | 'sf2e';
   /**
@@ -1017,6 +1025,10 @@ export interface WikiRegion {
           }
       )[]
     | null;
+  /**
+   * Generated from the entry's text on save. Not edited directly.
+   */
+  searchText?: string | null;
   contentKind: 'lore' | 'crunch';
   gameSystem: 'system-neutral' | '5e-2014' | '5e-2024' | 'pf2e' | 'sf2e';
   /**
@@ -1108,6 +1120,10 @@ export interface WikiGod {
           }
       )[]
     | null;
+  /**
+   * Generated from the entry's text on save. Not edited directly.
+   */
+  searchText?: string | null;
   contentKind: 'lore' | 'crunch';
   gameSystem: 'system-neutral' | '5e-2014' | '5e-2024' | 'pf2e' | 'sf2e';
   /**
@@ -1676,6 +1692,7 @@ export interface WikiArticlesSelect<T extends boolean = true> {
       };
   related?: T;
   spoiler?: T;
+  searchText?: T;
   contentKind?: T;
   gameSystem?: T;
   licence?: T;
@@ -1711,6 +1728,7 @@ export interface WikiRegionsSelect<T extends boolean = true> {
       };
   factions?: T;
   related?: T;
+  searchText?: T;
   contentKind?: T;
   gameSystem?: T;
   licence?: T;
@@ -1741,6 +1759,7 @@ export interface WikiFactionsSelect<T extends boolean = true> {
   summary?: T;
   body?: T;
   related?: T;
+  searchText?: T;
   contentKind?: T;
   gameSystem?: T;
   licence?: T;
@@ -1776,6 +1795,7 @@ export interface WikiGodsSelect<T extends boolean = true> {
   body?: T;
   worshippedIn?: T;
   related?: T;
+  searchText?: T;
   contentKind?: T;
   gameSystem?: T;
   licence?: T;

@@ -98,9 +98,18 @@ decisions), tools, gallery, timeline, VTT assets.
 The blog is **Dispatches**. The design system's voice guide still calls it
 "field notes" — update it there when convenient.
 
+## Open decisions
+
+`docs/information-architecture.md` — the wiki's structure, and separating tags
+from categories. Wiki routes are blocked on it; every component they need is
+built.
+
 ## Before launch
 
-- Replace the eleven placeholder social glyphs with official brand assets.
+- Replace the eleven placeholder social glyphs in
+  `apps/web/src/assets/social-paths.ts` with each platform's official brand
+  asset. They are geometric approximations, and shipping an approximation of
+  someone else's trademark is a trademark problem as well as a sloppy one.
 - No logo exists yet; the wordmark is set in Cormorant Garamond.
 - See the open items in `docs/legal-and-licensing.md`.
 

@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { licensingFields, validateLicensing } from "../../fields/licensing";
+import { searchTextField } from "../../fields/searchText";
 import { seoField } from "../../fields/seo";
 import { slugField } from "../../fields/slug";
 
@@ -43,6 +44,7 @@ export const WikiGods: CollectionConfig = {
     { name: "body", type: "richText" },
     { name: "worshippedIn", type: "relationship", relationTo: "wiki-regions", hasMany: true, admin: { position: "sidebar" } },
     { name: "related", type: "relationship", relationTo: ["wiki-articles", "wiki-factions", "wiki-gods", "wiki-regions"], hasMany: true, admin: { position: "sidebar" } },
+    searchTextField({ text: ["title", "epithet", "summary"], rich: ["body"], arrays: [{ name: "domains", fields: ["domain"] }] }),
     ...licensingFields,
     seoField,
   ],
