@@ -94,3 +94,9 @@
     transition: none;
   }
 }
+
+.note {
+  max-width: var(--sf-measure-body);
+  font-size: var(--sf-text-sm);
+  color: var(--text-body-card);
+}

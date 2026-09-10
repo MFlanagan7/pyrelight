@@ -1,0 +1,101 @@
+.main {
+  max-width: var(--sf-container);
+  margin-inline: auto;
+  padding: calc(var(--sf-section-pad-y) + 3rem) var(--sf-section-pad-x)
+    var(--sf-section-pad-y);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--sf-space-12);
+}
+
+@media (min-width: 60rem) {
+  .layout {
+    grid-template-columns: 22rem minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.cover {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  border-radius: var(--sf-radius-cover);
+  overflow: hidden;
+  background: var(--sf-navy-550);
+  box-shadow: var(--sf-shadow-cover);
+}
+
+.tier {
+  margin-top: var(--sf-space-4);
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-xs);
+  letter-spacing: var(--sf-track-caps);
+  text-transform: uppercase;
+  color: var(--text-accent);
+}
+
+.title {
+  font-family: var(--sf-font-display);
+  font-size: var(--sf-text-3xl);
+  line-height: var(--sf-leading-tight);
+  color: var(--text-heading);
+}
+
+.blurb {
+  margin-top: var(--sf-space-5);
+  max-width: var(--sf-measure-body);
+  font-size: var(--sf-text-lg);
+  color: var(--text-body-card);
+}
+
+.buy {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sf-space-4);
+  margin-top: var(--sf-space-8);
+}
+
+.buyNote {
+  margin-top: var(--sf-space-3);
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-2xs);
+  letter-spacing: var(--sf-track-caps);
+  text-transform: uppercase;
+  color: var(--text-meta);
+}
+
+.description {
+  margin-top: var(--sf-space-10);
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--sf-col-min-card), 1fr));
+  gap: var(--sf-gap-card);
+  margin-top: var(--sf-space-10);
+}
+
+.licence {
+  margin-top: var(--sf-space-12);
+  padding-top: var(--sf-space-6);
+  border-top: 1px solid var(--sf-line);
+  max-width: var(--sf-measure-reading);
+}
+
+.licenceLabel {
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-2xs);
+  letter-spacing: var(--sf-track-caps);
+  text-transform: uppercase;
+  color: var(--text-meta);
+}
+
+.licenceText {
+  margin-top: var(--sf-space-3);
+  font-size: var(--sf-text-sm);
+  line-height: 1.7;
+  color: var(--text-legal);
+  overflow-wrap: anywhere;
+}

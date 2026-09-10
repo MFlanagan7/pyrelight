@@ -24,3 +24,16 @@ export const getLegalDocument = async (slug: string) => {
   });
   return docs[0] ?? null;
 };
+
+/**
+ * Site chrome. Returns null if the global has never been saved, so callers can
+ * fall back rather than render a site with no navigation.
+ */
+export const getSiteSettings = async () => {
+  const payload = await getPayloadClient();
+  try {
+    return await payload.findGlobal({ slug: "site-settings", depth: 0 });
+  } catch {
+    return null;
+  }
+};

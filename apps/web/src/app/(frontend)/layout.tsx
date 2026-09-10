@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Alegreya_Sans_SC, Spectral } from "next/font/google";
 import { SiteFooter, SiteNav } from "@/components/site";
+import { getSiteSettings } from "@/lib/payload";
 import "./globals.css";
 
 // The three Starfall families, no substitutes. Loaded here rather than through
@@ -45,31 +46,53 @@ export const metadata: Metadata = {
     "Starfall — a fifth-edition compatible fantasy setting from Pyrelight Press.",
 };
 
-const NAV = [
-  { label: "What is Starfall", href: "/what-is-starfall" },
+/**
+ * Fallbacks for a site whose settings have not been authored yet. Without them
+ * a fresh database renders a site with no navigation at all, which looks broken
+ * rather than unconfigured. Editing SiteSettings replaces these entirely.
+ */
+const FALLBACK_NAV = [
+  { label: "The World", href: "/world" },
+  { label: "Products", href: "/products" },
+  { label: "Resources", href: "/resources" },
   { label: "Dispatches", href: "/dispatches" },
+  { label: "About", href: "/about" },
 ];
 
-const FOOTER_COLUMNS = [
-  {
-    title: "The world",
-    links: [
-      { label: "What is Starfall", href: "/what-is-starfall" },
-      { label: "Dispatches", href: "/dispatches" },
-    ],
-  },
-];
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const settings = await getSiteSettings();
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+  const nav =
+    settings?.nav?.length
+      ? settings.nav.map((n) => ({ label: n.label, href: n.href }))
+      : FALLBACK_NAV;
+
+  const footerColumns =
+    settings?.footerColumns?.map((c) => ({
+      title: c.title,
+      links: (c.links ?? []).map((l) => ({ label: l.label, href: l.href })),
+    })) ?? [];
+
+  const socials =
+    settings?.social?.map((s) => ({
+      key: s.platform,
+      href: s.url,
+      label: s.platform,
+    })) ?? [];
+
   return (
     <html
       lang="en"
       className={`${cormorant.variable} ${alegreya.variable} ${spectral.variable}`}
     >
       <body>
-        <SiteNav links={NAV} />
+        <SiteNav links={nav} />
         {children}
-        <SiteFooter columns={FOOTER_COLUMNS} />
+        <SiteFooter
+          columns={footerColumns}
+          socials={socials}
+          note={settings?.footerNote ?? undefined}
+        />
       </body>
     </html>
   );

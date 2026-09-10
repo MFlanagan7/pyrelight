@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { licensingFields, validateLicensing } from "../fields/licensing";
+import { revalidateCollection } from "../hooks/revalidate";
 import { seoField } from "../fields/seo";
 import { slugField } from "../fields/slug";
 
@@ -96,5 +97,8 @@ export const Products: CollectionConfig = {
         return data;
       },
     ],
+    // Spread rather than assigned: this collection already owns beforeValidate
+    // for licence checking, and a second `hooks` key would silently replace it.
+    ...revalidateCollection("/products", "/products"),
   },
 };

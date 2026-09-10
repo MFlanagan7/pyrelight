@@ -1,4 +1,8 @@
-import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from "payload";
+import type {
+  CollectionAfterChangeHook,
+  CollectionAfterDeleteHook,
+  GlobalAfterChangeHook,
+} from "payload";
 
 /**
  * Purge the Next cache when content changes.
@@ -104,6 +108,25 @@ export const revalidateLegal = (): {
   afterDelete: [
     async ({ doc }) => {
       await purge([`/${doc?.slug}`]);
+      return doc;
+    },
+  ],
+});
+
+/**
+ * Nav, footer and social links render on every page, so a change to site
+ * settings invalidates the whole tree rather than any one path. The "layout"
+ * type is what makes revalidatePath cascade to everything beneath it.
+ */
+export const revalidateSiteSettings = (): { afterChange: GlobalAfterChangeHook[] } => ({
+  afterChange: [
+    async ({ doc }) => {
+      try {
+        const { revalidatePath } = await import("next/cache");
+        revalidatePath("/", "layout");
+      } catch {
+        // Outside the Next runtime — nothing to revalidate.
+      }
       return doc;
     },
   ],

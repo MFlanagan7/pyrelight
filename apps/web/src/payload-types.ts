@@ -1868,12 +1868,39 @@ export interface SiteSetting {
       }[]
     | null;
   /**
+   * Sitemap columns. Four is the practical ceiling before they wrap.
+   */
+  footerColumns?:
+    | {
+        title: string;
+        links?:
+          | {
+              label: string;
+              href: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
    * Optional line above the legal block. The copyright and licence notices are fixed and render automatically.
    */
   footerNote?: string | null;
   social?:
     | {
-        platform: 'bluesky' | 'mastodon' | 'discord' | 'youtube' | 'itch' | 'drivethrurpg' | 'rss';
+        platform:
+          | 'instagram'
+          | 'facebook'
+          | 'reddit'
+          | 'discord'
+          | 'youtube'
+          | 'tiktok'
+          | 'bluesky'
+          | 'itch'
+          | 'drivethru'
+          | 'patreon'
+          | 'kofi';
         url: string;
         id?: string | null;
       }[]
@@ -1896,6 +1923,19 @@ export interface SiteSettingsSelect<T extends boolean = true> {
     | {
         label?: T;
         href?: T;
+        id?: T;
+      };
+  footerColumns?:
+    | T
+    | {
+        title?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              id?: T;
+            };
         id?: T;
       };
   footerNote?: T;

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { TRADEMARK_NOTICE } from "@/lib/legal";
+import { SocialLinks, type SocialLink } from "./SocialLinks";
 import styles from "./SiteFooter.module.css";
 
 export type FooterColumn = {
@@ -18,7 +19,16 @@ const LEGAL_LINKS = [
  * lib/legal.ts rather than the CMS — it is mandated verbatim, so it must not be
  * casually editable.
  */
-export function SiteFooter({ columns = [] }: { columns?: FooterColumn[] }) {
+export function SiteFooter({
+  columns = [],
+  socials = [],
+  note,
+}: {
+  columns?: FooterColumn[];
+  socials?: SocialLink[];
+  /** Optional line above the legal block, from SiteSettings. */
+  note?: string;
+}) {
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
@@ -35,6 +45,10 @@ export function SiteFooter({ columns = [] }: { columns?: FooterColumn[] }) {
             </div>
           ))}
         </div>
+
+        {socials.length > 0 && <SocialLinks links={socials} />}
+
+        {note && <p className={styles.note}>{note}</p>}
 
         <div className={styles.legalRow}>
           <p className={styles.copyright}>{TRADEMARK_NOTICE}</p>

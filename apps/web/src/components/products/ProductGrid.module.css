@@ -1,0 +1,11 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-8);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--sf-col-min-cover), 1fr));
+  gap: var(--sf-gap-cover);
+}

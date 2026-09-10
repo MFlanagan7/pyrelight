@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { countDispatchPages, dispatchPageHref } from "@/lib/dispatches";
+import { findProducts } from "@/lib/products";
 import { getPayloadClient, publishedOnly } from "@/lib/payload";
 import { siteUrl } from "@/lib/site";
 
@@ -9,19 +10,19 @@ import { siteUrl } from "@/lib/site";
  * ┌─────────────────────────────────────────────────────────────────────────┐
  * │ MAINTENANCE — READ BEFORE ADDING A COLLECTION                           │
  * │                                                                         │
- * │ New Pages and Dispatches appear here automatically; nothing to do.      │
+ * │ Pages, Dispatches and Products appear here automatically once their     │
+ * │ query below exists; new entries in them need no change.                 │
  * │                                                                         │
  * │ A new COLLECTION does not. This function names each one explicitly, so  │
  * │ anything not listed below is invisible to search engines with no error  │
  * │ to warn you. Add a query and a mapping here when you add:               │
  * │                                                                         │
- * │   - Products        -> /products/<slug>                                     │
- * │   - Wiki articles   -> /wiki/<slug>                                     │
- * │   - Wiki regions    -> /wiki/regions/<slug>                             │
- * │   - Wiki factions   -> /wiki/factions/<slug>                            │
- * │   - Wiki gods       -> /wiki/gods/<slug>                                │
+ * │   - Wiki entries    -> /wiki/<slug>   (all four wiki collections share  │
+ * │                        the flat namespace; see lib/wiki.ts)             │
+ * │   - Resources       -> /resources/<section>/<slug>                      │
+ * │   - Tag pages       -> /tags/<tag>                                      │
  * │                                                                         │
- * │ Also add any new static route (a /shop or /wiki index, say) to the      │
+ * │ Also add any new static route (a /wiki or /resources index, say) to the │
  * │ returned array — static routes are not discovered either.               │
  * └─────────────────────────────────────────────────────────────────────────┘
  *
@@ -31,7 +32,7 @@ import { siteUrl } from "@/lib/site";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const payload = await getPayloadClient();
 
-  const [pages, dispatches, legal, dispatchPageCount] = await Promise.all([
+  const [pages, dispatches, legal, dispatchPageCount, products] = await Promise.all([
     payload.find({
       collection: "pages",
       where: publishedOnly,
@@ -54,6 +55,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       select: { slug: true, updatedAt: true },
     }),
     countDispatchPages(),
+    findProducts(),
   ]);
 
   const entry = (
@@ -78,6 +80,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Static routes — these must be listed by hand.
     entry("/dispatches", undefined, 0.7, "weekly"),
+    entry("/products", undefined, 0.9, "weekly"),
+    ...products.docs.map((p) => entry(`/products/${p.slug}`, p.updatedAt, 0.8)),
 
     // Paginated index pages, 2..N. Page 1 is /dispatches above, so it is not
     // repeated here — two URLs for one page is duplicate content.
