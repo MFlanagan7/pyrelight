@@ -1,6 +1,7 @@
 import type { CollectionConfig } from "payload";
 import { licensingFields, validateLicensing } from "../fields/licensing";
 import { revalidateCollection, revalidateTagPages } from "../hooks/revalidate";
+import { searchTextField } from "../fields/searchText";
 import { tagsField } from "../fields/tags";
 import { seoField } from "../fields/seo";
 import { slugField } from "../fields/slug";
@@ -88,6 +89,7 @@ export const Products: CollectionConfig = {
       ],
     },
     tagsField(),
+    searchTextField({ text: ["title", "blurb"], rich: ["description"] }),
     ...licensingFields,
     seoField,
   ],

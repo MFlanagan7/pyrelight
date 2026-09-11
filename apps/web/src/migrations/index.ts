@@ -6,6 +6,8 @@ import * as migration_20260910_220758_site_settings_chrome from './20260910_2207
 import * as migration_20260911_003733_tags from './20260911_003733_tags';
 import * as migration_20260911_121436_resources from './20260911_121436_resources';
 import * as migration_20260911_122416_wiki_pillars from './20260911_122416_wiki_pillars';
+import * as migration_20260911_124540_search_text_content from './20260911_124540_search_text_content';
+import * as migration_20260911_140000_search_indexes from './20260911_140000_search_indexes';
 
 export const migrations = [
   {
@@ -46,6 +48,16 @@ export const migrations = [
   {
     up: migration_20260911_122416_wiki_pillars.up,
     down: migration_20260911_122416_wiki_pillars.down,
-    name: '20260911_122416_wiki_pillars'
+    name: '20260911_122416_wiki_pillars',
+  },
+  {
+    up: migration_20260911_124540_search_text_content.up,
+    down: migration_20260911_124540_search_text_content.down,
+    name: '20260911_124540_search_text_content',
+  },
+  {
+    up: migration_20260911_140000_search_indexes.up,
+    down: migration_20260911_140000_search_indexes.down,
+    name: '20260911_140000_search_indexes'
   },
 ];

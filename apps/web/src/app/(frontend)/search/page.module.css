@@ -1,0 +1,45 @@
+.main {
+  max-width: var(--sf-container);
+  margin-inline: auto;
+  padding: calc(var(--sf-section-pad-y) + 3rem) var(--sf-section-pad-x)
+    var(--sf-section-pad-y);
+}
+
+.field {
+  max-width: 34rem;
+  margin-top: var(--sf-space-8);
+}
+
+.count {
+  margin-top: var(--sf-space-8);
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-xs);
+  letter-spacing: var(--sf-track-caps);
+  text-transform: uppercase;
+  color: var(--text-meta);
+}
+
+.tagSuggestions {
+  margin-top: var(--sf-space-6);
+  padding: var(--sf-card-pad);
+  border: 1px solid var(--sf-line);
+  border-radius: var(--sf-radius-card);
+  background: var(--surface-card);
+  max-width: var(--sf-measure-reading);
+}
+
+.tagLead {
+  font-size: var(--sf-text-sm);
+  color: var(--text-body-card);
+}
+
+.tagRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sf-space-3);
+  margin-top: var(--sf-space-4);
+}
+
+.results {
+  margin-top: var(--sf-space-8);
+}

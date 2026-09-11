@@ -1,0 +1,64 @@
+.form {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--sf-line-strong);
+  border-radius: var(--sf-radius-pill);
+  background: rgba(239, 236, 246, 0.06);
+  transition: border-color var(--sf-dur-hover) var(--sf-ease);
+}
+
+.lg {
+  padding: 0.9rem 1.2rem;
+}
+
+.form:hover {
+  border-color: var(--border-card-hover);
+}
+
+/* The ring belongs on the pill, not the bare input, since the input's own
+   outline is removed to keep the field seamless. */
+.form:focus-within {
+  outline: 2px solid var(--sf-gold-400);
+  outline-offset: 3px;
+}
+
+.glyph {
+  flex: none;
+  color: var(--text-meta);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--text-heading);
+  font-family: var(--sf-font-body);
+  font-size: var(--sf-text-base);
+}
+
+.lg .input {
+  font-size: 1.05rem;
+}
+
+.input::placeholder {
+  color: var(--text-meta);
+}
+
+.scope {
+  flex: none;
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-xs);
+  letter-spacing: var(--sf-track-caps);
+  text-transform: uppercase;
+  color: var(--text-meta);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form {
+    transition: none;
+  }
+}

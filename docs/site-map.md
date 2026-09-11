@@ -64,7 +64,7 @@ so one dynamic segment serves both without ambiguity.
 | `/wiki/<slug>` | Collection | **Live.** Zero entries. Type-aware info rail, contents list, tags, related |
 | `/tags` | Coded route | **Live.** Vocabulary index, grouped by subject / type / system |
 | `/tags/<tag>` | Coded route | **Live.** Aggregates every content area including the wiki |
-| `/search` | Coded route | Not built. `searchText` is populated; tsvector, index and query are not |
+| `/search` | Coded route | **Live.** Postgres full-text across every collection, GIN-indexed |
 
 **Pillars are not one-to-one with collections.** "Peoples & Powers" spans
 factions and articles; "The Gods" spans gods and articles about divine
@@ -140,9 +140,20 @@ can show the map product, the region article it covers, and the dispatch about
 making it. `tier` stays a product field: free versus premium is a different
 axis from what a thing is.
 
-**Search implementation.** Settled as Postgres full-text. `searchText` is
-populated on every wiki collection. The `tsvector` column, GIN index, weighted
-query and `SearchField` remain.
+**Search is built.** Postgres full-text across the wiki, dispatches, resources
+and products, ranked title (A) above summary (C) above body (D). GIN expression
+indexes rather than a stored tsvector column — a column Payload does not know
+about is schema drift, and the next generated migration would propose dropping
+it. An index is not a column, so it sits outside that diff.
+
+The index expression must match `lib/search.ts` exactly or Postgres silently
+falls back to a sequential scan. Verified with `EXPLAIN` over 2,000 seeded rows:
+Bitmap Index Scan, 0.8ms. Re-verify if either side of that expression changes.
+
+Tag matches are surfaced as suggested filters above the results rather than
+folded into the ranking. That is the job tags do that full-text cannot: an entry
+calling something "the Lantern" throughout is unreachable by a search for
+"Drowned Lantern" unless a human asserted the connection.
 
 ---
 

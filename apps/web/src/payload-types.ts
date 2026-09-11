@@ -430,6 +430,10 @@ export interface Product {
    * What this is about. Pick from the list; if nothing fits, add the tag rather than a near-duplicate.
    */
   tags?: (number | Tag)[] | null;
+  /**
+   * Generated from the entry's text on save. Not edited directly.
+   */
+  searchText?: string | null;
   contentKind: 'lore' | 'crunch';
   gameSystem: 'system-neutral' | '5e-2014' | '5e-2024' | 'pf2e' | 'sf2e';
   /**
@@ -685,6 +689,10 @@ export interface Dispatch {
    * What this is about. Pick from the list; if nothing fits, add the tag rather than a near-duplicate.
    */
   tags?: (number | Tag)[] | null;
+  /**
+   * Generated from the entry's text on save. Not edited directly.
+   */
+  searchText?: string | null;
   seo?: {
     /**
      * Overrides the browser tab and search result title.
@@ -1696,6 +1704,7 @@ export interface DispatchesSelect<T extends boolean = true> {
   publishedAt?: T;
   category?: T;
   tags?: T;
+  searchText?: T;
   seo?:
     | T
     | {
@@ -1735,6 +1744,7 @@ export interface ProductsSelect<T extends boolean = true> {
         id?: T;
       };
   tags?: T;
+  searchText?: T;
   contentKind?: T;
   gameSystem?: T;
   licence?: T;
