@@ -70,10 +70,12 @@ export interface Config {
     pages: Page;
     dispatches: Dispatch;
     products: Product;
+    resources: Resource;
     categories: Category;
     tags: Tag;
     'legal-documents': LegalDocument;
     media: Media;
+    downloads: Download;
     subscribers: Subscriber;
     users: User;
     'wiki-articles': WikiArticle;
@@ -90,10 +92,12 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     dispatches: DispatchesSelect<false> | DispatchesSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
+    resources: ResourcesSelect<false> | ResourcesSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
     'legal-documents': LegalDocumentsSelect<false> | LegalDocumentsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    downloads: DownloadsSelect<false> | DownloadsSelect<true>;
     subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'wiki-articles': WikiArticlesSelect<false> | WikiArticlesSelect<true>;
@@ -725,6 +729,118 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resources".
+ */
+export interface Resource {
+  id: number;
+  title: string;
+  /**
+   * Generated from the title on first save. Changing it breaks existing links.
+   */
+  slug: string;
+  /**
+   * Which library section this belongs to. Also its URL segment.
+   */
+  section: 'maps' | 'adventures' | 'tools' | 'guides' | 'templates';
+  /**
+   * One or two sentences. Shown in listings and search.
+   */
+  summary: string;
+  cover?: (number | null) | Media;
+  body?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  delivery: 'file' | 'link' | 'tool';
+  /**
+   * Stored privately. Delivered by a signed link that expires.
+   */
+  file?: (number | null) | Download;
+  /**
+   * Ask for an email before delivering. Newsletter signup stays a separate, optional tick on that form — making subscription a condition of download is bundled consent, which GDPR does not allow.
+   */
+  requireEmail?: boolean | null;
+  /**
+   * Where it actually lives — an itch.io page, say.
+   */
+  url?: string | null;
+  /**
+   * Which generator this page renders. Must match a key in lib/tools.ts — a tool cannot be published before it is built.
+   */
+  toolKey?: string | null;
+  /**
+   * What this is about. Pick from the list; if nothing fits, add the tag rather than a near-duplicate.
+   */
+  tags?: (number | Tag)[] | null;
+  /**
+   * Generated from the entry's text on save. Not edited directly.
+   */
+  searchText?: string | null;
+  contentKind: 'lore' | 'crunch';
+  gameSystem: 'system-neutral' | '5e-2014' | '5e-2024' | 'pf2e' | 'sf2e';
+  /**
+   * Drives which attribution notice renders. Set this to what the entry actually drew from — attributing an SRD you did not use is misleading.
+   */
+  licence: 'none' | 'srd-5.1' | 'srd-5.2' | 'orc';
+  seo?: {
+    /**
+     * Overrides the browser tab and search result title.
+     */
+    title?: string | null;
+    /**
+     * Search result snippet. Around 155 characters reads best.
+     */
+    description?: string | null;
+    /**
+     * Social share card. 1200×630 or larger.
+     */
+    image?: (number | null) | Media;
+    /**
+     * Hide from search engines.
+     */
+    noIndex?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * Private files. Attach one to a Resource rather than linking to it directly.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "downloads".
+ */
+export interface Download {
+  id: number;
+  /**
+   * What a visitor sees on the download button. Defaults to the filename.
+   */
+  label?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "legal-documents".
  */
 export interface LegalDocument {
@@ -794,9 +910,17 @@ export interface Subscriber {
    */
   confirmed?: boolean | null;
   /**
-   * Which page the signup came from.
+   * Which page or resource the address came from.
    */
   source?: string | null;
+  /**
+   * When marketing consent was given, if it was. An address captured to deliver a download has NOT consented to email — that tick is separate and optional, because making subscription a condition of the download is bundled consent and not defensible under GDPR.
+   */
+  consentedAt?: string | null;
+  /**
+   * Why this address is on file. A download-only address must not receive a broadcast unless consentedAt is set.
+   */
+  reason?: ('newsletter' | 'download') | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1248,6 +1372,10 @@ export interface PayloadLockedDocument {
         value: number | Product;
       } | null)
     | ({
+        relationTo: 'resources';
+        value: number | Resource;
+      } | null)
+    | ({
         relationTo: 'categories';
         value: number | Category;
       } | null)
@@ -1262,6 +1390,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'downloads';
+        value: number | Download;
       } | null)
     | ({
         relationTo: 'subscribers';
@@ -1605,6 +1737,39 @@ export interface ProductsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resources_select".
+ */
+export interface ResourcesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  section?: T;
+  summary?: T;
+  cover?: T;
+  body?: T;
+  delivery?: T;
+  file?: T;
+  requireEmail?: T;
+  url?: T;
+  toolKey?: T;
+  tags?: T;
+  searchText?: T;
+  contentKind?: T;
+  gameSystem?: T;
+  licence?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        noIndex?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories_select".
  */
 export interface CategoriesSelect<T extends boolean = true> {
@@ -1721,12 +1886,32 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "downloads_select".
+ */
+export interface DownloadsSelect<T extends boolean = true> {
+  label?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "subscribers_select".
  */
 export interface SubscribersSelect<T extends boolean = true> {
   email?: T;
   confirmed?: T;
   source?: T;
+  consentedAt?: T;
+  reason?: T;
   updatedAt?: T;
   createdAt?: T;
 }

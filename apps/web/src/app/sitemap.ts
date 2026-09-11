@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { countDispatchPages, dispatchPageHref } from "@/lib/dispatches";
 import { findProducts } from "@/lib/products";
+import { RESOURCE_SECTIONS, findResources } from "@/lib/resources";
 import { findAllTags } from "@/lib/tags";
 import { getPayloadClient, publishedOnly } from "@/lib/payload";
 import { siteUrl } from "@/lib/site";
@@ -20,7 +21,6 @@ import { siteUrl } from "@/lib/site";
  * │                                                                         │
  * │   - Wiki entries    -> /wiki/<slug>   (all four wiki collections share  │
  * │                        the flat namespace; see lib/wiki.ts)             │
- * │   - Resources       -> /resources/<section>/<slug>                      │
  * │                                                                         │
  * │ Also add any new static route (a /wiki or /resources index, say) to the │
  * │ returned array — static routes are not discovered either.               │
@@ -32,7 +32,7 @@ import { siteUrl } from "@/lib/site";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const payload = await getPayloadClient();
 
-  const [pages, dispatches, legal, dispatchPageCount, products, tags] = await Promise.all([
+  const [pages, dispatches, legal, dispatchPageCount, products, tags, resources] = await Promise.all([
     payload.find({
       collection: "pages",
       where: publishedOnly,
@@ -57,6 +57,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     countDispatchPages(),
     findProducts(),
     findAllTags(),
+    findResources(),
   ]);
 
   const entry = (
@@ -83,6 +84,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry("/dispatches", undefined, 0.7, "weekly"),
     entry("/products", undefined, 0.9, "weekly"),
     entry("/tags", undefined, 0.4, "weekly"),
+    entry("/resources", undefined, 0.9, "weekly"),
+    ...RESOURCE_SECTIONS.map((s) => entry(`/resources/${s.slug}`, undefined, 0.7, "weekly")),
+    ...resources.docs.map((r) =>
+      entry(`/resources/${r.section}/${r.slug}`, r.updatedAt, 0.6),
+    ),
     ...tags.map((t) => entry(`/tags/${t.slug}`, t.updatedAt, 0.3)),
     ...products.docs.map((p) => entry(`/products/${p.slug}`, p.updatedAt, 0.8)),
 

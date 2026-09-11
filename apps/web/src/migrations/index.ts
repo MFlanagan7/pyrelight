@@ -4,6 +4,7 @@ import * as migration_20260907_232552_search_text from './20260907_232552_search
 import * as migration_20260908_124317_content_license_spelling from './20260908_124317_content_license_spelling';
 import * as migration_20260910_220758_site_settings_chrome from './20260910_220758_site_settings_chrome';
 import * as migration_20260911_003733_tags from './20260911_003733_tags';
+import * as migration_20260911_121436_resources from './20260911_121436_resources';
 
 export const migrations = [
   {
@@ -34,6 +35,11 @@ export const migrations = [
   {
     up: migration_20260911_003733_tags.up,
     down: migration_20260911_003733_tags.down,
-    name: '20260911_003733_tags'
+    name: '20260911_003733_tags',
+  },
+  {
+    up: migration_20260911_121436_resources.up,
+    down: migration_20260911_121436_resources.down,
+    name: '20260911_121436_resources'
   },
 ];

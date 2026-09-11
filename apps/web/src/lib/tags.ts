@@ -15,10 +15,13 @@ import { getPayloadClient, publishedOnly } from "./payload";
  * │                                                                         │
  * │ Still to add:                                                           │
  * │   - wiki-articles, wiki-regions, wiki-factions, wiki-gods -> /wiki/<slug>│
- * │   - resources -> /resources/<section>/<slug>                            │
  * └─────────────────────────────────────────────────────────────────────────┘
  */
-const TAGGED_SOURCES = [
+const TAGGED_SOURCES: {
+  collection: "dispatches" | "products" | "resources";
+  label: string;
+  href: (slug: string, doc: { section?: string }) => string;
+}[] = [
   {
     collection: "dispatches" as const,
     label: "Dispatch",
@@ -28,6 +31,13 @@ const TAGGED_SOURCES = [
     collection: "products" as const,
     label: "Product",
     href: (slug: string) => `/products/${slug}`,
+  },
+  {
+    collection: "resources" as const,
+    label: "Resource",
+    // Resources are addressed by section as well as slug.
+    href: (slug: string, doc: { section?: string }) =>
+      `/resources/${doc.section ?? ""}/${slug}`,
   },
 ];
 
@@ -78,13 +88,14 @@ export const findTaggedContent = async (tagId: number): Promise<TaggedResult[]> 
         id: `${source.collection}-${doc.id}`,
         label: source.label,
         title: String(doc.title),
-        // Collections name their short text differently; neither field is
-        // guaranteed, so fall through rather than assuming a shape.
+        // Collections name their short text differently — dispatches use
+        // excerpt, products blurb, resources summary — and none is guaranteed.
         summary:
           ("excerpt" in doc ? doc.excerpt : undefined) ??
           ("blurb" in doc ? doc.blurb : undefined) ??
+          ("summary" in doc ? doc.summary : undefined) ??
           null,
-        href: source.href(String(doc.slug)),
+        href: source.href(String(doc.slug), doc as { section?: string }),
       }));
     }),
   );

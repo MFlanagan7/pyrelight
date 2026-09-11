@@ -1,0 +1,17 @@
+.main {
+  max-width: var(--sf-container);
+  margin-inline: auto;
+  padding: calc(var(--sf-section-pad-y) + 3rem) var(--sf-section-pad-x)
+    var(--sf-section-pad-y);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--sf-col-min-card), 1fr));
+  gap: var(--sf-gap-card);
+  margin-top: var(--sf-space-10);
+}
+
+.list {
+  margin-top: var(--sf-space-10);
+}

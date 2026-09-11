@@ -1,0 +1,67 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-4);
+  max-width: 30rem;
+}
+
+.row {
+  display: flex;
+  gap: 0.625rem;
+  flex-wrap: wrap;
+}
+
+.input {
+  flex: 1 1 12rem;
+  min-width: 0;
+  padding: 0.85rem 1.1rem;
+  border: 1px solid rgba(162, 156, 196, 0.4);
+  border-radius: var(--sf-radius-pill);
+  background: rgba(239, 236, 246, 0.06);
+  color: var(--text-heading);
+  font-family: var(--sf-font-body);
+  font-size: var(--sf-text-base);
+}
+
+.input::placeholder {
+  color: var(--text-meta);
+}
+
+/* Deliberately roomy and unticked. A consent control that is easy to miss is
+   not consent. */
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: var(--sf-text-sm);
+  line-height: 1.5;
+  color: var(--text-body-card);
+  cursor: pointer;
+}
+
+.consent input {
+  margin-top: 0.2rem;
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--sf-gold-400);
+}
+
+.note {
+  min-height: 1.2rem;
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-xs);
+  letter-spacing: var(--sf-track-nav);
+  text-transform: uppercase;
+  color: var(--text-label);
+}
+
+.error {
+  color: var(--sf-status-dead);
+}
+
+.ready {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-3);
+}

@@ -29,6 +29,29 @@ export const Subscribers: CollectionConfig = {
       defaultValue: false,
       admin: { description: "Set only by a confirmed double opt-in. Not yet implemented." },
     },
-    { name: "source", type: "text", admin: { description: "Which page the signup came from." } },
+    { name: "source", type: "text", admin: { description: "Which page or resource the address came from." } },
+    {
+      name: "consentedAt",
+      type: "date",
+      admin: {
+        readOnly: true,
+        description:
+          "When marketing consent was given, if it was. An address captured to deliver a download has NOT consented to email — that tick is separate and optional, because making subscription a condition of the download is bundled consent and not defensible under GDPR.",
+      },
+    },
+    {
+      name: "reason",
+      type: "select",
+      defaultValue: "newsletter",
+      options: [
+        { label: "Newsletter signup", value: "newsletter" },
+        { label: "Download — delivery only", value: "download" },
+      ],
+      admin: {
+        readOnly: true,
+        description:
+          "Why this address is on file. A download-only address must not receive a broadcast unless consentedAt is set.",
+      },
+    },
   ],
 };

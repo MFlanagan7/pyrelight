@@ -62,15 +62,37 @@ Entries live flat at `/wiki/<slug>`; pillar names are reserved
 | `/wiki` | Coded route | Not built |
 | `/wiki/<pillar>` × 7 | Coded route | Not built. Pillars: astralite, gods, sea, peoples, magic, realms, history |
 | `/wiki/<slug>` | Collection | Not built. Four collections share this namespace |
-| `/tags/<tag>` | Coded route | **Live.** Aggregates dispatches and products; wiki and resources register when their routes exist |
+| `/tags/<tag>` | Coded route | **Live.** Aggregates dispatches, products and resources; wiki registers when its routes exist |
 | `/search` | Coded route | Not built. `searchText` column exists; tsvector, index and query do not |
 | `/tags` | Coded route | **Live.** Vocabulary index, grouped by subject / type / system |
 
-## Resources — Phase 2, nothing modelled
+## Resources
 
-No collection exists. This is a build, not a configuration.
+One `Resources` collection covers all five sections including tools, so
+everything is tagged, searched and sitemapped by the same machinery. What
+differs is **delivery**, not kind.
 
-`/resources` and its five sections — maps, adventures, tools, guides, templates.
+| Route | Served by | Status |
+| --- | --- | --- |
+| `/resources` | Coded route | **Live.** Section cards with counts |
+| `/resources/<section>` | Coded route | **Live.** Five sections; an unknown one 404s |
+| `/resources/<section>/<slug>` | Collection | **Live.** Zero entries |
+
+**Delivery modes**
+
+| Mode | What happens |
+| --- | --- |
+| `file` | Hosted in the private bucket, delivered by a signed link that expires in ten minutes. Optionally gated behind an email. |
+| `link` | Points at itch.io or elsewhere. |
+| `tool` | Renders a generator registered in `lib/tools.ts`. None built yet — a key with no component says so rather than rendering a blank panel. |
+
+**The email gate and consent.** An address given to receive a file has consented
+to that file, not to marketing. Newsletter signup is a separate, unticked
+checkbox; only a tick sets `consentedAt` and marks the record as a newsletter
+signup. Making the download conditional on subscribing would be bundled consent,
+which GDPR does not permit — and a list built that way gets marked as spam,
+damaging the sending domain. The rule is enforced in the server action, not the
+form, because the form is a suggestion and the action is what writes.
 
 ## System
 
@@ -94,7 +116,8 @@ No collection exists. This is a build, not a configuration.
 | Legal documents | 3 — all published, prose placeholder |
 | Media | 3 |
 | Dispatches, Products, all wiki collections | 0 |
-| Site settings | **Never saved** — the site runs on fallback navigation |
+| Resources, Downloads | 0 |
+| Site settings | Saved — navigation now comes from the CMS |
 
 ---
 

@@ -12,10 +12,12 @@ import sharp from "sharp";
 
 import { Categories } from "./collections/Categories";
 import { Dispatches } from "./collections/Dispatches";
+import { Downloads } from "./collections/Downloads";
 import { LegalDocuments } from "./collections/LegalDocuments";
 import { Media } from "./collections/Media";
 import { Pages } from "./collections/Pages";
 import { Products } from "./collections/Products";
+import { Resources } from "./collections/Resources";
 import { Subscribers } from "./collections/Subscribers";
 import { Tags } from "./collections/Tags";
 import { Users } from "./collections/Users";
@@ -41,10 +43,12 @@ export default buildConfig({
     Pages,
     Dispatches,
     Products,
+    Resources,
     Categories,
     Tags,
     LegalDocuments,
     Media,
+    Downloads,
     Subscribers,
     Users,
     // v2 — the wiki cluster
@@ -119,6 +123,34 @@ export default buildConfig({
             },
           },
         }),
+
+        /**
+         * Second instance for the private bucket. s3Storage handles one bucket
+         * per call, and downloads need the opposite policy to media: no public
+         * URL, no CDN, access only through a signed link that expires.
+         *
+         * Deliberately no generateFileURL and no disablePayloadAccessControl —
+         * the two options that make media public are exactly what must not
+         * apply here.
+         */
+        ...(process.env.S3_DOWNLOADS_BUCKET
+          ? [
+              s3Storage({
+                collections: { downloads: true },
+                bucket: process.env.S3_DOWNLOADS_BUCKET,
+                config: {
+                  endpoint: process.env.S3_ENDPOINT,
+                  region: process.env.S3_REGION,
+                  forcePathStyle: true,
+                  retryStrategy: tlsAwareRetryStrategy(8),
+                  credentials: {
+                    accessKeyId: process.env.S3_ACCESS_KEY_ID || "",
+                    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || "",
+                  },
+                },
+              }),
+            ]
+          : []),
       ]
     : [],
 
