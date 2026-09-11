@@ -159,6 +159,28 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI,
+
+      /**
+       * TLS, configured here rather than by an sslmode flag on the URI.
+       *
+       * node-postgres connects in PLAINTEXT by default. That works from a
+       * developer machine, but Vercel's egress path breaks unencrypted
+       * Postgres: the connection simply hangs until the pool's timeout, with no
+       * error explaining why. Encrypting is the fix, and it is what a
+       * connection crossing the public internet should have been doing anyway.
+       *
+       * rejectUnauthorized is false because Supabase's pooler presents a
+       * certificate signed by their own CA, which is not in Node's trust store.
+       * Current node-postgres treats sslmode=require as verify-full, so it
+       * rejects that chain outright — hence SELF_SIGNED_CERT_IN_CHAIN.
+       *
+       * The traffic is still encrypted; what is skipped is proving the server's
+       * identity. To close that gap, put Supabase's CA certificate in
+       * DATABASE_CA_CERT and verification turns on automatically.
+       */
+      ssl: process.env.DATABASE_CA_CERT
+        ? { ca: process.env.DATABASE_CA_CERT, rejectUnauthorized: true }
+        : { rejectUnauthorized: false },
       /**
        * Pool size by role, not by environment.
        *
