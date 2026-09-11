@@ -106,6 +106,7 @@ The blog is **Dispatches**. The design system's voice guide still calls it
 | `docs/site-map.md` | Reality: every route, how it is served, what fills it, what to author next |
 | `docs/legal-and-licensing.md` | Licence obligations and the content workflow rules |
 | `docs/deployment.md` | Vercel setup, environment variables, migrations |
+| `docs/onboarding-guide.md` | **Planned.** Written at launch: the plain-language guide to everything here and why |
 
 ## Before launch
 
