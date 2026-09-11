@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { TRADEMARK_NOTICE } from "@/lib/legal";
+import { NewsletterForm } from "./NewsletterForm";
 import { SocialLinks, type SocialLink } from "./SocialLinks";
 import styles from "./SiteFooter.module.css";
 
@@ -23,15 +24,29 @@ export function SiteFooter({
   columns = [],
   socials = [],
   note,
+  newsletter,
 }: {
   columns?: FooterColumn[];
   socials?: SocialLink[];
   /** Optional line above the legal block, from SiteSettings. */
   note?: string;
+  /**
+   * Persistent signup, from SiteSettings. The IA asks for one reachable from
+   * every page; the footer is where it lives without competing with the nav.
+   */
+  newsletter?: { heading?: string; body?: string };
 }) {
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
+        {newsletter && (
+          <div className={styles.newsletter}>
+            {newsletter.heading && <p className={styles.newsletterHeading}>{newsletter.heading}</p>}
+            {newsletter.body && <p className={styles.newsletterBody}>{newsletter.body}</p>}
+            <NewsletterForm align="stretch" source="footer" />
+          </div>
+        )}
+
         <div className={styles.columns}>
           <span className={styles.brand}>Starfall</span>
           {columns.map((col) => (

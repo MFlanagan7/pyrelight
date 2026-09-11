@@ -100,3 +100,24 @@
   font-size: var(--sf-text-sm);
   color: var(--text-body-card);
 }
+
+.newsletter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-3);
+  max-width: 32rem;
+  padding-bottom: var(--sf-space-8);
+  border-bottom: 1px solid var(--sf-line-faint);
+}
+
+.newsletterHeading {
+  font-family: var(--sf-font-display);
+  font-size: var(--sf-text-xl);
+  line-height: var(--sf-leading-heading);
+  color: var(--text-heading);
+}
+
+.newsletterBody {
+  font-size: var(--sf-text-sm);
+  color: var(--text-body-card);
+}

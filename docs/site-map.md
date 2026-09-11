@@ -22,16 +22,13 @@ against it, and should be updated whenever a route lands.
 | Route | Served by | Content | Status |
 | --- | --- | --- | --- |
 | `/` | CMS Page `home` | Hero → start-here → lore teasers → product grid → newsletter | **Live.** Published, renders a Hero. Remaining blocks unfilled. |
-| `/world` | CMS Page | Atmospheric on-ramp; gateways into the wiki pillars | **Not created.** See the naming conflict below. |
+| `/world` | CMS Page | Atmospheric on-ramp; gateways into the wiki pillars | **Live.** Renamed from `what-is-starfall`. Still titled "What is Starfall?" — retitle if you want "The World". |
 | `/about` | CMS Page | Who, why, newsletter signup | **Not created.** No code needed. |
 | `/products` | Coded route | Grid of published products, filtered by tier | **Live.** Zero products, so it shows an empty state. |
 | `/products/[slug]` | Collection | Cover, blurb, buy links, description, gallery, licence notice | **Live.** Zero products. |
 
-> **Naming conflict.** The IA document calls the marketing on-ramp `/world`, but
-> the published page is `/what-is-starfall`. They are the same idea under two
-> names. Pick one: rename the page's slug to `world`, or change the IA document
-> and the nav. Leaving both means a dead nav link, because the fallback nav
-> already points at `/world`.
+> Resolved: the page's slug moved from `what-is-starfall` to `world`, so the IA
+> and the nav now agree. `/what-is-starfall` no longer exists.
 
 ## Dispatches
 
@@ -90,7 +87,7 @@ No collection exists. This is a build, not a configuration.
 
 | Collection | Entries |
 | --- | --- |
-| Pages | 2 — `home`, `what-is-starfall` |
+| Pages | 2 — `home`, `world` |
 | Legal documents | 3 — all published, prose placeholder |
 | Media | 3 |
 | Dispatches, Products, Categories, all wiki collections | 0 |
@@ -118,11 +115,20 @@ query and `SearchField` remain.
 
 ## What to author next, in order
 
-1. **Resolve `/world` versus `/what-is-starfall`** — it is a dead nav link today.
-2. **Save Site Settings** — nav, footer columns, socials. Until then the site
-   runs on fallbacks, one of which points at `/resources`, which does not exist.
-3. **Create `/about`** as a Page.
-4. **Fill in the home page's remaining blocks.**
-5. **Write the three legal documents properly.**
-6. **First product and first dispatch** — both indexes currently show empty
-   states.
+Nothing here needs a developer. All of it is admin work.
+
+1. **Save Site Settings.** Nav, footer columns, social links, and the newsletter
+   heading and body. Until this is saved the site runs on a fallback nav of four
+   items; the footer has no columns, no socials, and no signup form, because the
+   signup only renders when the newsletter setting is enabled.
+2. **Create `/about`** as a Page.
+3. **Fill in the home page's remaining blocks.** It publishes a Hero and nothing
+   else. Twelve block types are available.
+4. **Write the three legal documents properly.** All three are published with
+   placeholder prose. The licence notices already render from code.
+5. **Retitle `/world`** if "What is Starfall?" is not the heading you want.
+6. **First product and first dispatch.** Both indexes show empty states.
+7. **Replace the eleven placeholder social glyphs** before launch —
+   `apps/web/src/assets/social-paths.ts`.
+
+Completed: the `/world` slug rename.

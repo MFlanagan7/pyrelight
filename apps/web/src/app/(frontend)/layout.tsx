@@ -50,11 +50,13 @@ export const metadata: Metadata = {
  * Fallbacks for a site whose settings have not been authored yet. Without them
  * a fresh database renders a site with no navigation at all, which looks broken
  * rather than unconfigured. Editing SiteSettings replaces these entirely.
+ *
+ * Only routes that exist belong here. /resources is in the IA but not built, and
+ * a nav that links to a 404 is worse than one item short.
  */
 const FALLBACK_NAV = [
   { label: "The World", href: "/world" },
   { label: "Products", href: "/products" },
-  { label: "Resources", href: "/resources" },
   { label: "Dispatches", href: "/dispatches" },
   { label: "About", href: "/about" },
 ];
@@ -92,6 +94,14 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           columns={footerColumns}
           socials={socials}
           note={settings?.footerNote ?? undefined}
+          newsletter={
+            settings?.newsletter?.enabled
+              ? {
+                  heading: settings.newsletter.heading ?? undefined,
+                  body: settings.newsletter.body ?? undefined,
+                }
+              : undefined
+          }
         />
       </body>
     </html>
