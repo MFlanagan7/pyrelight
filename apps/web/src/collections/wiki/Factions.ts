@@ -1,6 +1,7 @@
 import type { CollectionConfig } from "payload";
 import { licensingFields, validateLicensing } from "../../fields/licensing";
 import { searchTextField } from "../../fields/searchText";
+import { tagsField } from "../../fields/tags";
 import { seoField } from "../../fields/seo";
 import { RESERVED_WIKI_SLUGS } from "../../lib/wiki";
 import { slugField } from "../../fields/slug";
@@ -43,6 +44,7 @@ export const WikiFactions: CollectionConfig = {
     { name: "body", type: "richText" },
     { name: "related", type: "relationship", relationTo: ["wiki-articles", "wiki-factions", "wiki-gods", "wiki-regions"], hasMany: true, admin: { position: "sidebar" } },
     searchTextField({ text: ["title", "motto", "seat", "summary"], rich: ["body"] }),
+    tagsField(),
     ...licensingFields,
     seoField,
   ],

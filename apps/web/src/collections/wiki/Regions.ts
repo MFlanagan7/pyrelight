@@ -1,6 +1,7 @@
 import type { CollectionConfig } from "payload";
 import { licensingFields, validateLicensing } from "../../fields/licensing";
 import { searchTextField } from "../../fields/searchText";
+import { tagsField } from "../../fields/tags";
 import { seoField } from "../../fields/seo";
 import { RESERVED_WIKI_SLUGS } from "../../lib/wiki";
 import { slugField } from "../../fields/slug";
@@ -38,6 +39,7 @@ export const WikiRegions: CollectionConfig = {
     { name: "factions", type: "relationship", relationTo: "wiki-factions", hasMany: true, admin: { position: "sidebar" } },
     { name: "related", type: "relationship", relationTo: ["wiki-articles", "wiki-factions", "wiki-gods", "wiki-regions"], hasMany: true, admin: { position: "sidebar" } },
     searchTextField({ text: ["title", "terrain", "summary"], rich: ["body"], arrays: [{ name: "locations", fields: ["name", "description"] }] }),
+    tagsField(),
     ...licensingFields,
     seoField,
   ],

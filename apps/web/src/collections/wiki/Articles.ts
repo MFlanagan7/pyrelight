@@ -2,6 +2,7 @@ import type { CollectionConfig } from "payload";
 import { articleBlocks } from "../../blocks";
 import { licensingFields, validateLicensing } from "../../fields/licensing";
 import { searchTextField } from "../../fields/searchText";
+import { tagsField } from "../../fields/tags";
 import { seoField } from "../../fields/seo";
 import { RESERVED_WIKI_SLUGS } from "../../lib/wiki";
 import { slugField } from "../../fields/slug";
@@ -49,6 +50,7 @@ export const WikiArticles: CollectionConfig = {
       admin: { position: "sidebar", description: "Renders behind a spoiler block." },
     },
     searchTextField({ text: ["title", "summary"], rich: ["body"] }),
+    tagsField(),
     ...licensingFields,
     seoField,
   ],

@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { revalidateCollection } from "../hooks/revalidate";
+import { tagsField } from "../fields/tags";
 import { seoField } from "../fields/seo";
 import { slugField } from "../fields/slug";
 
@@ -39,12 +40,15 @@ export const Dispatches: CollectionConfig = {
       admin: { position: "sidebar", date: { pickerAppearance: "dayAndTime" } },
     },
     {
-      name: "tags",
+      // Renamed from "tags": this is the post's category — Design Notes,
+      // Worldbuilding, GM Advice, Studio — a different axis from the shared
+      // tag vocabulary below.
+      name: "category",
       type: "relationship",
       relationTo: "categories",
-      hasMany: true,
       admin: { position: "sidebar" },
     },
+    tagsField(),
     seoField,
   ],
 };

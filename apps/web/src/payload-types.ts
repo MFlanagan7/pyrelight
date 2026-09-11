@@ -71,6 +71,7 @@ export interface Config {
     dispatches: Dispatch;
     products: Product;
     categories: Category;
+    tags: Tag;
     'legal-documents': LegalDocument;
     media: Media;
     subscribers: Subscriber;
@@ -90,6 +91,7 @@ export interface Config {
     dispatches: DispatchesSelect<false> | DispatchesSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    tags: TagsSelect<false> | TagsSelect<true>;
     'legal-documents': LegalDocumentsSelect<false> | LegalDocumentsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
@@ -420,6 +422,10 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
+  /**
+   * What this is about. Pick from the list; if nothing fits, add the tag rather than a near-duplicate.
+   */
+  tags?: (number | Tag)[] | null;
   contentKind: 'lore' | 'crunch';
   gameSystem: 'system-neutral' | '5e-2014' | '5e-2024' | 'pf2e' | 'sf2e';
   /**
@@ -447,6 +453,39 @@ export interface Product {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * Controlled vocabulary. Adding a near-duplicate of an existing tag is worse than reusing a loose one.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
+export interface Tag {
+  id: number;
+  title: string;
+  /**
+   * Generated from the title on first save. Changing it breaks existing links.
+   */
+  slug: string;
+  /**
+   * One term, one group. A System tag describes mechanics the entry CONTAINS (statblock, spell, encounter). If the term is a noun for what the entry is, it belongs in Type.
+   */
+  group: 'subject' | 'type' | 'system';
+  /**
+   * What belongs under this tag. Worth writing — it is what stops the vocabulary drifting.
+   */
+  description?: string | null;
+  /**
+   * Other names readers might search for. A tag is the only way to make an entry findable under a name its text never uses — full-text search cannot infer that.
+   */
+  aliases?:
+    | {
+        alias: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -637,7 +676,11 @@ export interface Dispatch {
     [k: string]: unknown;
   };
   publishedAt: string;
-  tags?: (number | Category)[] | null;
+  category?: (number | null) | Category;
+  /**
+   * What this is about. Pick from the list; if nothing fits, add the tag rather than a near-duplicate.
+   */
+  tags?: (number | Tag)[] | null;
   seo?: {
     /**
      * Overrides the browser tab and search result title.
@@ -672,7 +715,7 @@ export interface Category {
    */
   slug: string;
   description?: string | null;
-  kind: 'wiki' | 'dispatch' | 'both';
+  kind: 'wiki' | 'dispatch';
   /**
    * Optional, for nested categories.
    */
@@ -847,6 +890,10 @@ export interface WikiArticle {
    * Generated from the entry's text on save. Not edited directly.
    */
   searchText?: string | null;
+  /**
+   * What this is about. Pick from the list; if nothing fits, add the tag rather than a near-duplicate.
+   */
+  tags?: (number | Tag)[] | null;
   contentKind: 'lore' | 'crunch';
   gameSystem: 'system-neutral' | '5e-2014' | '5e-2024' | 'pf2e' | 'sf2e';
   /**
@@ -934,6 +981,10 @@ export interface WikiFaction {
    * Generated from the entry's text on save. Not edited directly.
    */
   searchText?: string | null;
+  /**
+   * What this is about. Pick from the list; if nothing fits, add the tag rather than a near-duplicate.
+   */
+  tags?: (number | Tag)[] | null;
   contentKind: 'lore' | 'crunch';
   gameSystem: 'system-neutral' | '5e-2014' | '5e-2024' | 'pf2e' | 'sf2e';
   /**
@@ -1029,6 +1080,10 @@ export interface WikiRegion {
    * Generated from the entry's text on save. Not edited directly.
    */
   searchText?: string | null;
+  /**
+   * What this is about. Pick from the list; if nothing fits, add the tag rather than a near-duplicate.
+   */
+  tags?: (number | Tag)[] | null;
   contentKind: 'lore' | 'crunch';
   gameSystem: 'system-neutral' | '5e-2014' | '5e-2024' | 'pf2e' | 'sf2e';
   /**
@@ -1124,6 +1179,10 @@ export interface WikiGod {
    * Generated from the entry's text on save. Not edited directly.
    */
   searchText?: string | null;
+  /**
+   * What this is about. Pick from the list; if nothing fits, add the tag rather than a near-duplicate.
+   */
+  tags?: (number | Tag)[] | null;
   contentKind: 'lore' | 'crunch';
   gameSystem: 'system-neutral' | '5e-2014' | '5e-2024' | 'pf2e' | 'sf2e';
   /**
@@ -1191,6 +1250,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'categories';
         value: number | Category;
+      } | null)
+    | ({
+        relationTo: 'tags';
+        value: number | Tag;
       } | null)
     | ({
         relationTo: 'legal-documents';
@@ -1484,6 +1547,7 @@ export interface DispatchesSelect<T extends boolean = true> {
   cover?: T;
   body?: T;
   publishedAt?: T;
+  category?: T;
   tags?: T;
   seo?:
     | T
@@ -1523,6 +1587,7 @@ export interface ProductsSelect<T extends boolean = true> {
         affiliateUrl?: T;
         id?: T;
       };
+  tags?: T;
   contentKind?: T;
   gameSystem?: T;
   licence?: T;
@@ -1548,6 +1613,24 @@ export interface CategoriesSelect<T extends boolean = true> {
   description?: T;
   kind?: T;
   parent?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags_select".
+ */
+export interface TagsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  group?: T;
+  description?: T;
+  aliases?:
+    | T
+    | {
+        alias?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1693,6 +1776,7 @@ export interface WikiArticlesSelect<T extends boolean = true> {
   related?: T;
   spoiler?: T;
   searchText?: T;
+  tags?: T;
   contentKind?: T;
   gameSystem?: T;
   licence?: T;
@@ -1729,6 +1813,7 @@ export interface WikiRegionsSelect<T extends boolean = true> {
   factions?: T;
   related?: T;
   searchText?: T;
+  tags?: T;
   contentKind?: T;
   gameSystem?: T;
   licence?: T;
@@ -1760,6 +1845,7 @@ export interface WikiFactionsSelect<T extends boolean = true> {
   body?: T;
   related?: T;
   searchText?: T;
+  tags?: T;
   contentKind?: T;
   gameSystem?: T;
   licence?: T;
@@ -1796,6 +1882,7 @@ export interface WikiGodsSelect<T extends boolean = true> {
   worshippedIn?: T;
   related?: T;
   searchText?: T;
+  tags?: T;
   contentKind?: T;
   gameSystem?: T;
   licence?: T;

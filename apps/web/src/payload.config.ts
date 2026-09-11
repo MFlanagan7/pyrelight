@@ -17,6 +17,7 @@ import { Media } from "./collections/Media";
 import { Pages } from "./collections/Pages";
 import { Products } from "./collections/Products";
 import { Subscribers } from "./collections/Subscribers";
+import { Tags } from "./collections/Tags";
 import { Users } from "./collections/Users";
 import { WikiArticles } from "./collections/wiki/Articles";
 import { WikiFactions } from "./collections/wiki/Factions";
@@ -41,6 +42,7 @@ export default buildConfig({
     Dispatches,
     Products,
     Categories,
+    Tags,
     LegalDocuments,
     Media,
     Subscribers,
@@ -125,20 +127,6 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI,
-      /**
-       * Pool size differs by runtime, and getting it wrong exhausts the
-       * database rather than merely slowing things down.
-       *
-       * Serverless: every invocation is its own short-lived process with its
-       * own pool, so a pool of N becomes N x (concurrent invocations). One
-       * connection each, released promptly, is the only shape that scales.
-       * Point DATABASE_URI at Supabase's TRANSACTION pooler (port 6543) in
-       * production — it is built for many brief clients.
-       *
-       * Local dev: one long-lived process against the SESSION pooler (5432),
-       * which caps a tenant at 15 clients. Five leaves room for the migration
-       * CLI to run alongside a dev server.
-       */
       /**
        * Pool size by role, not by environment.
        *
