@@ -13,12 +13,19 @@ import { getPayloadClient, publishedOnly } from "./payload";
  * │ collection before its routes are built produces results that link to    │
  * │ 404s, which is worse than omitting it.                                  │
  * │                                                                         │
- * │ Still to add:                                                           │
- * │   - wiki-articles, wiki-regions, wiki-factions, wiki-gods -> /wiki/<slug>│
+ * │ Every content collection with a detail route is registered. Add the next │
+ * │ one here when its routes land, not before.                              │
  * └─────────────────────────────────────────────────────────────────────────┘
  */
 const TAGGED_SOURCES: {
-  collection: "dispatches" | "products" | "resources";
+  collection:
+    | "dispatches"
+    | "products"
+    | "resources"
+    | "wiki-articles"
+    | "wiki-gods"
+    | "wiki-factions"
+    | "wiki-regions";
   label: string;
   href: (slug: string, doc: { section?: string }) => string;
 }[] = [
@@ -39,6 +46,11 @@ const TAGGED_SOURCES: {
     href: (slug: string, doc: { section?: string }) =>
       `/resources/${doc.section ?? ""}/${slug}`,
   },
+  // The four wiki collections share one flat namespace at /wiki/<slug>.
+  { collection: "wiki-articles" as const, label: "Article", href: (slug: string) => `/wiki/${slug}` },
+  { collection: "wiki-gods" as const, label: "God", href: (slug: string) => `/wiki/${slug}` },
+  { collection: "wiki-factions" as const, label: "Faction", href: (slug: string) => `/wiki/${slug}` },
+  { collection: "wiki-regions" as const, label: "Region", href: (slug: string) => `/wiki/${slug}` },
 ];
 
 export type TaggedResult = {

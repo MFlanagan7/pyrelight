@@ -2,6 +2,8 @@ import type { CollectionConfig } from "payload";
 import { licensingFields, validateLicensing } from "../../fields/licensing";
 import { searchTextField } from "../../fields/searchText";
 import { tagsField } from "../../fields/tags";
+import { pillarField } from "../../fields/pillar";
+import { revalidateCollection, revalidateTagPages } from "../../hooks/revalidate";
 import { seoField } from "../../fields/seo";
 import { RESERVED_WIKI_SLUGS } from "../../lib/wiki";
 import { slugField } from "../../fields/slug";
@@ -23,6 +25,7 @@ export const WikiRegions: CollectionConfig = {
     // Pillars live at /wiki/<pillar> and entries at /wiki/<slug>, so an entry
     // may not take a pillar's name.
     slugField("title", RESERVED_WIKI_SLUGS),
+    pillarField(),
     { name: "terrain", type: "text", admin: { description: "'Drowned coast', 'Ashen steppe'." } },
     { name: "map", type: "upload", relationTo: "media" },
     { name: "summary", type: "textarea" },
@@ -43,5 +46,16 @@ export const WikiRegions: CollectionConfig = {
     ...licensingFields,
     seoField,
   ],
-  hooks: { beforeValidate: [({ data }) => { const r = validateLicensing(data ?? {}); if (r !== true) throw new Error(r); return data; }] },
+  hooks: {
+    beforeValidate: [({ data }) => { const r = validateLicensing(data ?? {}); if (r !== true) throw new Error(r); return data; }],
+    // Entries share the flat /wiki namespace, and their pillar page lists them.
+    afterChange: [
+      ...revalidateCollection("/wiki", "/wiki").afterChange,
+      ...revalidateTagPages().afterChange,
+    ],
+    afterDelete: [
+      ...revalidateCollection("/wiki", "/wiki").afterDelete,
+      ...revalidateTagPages().afterDelete,
+    ],
+  },
 };

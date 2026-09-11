@@ -52,19 +52,30 @@ are not yet created as `Categories` entries.
 Notices render from `lib/legal.ts` whether or not the prose exists — a missing
 page must never mean a missing attribution.
 
-## Wiki — Phase 3, nothing built
+## Wiki
 
-Entries live flat at `/wiki/<slug>`; pillar names are reserved
-(`lib/wiki.ts`). Every component these need is ported and waiting.
+Entries live flat at `/wiki/<slug>`; pillar names are reserved (`lib/wiki.ts`),
+so one dynamic segment serves both without ambiguity.
 
 | Route | Served by | Status |
 | --- | --- | --- |
-| `/wiki` | Coded route | Not built |
-| `/wiki/<pillar>` × 7 | Coded route | Not built. Pillars: astralite, gods, sea, peoples, magic, realms, history |
-| `/wiki/<slug>` | Collection | Not built. Four collections share this namespace |
-| `/tags/<tag>` | Coded route | **Live.** Aggregates dispatches, products and resources; wiki registers when its routes exist |
-| `/search` | Coded route | Not built. `searchText` column exists; tsvector, index and query do not |
+| `/wiki` | Coded route | **Live.** Seven pillar cards with entry counts, in declared order |
+| `/wiki/<pillar>` × 7 | Coded route | **Live.** Lists every entry in that pillar, across all four collections |
+| `/wiki/<slug>` | Collection | **Live.** Zero entries. Type-aware info rail, contents list, tags, related |
 | `/tags` | Coded route | **Live.** Vocabulary index, grouped by subject / type / system |
+| `/tags/<tag>` | Coded route | **Live.** Aggregates every content area including the wiki |
+| `/search` | Coded route | Not built. `searchText` is populated; tsvector, index and query are not |
+
+**Pillars are not one-to-one with collections.** "Peoples & Powers" spans
+factions and articles; "The Gods" spans gods and articles about divine
+politics. Every wiki collection therefore carries a pillar field, and the
+picker is filtered to categories marked as wiki pillars so a dispatch category
+cannot be assigned by mistake.
+
+**Spoiler handling.** An entry marked `spoiler` renders its whole body behind a
+reveal, rather than relying on an author remembering to wrap it. Its contents
+list is suppressed too — a list of concealed headings gives away what the
+reveal protects.
 
 ## Resources
 

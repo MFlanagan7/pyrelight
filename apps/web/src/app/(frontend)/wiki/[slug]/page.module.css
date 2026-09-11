@@ -1,0 +1,78 @@
+.main {
+  max-width: var(--sf-container);
+  margin-inline: auto;
+  padding: calc(var(--sf-section-pad-y) + 3rem) var(--sf-section-pad-x)
+    var(--sf-section-pad-y);
+}
+
+.title {
+  margin-top: var(--sf-space-4);
+  max-width: 22ch;
+  font-family: var(--sf-font-display);
+  font-size: var(--sf-text-3xl);
+  line-height: var(--sf-leading-tight);
+  color: var(--text-heading);
+}
+
+.summary {
+  margin-top: var(--sf-space-5);
+  max-width: var(--sf-measure-body);
+  font-size: var(--sf-text-lg);
+  color: var(--text-body-card);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--sf-space-10);
+  margin-top: var(--sf-space-10);
+}
+
+/* The rail joins only when there is room for it beside a 72ch measure. */
+@media (min-width: 64rem) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr) 20rem;
+    align-items: start;
+  }
+}
+
+.rail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-8);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sf-space-3);
+  margin-top: var(--sf-space-10);
+}
+
+.related {
+  margin-top: var(--sf-space-12);
+}
+
+.relatedTitle {
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-xs);
+  letter-spacing: var(--sf-track-label);
+  text-transform: uppercase;
+  color: var(--text-accent);
+  margin-bottom: var(--sf-space-5);
+}
+
+.licence {
+  margin-top: var(--sf-space-12);
+  padding-top: var(--sf-space-6);
+  border-top: 1px solid var(--sf-line);
+  max-width: var(--sf-measure-reading);
+  font-size: var(--sf-text-sm);
+  line-height: 1.7;
+  color: var(--text-legal);
+  overflow-wrap: anywhere;
+}
+
+.pillarList {
+  margin-top: var(--sf-space-10);
+}

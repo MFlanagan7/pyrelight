@@ -966,7 +966,10 @@ export interface WikiArticle {
    * One paragraph. Shown in search results and category listings.
    */
   summary?: string | null;
-  category?: (number | null) | Category;
+  /**
+   * Which of the seven pillars this belongs to. One per entry — cross-cutting connections are tags.
+   */
+  category: number | Category;
   body?: {
     root: {
       type: string;
@@ -1057,6 +1060,10 @@ export interface WikiFaction {
    * Generated from the title on first save. Changing it breaks existing links.
    */
   slug: string;
+  /**
+   * Which of the seven pillars this belongs to. One per entry — cross-cutting connections are tags.
+   */
+  category: number | Category;
   kind?: ('house' | 'order' | 'guild' | 'cult' | 'other') | null;
   sigil?: (number | null) | Media;
   motto?: string | null;
@@ -1148,6 +1155,10 @@ export interface WikiRegion {
    * Generated from the title on first save. Changing it breaks existing links.
    */
   slug: string;
+  /**
+   * Which of the seven pillars this belongs to. One per entry — cross-cutting connections are tags.
+   */
+  category: number | Category;
   /**
    * 'Drowned coast', 'Ashen steppe'.
    */
@@ -1247,6 +1258,10 @@ export interface WikiGod {
    * Generated from the title on first save. Changing it breaks existing links.
    */
   slug: string;
+  /**
+   * Which of the seven pillars this belongs to. One per entry — cross-cutting connections are tags.
+   */
+  category: number | Category;
   /**
    * The name mortals use. 'The Drowned Lantern'.
    */
@@ -1984,6 +1999,7 @@ export interface WikiArticlesSelect<T extends boolean = true> {
 export interface WikiRegionsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  category?: T;
   terrain?: T;
   map?: T;
   summary?: T;
@@ -2021,6 +2037,7 @@ export interface WikiRegionsSelect<T extends boolean = true> {
 export interface WikiFactionsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  category?: T;
   kind?: T;
   sigil?: T;
   motto?: T;
@@ -2053,6 +2070,7 @@ export interface WikiFactionsSelect<T extends boolean = true> {
 export interface WikiGodsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  category?: T;
   epithet?: T;
   divineStatus?: T;
   domains?:

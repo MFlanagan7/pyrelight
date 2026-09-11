@@ -3,6 +3,8 @@ import { countDispatchPages, dispatchPageHref } from "@/lib/dispatches";
 import { findProducts } from "@/lib/products";
 import { RESOURCE_SECTIONS, findResources } from "@/lib/resources";
 import { findAllTags } from "@/lib/tags";
+import { WIKI_PILLARS } from "@/lib/wiki";
+import { findAllWikiEntries } from "@/lib/wiki-content";
 import { getPayloadClient, publishedOnly } from "@/lib/payload";
 import { siteUrl } from "@/lib/site";
 
@@ -19,8 +21,6 @@ import { siteUrl } from "@/lib/site";
  * │ anything not listed below is invisible to search engines with no error  │
  * │ to warn you. Add a query and a mapping here when you add:               │
  * │                                                                         │
- * │   - Wiki entries    -> /wiki/<slug>   (all four wiki collections share  │
- * │                        the flat namespace; see lib/wiki.ts)             │
  * │                                                                         │
  * │ Also add any new static route (a /wiki or /resources index, say) to the │
  * │ returned array — static routes are not discovered either.               │
@@ -32,7 +32,7 @@ import { siteUrl } from "@/lib/site";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const payload = await getPayloadClient();
 
-  const [pages, dispatches, legal, dispatchPageCount, products, tags, resources] = await Promise.all([
+  const [pages, dispatches, legal, dispatchPageCount, products, tags, resources, wikiEntries] = await Promise.all([
     payload.find({
       collection: "pages",
       where: publishedOnly,
@@ -58,6 +58,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     findProducts(),
     findAllTags(),
     findResources(),
+    findAllWikiEntries(),
   ]);
 
   const entry = (
@@ -84,6 +85,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry("/dispatches", undefined, 0.7, "weekly"),
     entry("/products", undefined, 0.9, "weekly"),
     entry("/tags", undefined, 0.4, "weekly"),
+    entry("/wiki", undefined, 0.9, "weekly"),
+    ...WIKI_PILLARS.map((p) => entry(`/wiki/${p.slug}`, undefined, 0.8, "weekly")),
+    ...wikiEntries.map((e) => entry(`/wiki/${e.slug}`, undefined, 0.6)),
     entry("/resources", undefined, 0.9, "weekly"),
     ...RESOURCE_SECTIONS.map((s) => entry(`/resources/${s.slug}`, undefined, 0.7, "weekly")),
     ...resources.docs.map((r) =>

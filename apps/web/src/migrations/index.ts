@@ -5,6 +5,7 @@ import * as migration_20260908_124317_content_license_spelling from './20260908_
 import * as migration_20260910_220758_site_settings_chrome from './20260910_220758_site_settings_chrome';
 import * as migration_20260911_003733_tags from './20260911_003733_tags';
 import * as migration_20260911_121436_resources from './20260911_121436_resources';
+import * as migration_20260911_122416_wiki_pillars from './20260911_122416_wiki_pillars';
 
 export const migrations = [
   {
@@ -40,6 +41,11 @@ export const migrations = [
   {
     up: migration_20260911_121436_resources.up,
     down: migration_20260911_121436_resources.down,
-    name: '20260911_121436_resources'
+    name: '20260911_121436_resources',
+  },
+  {
+    up: migration_20260911_122416_wiki_pillars.up,
+    down: migration_20260911_122416_wiki_pillars.down,
+    name: '20260911_122416_wiki_pillars'
   },
 ];

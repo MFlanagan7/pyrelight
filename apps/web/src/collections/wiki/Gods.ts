@@ -2,6 +2,8 @@ import type { CollectionConfig } from "payload";
 import { licensingFields, validateLicensing } from "../../fields/licensing";
 import { searchTextField } from "../../fields/searchText";
 import { tagsField } from "../../fields/tags";
+import { pillarField } from "../../fields/pillar";
+import { revalidateCollection, revalidateTagPages } from "../../hooks/revalidate";
 import { seoField } from "../../fields/seo";
 import { RESERVED_WIKI_SLUGS } from "../../lib/wiki";
 import { slugField } from "../../fields/slug";
@@ -23,6 +25,7 @@ export const WikiGods: CollectionConfig = {
     // Pillars live at /wiki/<pillar> and entries at /wiki/<slug>, so an entry
     // may not take a pillar's name.
     slugField("title", RESERVED_WIKI_SLUGS),
+    pillarField(),
     { name: "epithet", type: "text", admin: { description: "The name mortals use. 'The Drowned Lantern'." } },
     {
       // NOT "status": Payload's drafts feature adds a _status column whose enum is
@@ -53,5 +56,16 @@ export const WikiGods: CollectionConfig = {
     ...licensingFields,
     seoField,
   ],
-  hooks: { beforeValidate: [({ data }) => { const r = validateLicensing(data ?? {}); if (r !== true) throw new Error(r); return data; }] },
+  hooks: {
+    beforeValidate: [({ data }) => { const r = validateLicensing(data ?? {}); if (r !== true) throw new Error(r); return data; }],
+    // Entries share the flat /wiki namespace, and their pillar page lists them.
+    afterChange: [
+      ...revalidateCollection("/wiki", "/wiki").afterChange,
+      ...revalidateTagPages().afterChange,
+    ],
+    afterDelete: [
+      ...revalidateCollection("/wiki", "/wiki").afterDelete,
+      ...revalidateTagPages().afterDelete,
+    ],
+  },
 };
