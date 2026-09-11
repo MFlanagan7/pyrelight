@@ -5,6 +5,8 @@
 > **The one big idea:** This is really **three sites in one**, each serving a different visitor.
 > **Marketing** ("should I care?") → sell the world. **Wiki** ("tell me about X") → explore the lore. **Resources** ("help me run Thursday") → tools for GMs. Keep them structurally distinct or everything turns to mush.
 
+> **Build status lives in `site-map.md`.** This document is the target; that one tracks every route against it — what exists, what is authored, and what to write next.
+
 ---
 
 ## 1 · Top-Level Navigation

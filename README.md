@@ -98,11 +98,14 @@ decisions), tools, gallery, timeline, VTT assets.
 The blog is **Dispatches**. The design system's voice guide still calls it
 "field notes" — update it there when convenient.
 
-## Open decisions
+## Documentation
 
-`docs/information-architecture.md` — the wiki's structure, and separating tags
-from categories. Wiki routes are blocked on it; every component they need is
-built.
+| Doc | What it is |
+| --- | --- |
+| `docs/starfall-site-ia.md` | Strategy: what the site should be, navigation, wiki taxonomy, phasing |
+| `docs/site-map.md` | Reality: every route, how it is served, what fills it, what to author next |
+| `docs/legal-and-licensing.md` | Licence obligations and the content workflow rules |
+| `docs/deployment.md` | Vercel setup, environment variables, migrations |
 
 ## Before launch
 
