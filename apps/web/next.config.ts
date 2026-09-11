@@ -71,11 +71,31 @@ const nextConfig: NextConfig = {
    * dev server is running and holding its own pool.
    *
    * Four workers is still comfortably parallel for a site this size, and
-   * leaves headroom for a dev server alongside a build. Payload's own pool
-   * drops to one connection per process during the build phase; both limits
-   * are needed, since either alone still exceeds the cap.
+   * leaves headroom for a dev server alongside a build. Each holds a pool of
+   * five (see poolMax in payload.config.ts), so a build peaks around twenty
+   * clients — fine for the transaction pooler, which allows far more, and over
+   * the session pooler's cap, which is one more reason to stay on 6543.
    */
   experimental: { cpus: 4 },
+
+  /**
+   * Keep every non-production deployment out of search results.
+   *
+   * Stronger than the robots.txt rule beside it: a Disallow stops a crawl but
+   * does not prevent a URL that something links to from being listed anyway,
+   * whereas noindex removes it outright. Vercel sends this header on its own
+   * *.vercel.app preview URLs, but not on a custom domain pointed at a branch —
+   * which is exactly what staging will be.
+   */
+  async headers() {
+    if (environment === "production") return [];
+    return [
+      {
+        source: "/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+    ];
+  },
 
   images: {
     // next/image refuses remote sources that are not explicitly allowed.

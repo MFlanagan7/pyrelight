@@ -8,8 +8,32 @@ import { siteUrl } from "@/lib/site";
  * engine and every crawl of them costs a serverless invocation. This is not a
  * security measure — robots.txt is advisory, and access control is what
  * actually protects those routes.
+ *
+ * Staging is disallowed OUTRIGHT. Once staging.starfall.pyrelightpress.com is a
+ * real domain it is as crawlable as production, and an indexed staging site
+ * competes with the live one for the same terms while showing unfinished drafts
+ * to the public. next.config.ts also sends X-Robots-Tag: noindex there, which is
+ * the stronger of the two — robots.txt stops a crawl, but a URL linked from
+ * elsewhere can still be listed without one.
  */
 export default function robots(): MetadataRoute.Robots {
+  /**
+   * Deliberately treats an unknown environment as production.
+   *
+   * The two failure directions are not equal. Indexing staging is untidy and
+   * reversible; de-indexing the live site because a build did not inline this
+   * variable would quietly destroy its search presence for weeks. So this only
+   * locks the door when it positively knows it is not production.
+   */
+  const environment = process.env.NEXT_PUBLIC_ENVIRONMENT;
+  const isPublic = !environment || environment === "production";
+
+  if (!isPublic) {
+    return {
+      rules: { userAgent: "*", disallow: "/" },
+    };
+  }
+
   return {
     rules: {
       userAgent: "*",
