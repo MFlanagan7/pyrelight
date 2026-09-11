@@ -49,6 +49,11 @@ console.log(`[build] environment=${env} branch=${branch}`);
 
 if (isProduction || isStaging) {
   console.log(`[build] database: ${describeDatabase()}`);
+
+  // Reports which layer of the connection works before the pool gets a chance
+  // to fail with a single undifferentiated timeout. Never fails the build.
+  run("node", ["scripts/db-preflight.mjs"]);
+
   console.log(
     `[build] ${isProduction ? "production" : "staging"} deployment — applying migrations`,
   );
