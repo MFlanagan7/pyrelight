@@ -1,5 +1,39 @@
+import { execSync } from "node:child_process";
 import { withPayload } from "@payloadcms/next/withPayload";
 import type { NextConfig } from "next";
+
+/**
+ * Which environment this build is for, and which branch it came from.
+ *
+ * Resolved at build time and inlined, because the browser has no other way to
+ * know: VERCEL_GIT_* exist only on the build machine, and a serverless runtime
+ * cannot shell out to git.
+ *
+ * Vercel calls every non-production deploy "preview". The staging branch is
+ * singled out so it reads as staging rather than sharing a label with every
+ * pull-request deploy.
+ */
+const localGit = (command: string): string | undefined => {
+  try {
+    return execSync(command, { stdio: ["ignore", "pipe", "ignore"] }).toString().trim();
+  } catch {
+    // Absent in CI, and a missing git must never fail the build.
+    return undefined;
+  }
+};
+
+const vercelEnv = process.env.VERCEL_ENV;
+const branch =
+  process.env.VERCEL_GIT_COMMIT_REF ?? localGit("git rev-parse --abbrev-ref HEAD") ?? "unknown";
+const sha = (process.env.VERCEL_GIT_COMMIT_SHA ?? localGit("git rev-parse HEAD") ?? "").slice(0, 7);
+
+const environment = !vercelEnv
+  ? "local"
+  : vercelEnv === "production"
+    ? "production"
+    : branch === "staging"
+      ? "staging"
+      : "preview";
 
 /**
  * Supabase Storage hostname, derived from the S3 endpoint so there is one
@@ -21,6 +55,12 @@ const supabaseHost = (): string | null => {
 const host = supabaseHost();
 
 const nextConfig: NextConfig = {
+  env: {
+    NEXT_PUBLIC_ENVIRONMENT: environment,
+    NEXT_PUBLIC_GIT_BRANCH: branch,
+    NEXT_PUBLIC_GIT_SHA: sha,
+  },
+
   /**
    * Bound the prerender worker pool.
    *

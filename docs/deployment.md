@@ -3,6 +3,42 @@
 Frontend and CMS deploy together to Vercel as one Next.js app. There is no
 second server: Payload's admin and API are routes inside `apps/web`.
 
+## Branches and environments
+
+| Branch | Vercel environment | Database | Badge |
+| --- | --- | --- | --- |
+| `main` | Production | Production | None |
+| `staging` | Preview, with its own domain | **Its own** | Gold strip |
+| anything else | Preview | Whatever that environment points at | Teal strip |
+
+Work lands on `staging`, gets tested on a real deployment, and is merged to
+`main` to go live.
+
+**Staging needs its own `DATABASE_URI`.** Scope it to the staging environment in
+Vercel. Staging runs migrations — it has to, or it cannot prove a release before
+it goes live — so if it shares production's database, a staging deploy reshapes
+production. That is the exact failure this arrangement exists to prevent.
+
+Pull-request previews deliberately do not migrate. A branch still under review
+must not reshape a shared schema. A preview needing a new column therefore fails
+until that migration reaches staging: a visible, cheap failure, where a silently
+mutated schema is neither.
+
+Every deploy that migrates prints its database host to the build log, with
+credentials stripped. It is the one line that answers "which database did this
+deploy just change?" — check it after the first staging deploy.
+
+## The environment badge
+
+Local, staging and preview builds carry a thin coloured strip down the left edge
+showing environment, branch and commit. Production has none, and anything
+unrecognised is treated as production — failing closed, so a misconfigured build
+cannot brand the live site.
+
+Values are inlined at build time by `next.config.ts`: `VERCEL_GIT_*` exists only
+on the build machine, and a serverless runtime cannot shell out to git. Locally
+it reads git directly, and a missing git is not an error.
+
 ## Vercel project setup
 
 1. Import the repository.
@@ -14,6 +50,11 @@ second server: Payload's admin and API are routes inside `apps/web`.
 4. Add the environment variables below.
 5. Add the domain `starfall.pyrelightpress.com`, then add the CNAME Vercel gives
    you to `pyrelightpress.com`'s DNS.
+6. Production Branch: `main`.
+7. Add a second domain — `staging.starfall.pyrelightpress.com` — assigned to the
+   `staging` branch, so staging has a stable URL rather than a per-deploy one.
+8. Scope `DATABASE_URI` separately for Production and for staging. Every other
+   variable can be shared.
 
 ## Environment variables
 

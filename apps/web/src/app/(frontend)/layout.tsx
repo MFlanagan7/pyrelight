@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Alegreya_Sans_SC, Spectral } from "next/font/google";
+import { EnvBadge } from "@/components/EnvBadge";
 import { SiteFooter, SiteNav } from "@/components/site";
 import { getSiteSettings } from "@/lib/payload";
 import "./globals.css";
@@ -88,6 +89,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       className={`${cormorant.variable} ${alegreya.variable} ${spectral.variable}`}
     >
       <body>
+        <EnvBadge />
         <SiteNav links={nav} />
         {children}
         <SiteFooter

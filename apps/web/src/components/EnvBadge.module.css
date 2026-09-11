@@ -1,0 +1,74 @@
+/*
+ * A thin vertical strip down the left edge, outside the content entirely.
+ *
+ * pointer-events: none is load-bearing — the strip sits above the page at a
+ * high z-index, and without it a fixed element over the nav would swallow
+ * clicks along that edge.
+ */
+.badge {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 90;
+  width: 1.55rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  border-right: 1px solid var(--badge-line);
+  background: var(--badge-bg);
+}
+
+.label {
+  /* Reads bottom-to-top, so the branch name starts near the bottom-left where
+     the eye lands rather than trailing off the top. */
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--sf-font-heading);
+  font-size: var(--sf-text-2xs);
+  letter-spacing: var(--sf-track-caps);
+  text-transform: uppercase;
+  color: var(--badge-ink);
+  white-space: nowrap;
+  /* A long branch name is truncated rather than overflowing off-screen. */
+  max-height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Local: violet, the ambient colour — present but never mistaken for a warning. */
+.local {
+  --badge-bg: rgba(58, 46, 92, 0.55);
+  --badge-line: rgba(162, 156, 196, 0.28);
+  --badge-ink: var(--sf-lilac-400);
+}
+
+/* Staging: gold, the accent. Loud enough that nobody demos it thinking it is live. */
+.staging {
+  --badge-bg: rgba(235, 203, 110, 0.16);
+  --badge-line: rgba(235, 203, 110, 0.45);
+  --badge-ink: var(--sf-gold-400);
+}
+
+/* Preview: teal, distinct from staging so a pull-request deploy is not mistaken
+   for the shared staging environment. */
+.preview {
+  --badge-bg: rgba(44, 110, 127, 0.22);
+  --badge-line: rgba(127, 211, 228, 0.4);
+  --badge-ink: var(--sf-teal-300);
+}
+
+/* The strip would cover the nav's left padding on a narrow screen, where the
+   information is least useful anyway. */
+@media (max-width: 40rem) {
+  .badge {
+    display: none;
+  }
+}
+
+@media print {
+  .badge {
+    display: none;
+  }
+}
