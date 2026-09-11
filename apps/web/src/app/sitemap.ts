@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { countDispatchPages, dispatchPageHref } from "@/lib/dispatches";
 import { findProducts } from "@/lib/products";
+import { findAllTags } from "@/lib/tags";
 import { getPayloadClient, publishedOnly } from "@/lib/payload";
 import { siteUrl } from "@/lib/site";
 
@@ -20,7 +21,6 @@ import { siteUrl } from "@/lib/site";
  * │   - Wiki entries    -> /wiki/<slug>   (all four wiki collections share  │
  * │                        the flat namespace; see lib/wiki.ts)             │
  * │   - Resources       -> /resources/<section>/<slug>                      │
- * │   - Tag pages       -> /tags/<tag>                                      │
  * │                                                                         │
  * │ Also add any new static route (a /wiki or /resources index, say) to the │
  * │ returned array — static routes are not discovered either.               │
@@ -32,7 +32,7 @@ import { siteUrl } from "@/lib/site";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const payload = await getPayloadClient();
 
-  const [pages, dispatches, legal, dispatchPageCount, products] = await Promise.all([
+  const [pages, dispatches, legal, dispatchPageCount, products, tags] = await Promise.all([
     payload.find({
       collection: "pages",
       where: publishedOnly,
@@ -56,6 +56,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }),
     countDispatchPages(),
     findProducts(),
+    findAllTags(),
   ]);
 
   const entry = (
@@ -81,6 +82,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Static routes — these must be listed by hand.
     entry("/dispatches", undefined, 0.7, "weekly"),
     entry("/products", undefined, 0.9, "weekly"),
+    entry("/tags", undefined, 0.4, "weekly"),
+    ...tags.map((t) => entry(`/tags/${t.slug}`, t.updatedAt, 0.3)),
     ...products.docs.map((p) => entry(`/products/${p.slug}`, p.updatedAt, 0.8)),
 
     // Paginated index pages, 2..N. Page 1 is /dispatches above, so it is not

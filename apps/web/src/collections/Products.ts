@@ -1,6 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { licensingFields, validateLicensing } from "../fields/licensing";
-import { revalidateCollection } from "../hooks/revalidate";
+import { revalidateCollection, revalidateTagPages } from "../hooks/revalidate";
 import { tagsField } from "../fields/tags";
 import { seoField } from "../fields/seo";
 import { slugField } from "../fields/slug";
@@ -101,6 +101,14 @@ export const Products: CollectionConfig = {
     ],
     // Spread rather than assigned: this collection already owns beforeValidate
     // for licence checking, and a second `hooks` key would silently replace it.
-    ...revalidateCollection("/products", "/products"),
+    // Tag pages aggregate products, so they are purged alongside.
+    afterChange: [
+      ...revalidateCollection("/products", "/products").afterChange,
+      ...revalidateTagPages().afterChange,
+    ],
+    afterDelete: [
+      ...revalidateCollection("/products", "/products").afterDelete,
+      ...revalidateTagPages().afterDelete,
+    ],
   },
 };

@@ -1,5 +1,5 @@
 import type { CollectionConfig } from "payload";
-import { revalidateCollection } from "../hooks/revalidate";
+import { revalidateCollection, revalidateTagPages } from "../hooks/revalidate";
 import { tagsField } from "../fields/tags";
 import { seoField } from "../fields/seo";
 import { slugField } from "../fields/slug";
@@ -18,7 +18,18 @@ export const Dispatches: CollectionConfig = {
   },
   access: { read: () => true },
   versions: { drafts: true },
-  hooks: revalidateCollection("/dispatches", "/dispatches"),
+  hooks: {
+    // Two concerns: this collection's own pages, and the tag pages that
+    // aggregate it. Arrays are concatenated so neither replaces the other.
+    afterChange: [
+      ...revalidateCollection("/dispatches", "/dispatches").afterChange,
+      ...revalidateTagPages().afterChange,
+    ],
+    afterDelete: [
+      ...revalidateCollection("/dispatches", "/dispatches").afterDelete,
+      ...revalidateTagPages().afterDelete,
+    ],
+  },
   fields: [
     { name: "title", type: "text", required: true },
     // "page" is reserved: /dispatches/page/N is the pagination route, so a

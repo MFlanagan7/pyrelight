@@ -1,0 +1,17 @@
+.main {
+  max-width: var(--sf-container);
+  margin-inline: auto;
+  padding: calc(var(--sf-section-pad-y) + 3rem) var(--sf-section-pad-x)
+    var(--sf-section-pad-y);
+}
+
+.aliases {
+  margin-top: var(--sf-space-5);
+  max-width: var(--sf-measure-body);
+  font-size: var(--sf-text-sm);
+  color: var(--text-meta);
+}
+
+.results {
+  margin-top: var(--sf-space-10);
+}

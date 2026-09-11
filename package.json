@@ -14,6 +14,7 @@
     "lint": "pnpm --filter web lint",
     "cms": "pnpm --filter web payload",
     "migrate": "pnpm --filter web migrate",
-    "migrate:create": "pnpm --filter web migrate:create"
+    "migrate:create": "pnpm --filter web migrate:create",
+    "seed:taxonomy": "pnpm --filter web seed:taxonomy"
   }
 }

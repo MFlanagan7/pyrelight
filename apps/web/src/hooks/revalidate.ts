@@ -131,3 +131,31 @@ export const revalidateSiteSettings = (): { afterChange: GlobalAfterChangeHook[]
     },
   ],
 });
+
+/**
+ * Tag pages aggregate content from other collections, so they go stale when
+ * that content changes rather than when the tag itself does.
+ *
+ * Purges the whole /tags subtree rather than the specific tags on the entry:
+ * the document carries tag IDs, not slugs, so targeting would need a lookup per
+ * save, and a removed tag's page needs purging too — which the new document no
+ * longer names. Coarse and correct beats precise and wrong.
+ */
+export const revalidateTagPages = (): {
+  afterChange: CollectionAfterChangeHook[];
+  afterDelete: CollectionAfterDeleteHook[];
+} => {
+  const purgeTags = async () => {
+    try {
+      const { revalidatePath } = await import("next/cache");
+      revalidatePath("/tags", "layout");
+    } catch {
+      // Outside the Next runtime.
+    }
+  };
+
+  return {
+    afterChange: [async ({ doc }) => { await purgeTags(); return doc; }],
+    afterDelete: [async ({ doc }) => { await purgeTags(); return doc; }],
+  };
+};

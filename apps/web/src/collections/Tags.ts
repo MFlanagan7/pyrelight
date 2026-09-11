@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { revalidateCollection } from "../hooks/revalidate";
 import { slugField } from "../fields/slug";
 
 /**
@@ -23,6 +24,7 @@ export const Tags: CollectionConfig = {
       "Controlled vocabulary. Adding a near-duplicate of an existing tag is worse than reusing a loose one.",
   },
   access: { read: () => true },
+  hooks: revalidateCollection("/tags", "/tags"),
   fields: [
     { name: "title", type: "text", required: true },
     slugField(),

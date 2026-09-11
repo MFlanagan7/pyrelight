@@ -62,8 +62,9 @@ Entries live flat at `/wiki/<slug>`; pillar names are reserved
 | `/wiki` | Coded route | Not built |
 | `/wiki/<pillar>` × 7 | Coded route | Not built. Pillars: astralite, gods, sea, peoples, magic, realms, history |
 | `/wiki/<slug>` | Collection | Not built. Four collections share this namespace |
-| `/tags/<tag>` | Coded route | Not built. Global, aggregating wiki + resources + dispatches |
+| `/tags/<tag>` | Coded route | **Live.** Aggregates dispatches and products; wiki and resources register when their routes exist |
 | `/search` | Coded route | Not built. `searchText` column exists; tsvector, index and query do not |
+| `/tags` | Coded route | **Live.** Vocabulary index, grouped by subject / type / system |
 
 ## Resources — Phase 2, nothing modelled
 
@@ -88,24 +89,22 @@ No collection exists. This is a build, not a configuration.
 | Collection | Entries |
 | --- | --- |
 | Pages | 2 — `home`, `world` |
+| Categories | 11 — seven wiki pillars, four dispatch categories (seeded) |
+| Tags | 0 — added as the writing demands them |
 | Legal documents | 3 — all published, prose placeholder |
 | Media | 3 |
-| Dispatches, Products, Categories, all wiki collections | 0 |
+| Dispatches, Products, all wiki collections | 0 |
 | Site settings | **Never saved** — the site runs on fallback navigation |
 
 ---
 
 ## Open decisions
 
-**Tags are not built.** `Categories` currently does both jobs and is attached
-only to wiki articles. The IA settles that categories and tags are different
-things; the collection, the field on each collection, and the migration are
-still to do. Search weighting depends on it.
-
-**Product type.** The IA asks for products filtered by type — maps, adventures,
-supplements. The model has `tier` (free / PWYW / premium), not type, so
-`/products` filters by tier. Decide with the tags work whether type is a product
-field, a tag, or both.
+**Product type — resolved as a tag.** Maps, adventures and supplements are Type
+tags, not a new product field. Using the shared vocabulary means one tag page
+can show the map product, the region article it covers, and the dispatch about
+making it. `tier` stays a product field: free versus premium is a different
+axis from what a thing is.
 
 **Search implementation.** Settled as Postgres full-text. `searchText` is
 populated on every wiki collection. The `tsvector` column, GIN index, weighted
