@@ -28,6 +28,7 @@
     "graphql": "^16.14.2",
     "next": "16.3.4",
     "payload": "3.88.0",
+    "pg": "^8.23.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "server-only": "^0.0.1",
@@ -36,6 +37,7 @@
   "devDependencies": {
     "@smithy/types": "^4.18.0",
     "@types/node": "^20",
+    "@types/pg": "^8.23.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",

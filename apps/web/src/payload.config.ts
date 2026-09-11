@@ -30,6 +30,49 @@ import { SiteSettings } from "./globals/SiteSettings";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
+/**
+ * How many database connections this process may hold.
+ *
+ * Exactly ONE case wants a pool of one: a serverless request handler. Each
+ * invocation is its own short-lived process, so a pool of N there becomes
+ * N x concurrent invocations, and the pooler starts refusing connections.
+ *
+ * Every other case needs more than one, and for a reason that is easy to miss:
+ * a pool of one cannot hold a transaction and run a query at the same time. It
+ * deadlocks against itself, waits out connectionTimeoutMillis, and fails with
+ * "timeout exceeded when trying to connect" — an error that names the network
+ * for something the network had no part in.
+ *
+ * That is what broke production deploys. `payload migrate` runs as its own CLI
+ * process where NEXT_PHASE is unset and VERCEL is set, so the old rule handed
+ * it a pool of one; the migration runner holds a client for its transaction and
+ * queries the migrations table beside it, and every deploy died at 15 seconds
+ * with the network looking perfectly healthy in the preflight above it.
+ *
+ * So the test is "am I inside the Next server runtime", not "am I on Vercel".
+ * NEXT_RUNTIME is set only in the bundled server, which is precisely the
+ * distinction — a build worker or a CLI task never sees it.
+ *
+ * Point DATABASE_URI at Supabase's TRANSACTION pooler (6543) rather than the
+ * session pooler (5432). The session pooler caps a tenant at 15 clients, which
+ * a build's workers plus a dev server exceed; transaction mode is built for
+ * many short-lived clients and handles migrations and transactions fine.
+ */
+const poolMax = (): number => {
+  // Escape hatch, and what vercel-build.mjs sets for the migrate step so that
+  // deploys never depend on the inference below being right.
+  const override = Number(process.env.DATABASE_POOL_MAX);
+  if (Number.isInteger(override) && override > 0) return override;
+
+  // Checked first, and separately from NEXT_RUNTIME. A build's prerender
+  // workers render many pages at once in one process and all queue on the
+  // pool, so starving them reproduces the same self-inflicted timeout from the
+  // other direction — and Next may well define NEXT_RUNTIME while bundling.
+  if (process.env.NEXT_PHASE === "phase-production-build") return 5;
+
+  return process.env.VERCEL && process.env.NEXT_RUNTIME ? 1 : 5;
+};
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -167,26 +210,11 @@ export default buildConfig({
        */
       ssl: databaseSsl(),
       /**
-       * Pool size by role, not by environment.
-       *
-       * Serverless RUNTIME wants exactly one: each invocation is its own
-       * short-lived process, so a pool of N becomes N x concurrent
-       * invocations.
-       *
-       * A BUILD is the opposite. Each prerender worker renders many pages
-       * concurrently in one process, and they all queue on the pool — with a
-       * pool of 1 that queue exceeds connectionTimeoutMillis and the build
-       * fails with "timeout exceeded when trying to connect", which reads like
-       * a network fault but is pure self-contention. Vercel sets VERCEL during
-       * its build too, so the phase check has to come first.
-       *
-       * Point DATABASE_URI at Supabase's TRANSACTION pooler (6543) rather than
-       * the session pooler (5432). The session pooler caps a tenant at 15
-       * clients, which a build's workers plus a dev server exceed; transaction
-       * mode is built for many short-lived clients and handles migrations and
-       * transactions fine.
+       * Pool size — see poolMax below. Only a serverless request handler wants
+       * a pool of one; everything else needs room to hold a transaction and
+       * query at the same time.
        */
-      max: process.env.NEXT_PHASE === "phase-production-build" ? 5 : process.env.VERCEL ? 1 : 5,
+      max: poolMax(),
       idleTimeoutMillis: process.env.VERCEL ? 5_000 : 10_000,
 
       /**

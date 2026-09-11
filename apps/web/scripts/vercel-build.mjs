@@ -22,8 +22,12 @@
  */
 import { spawnSync } from "node:child_process";
 
-const run = (command, args) => {
-  const result = spawnSync(command, args, { stdio: "inherit", shell: true });
+const run = (command, args, env) => {
+  const result = spawnSync(command, args, {
+    stdio: "inherit",
+    shell: true,
+    env: { ...process.env, ...env },
+  });
   if (result.status !== 0) process.exit(result.status ?? 1);
 };
 
@@ -57,7 +61,15 @@ if (isProduction || isStaging) {
   console.log(
     `[build] ${isProduction ? "production" : "staging"} deployment — applying migrations`,
   );
-  run("pnpm", ["run", "migrate"]);
+
+  /**
+   * The migration runner holds a client for its transaction and queries the
+   * migrations table beside it, so a pool of one deadlocks and dies at
+   * connectionTimeoutMillis. Stated here rather than inferred in
+   * payload.config.ts, because a deploy is the worst place to be relying on a
+   * guess about which environment variables a CLI process happens to see.
+   */
+  run("pnpm", ["run", "migrate"], { DATABASE_POOL_MAX: "5" });
 } else {
   console.log(
     `[build] ${env} deployment on "${branch}" — skipping migrations; building against the existing schema`,
