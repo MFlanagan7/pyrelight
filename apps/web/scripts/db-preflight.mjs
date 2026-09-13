@@ -156,6 +156,28 @@ const main = async () => {
     `[preflight] host=${host} port=${port} user=${decodeURIComponent(url.username)} password=${password.length} chars`,
   );
 
+  /**
+   * The session pooler caps a tenant at 15 clients in TOTAL, which serverless
+   * fan-out reaches almost at once. It then fails with a connect timeout,
+   * identical in appearance to a firewall, a bad password or a starved pool —
+   * so say it here, where it is still cheap to notice.
+   */
+  if (port === 5432 && host.includes("pooler.supabase.com")) {
+    console.log(
+      "[preflight] WARNING: port 5432 is Supabase's SESSION pooler, capped at 15 clients " +
+        "for the whole project. Use the TRANSACTION pooler on 6543 instead.",
+    );
+  }
+
+  // IPv6-only, and Vercel's functions are not. Reachable from some networks and
+  // not from others, which makes it look intermittent rather than wrong.
+  if (host.startsWith("db.") && host.endsWith(".supabase.co")) {
+    console.log(
+      "[preflight] WARNING: this is Supabase's DIRECT connection, which resolves to IPv6 " +
+        "only. Vercel cannot reach it. Use the transaction pooler on 6543.",
+    );
+  }
+
   try {
     const addresses = await dns.lookup(host, { all: true, verbatim: true });
     console.log(`[preflight] dns: ${addresses.map((a) => `IPv${a.family} ${a.address}`).join(", ")}`);

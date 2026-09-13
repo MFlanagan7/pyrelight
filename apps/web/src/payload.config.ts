@@ -33,30 +33,32 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 /**
  * How many database connections this process may hold.
  *
- * Exactly ONE case wants a pool of one: a serverless request handler. Each
- * invocation is its own short-lived process, so a pool of N there becomes
- * N x concurrent invocations, and the pooler starts refusing connections.
+ * NOTHING here wants a pool of one. That was the assumption behind three
+ * separate failures on this project, and it was wrong every time, because a
+ * pool of one cannot serve two things at once. The second waiter sits out
+ * connectionTimeoutMillis and fails with "timeout exceeded when trying to
+ * connect" — an error naming the network for something the network had no part
+ * in, which is why each of these cost days rather than minutes.
  *
- * Every other case needs more than one, and for a reason that is easy to miss:
- * a pool of one cannot hold a transaction and run a query at the same time. It
- * deadlocks against itself, waits out connectionTimeoutMillis, and fails with
- * "timeout exceeded when trying to connect" — an error that names the network
- * for something the network had no part in.
+ *   1. Build workers. Each prerenders many pages concurrently in one process.
+ *   2. `payload migrate`. Holds a client for its transaction while querying the
+ *      migrations table beside it.
+ *   3. The serverless runtime itself. Next runs generateMetadata concurrently
+ *      with the page render, and the layout fetches site settings alongside
+ *      both, so a single request needs three connections at once. Production
+ *      survived on luck and warm connections; staging, connecting cold to a new
+ *      database, did not.
  *
- * That is what broke production deploys. `payload migrate` runs as its own CLI
- * process where NEXT_PHASE is unset and VERCEL is set, so the old rule handed
- * it a pool of one; the migration runner holds a client for its transaction and
- * queries the migrations table beside it, and every deploy died at 15 seconds
- * with the network looking perfectly healthy in the preflight above it.
+ * The serverless case is still the tightest, because each invocation is its own
+ * process and the pool multiplies by concurrent invocations rather than being
+ * shared. Four is enough for the fan-out a single request actually produces,
+ * and small enough that the transaction pooler — built for many short-lived
+ * clients — does not care.
  *
- * So the test is "am I inside the Next server runtime", not "am I on Vercel".
- * NEXT_RUNTIME is set only in the bundled server, which is precisely the
- * distinction — a build worker or a CLI task never sees it.
- *
- * Point DATABASE_URI at Supabase's TRANSACTION pooler (6543) rather than the
- * session pooler (5432). The session pooler caps a tenant at 15 clients, which
- * a build's workers plus a dev server exceed; transaction mode is built for
- * many short-lived clients and handles migrations and transactions fine.
+ * DATABASE_URI must point at Supabase's TRANSACTION pooler (6543), never the
+ * session pooler (5432), which caps a tenant at 15 clients in total. Under
+ * serverless fan-out that cap is reached almost immediately, and the symptom is
+ * indistinguishable from everything above: a connect timeout.
  */
 const poolMax = (): number => {
   // Escape hatch, and what vercel-build.mjs sets for the migrate step so that
@@ -64,13 +66,12 @@ const poolMax = (): number => {
   const override = Number(process.env.DATABASE_POOL_MAX);
   if (Number.isInteger(override) && override > 0) return override;
 
-  // Checked first, and separately from NEXT_RUNTIME. A build's prerender
-  // workers render many pages at once in one process and all queue on the
-  // pool, so starving them reproduces the same self-inflicted timeout from the
-  // other direction — and Next may well define NEXT_RUNTIME while bundling.
+  // Checked first, and separately from NEXT_RUNTIME, since Next may well define
+  // NEXT_RUNTIME while bundling.
   if (process.env.NEXT_PHASE === "phase-production-build") return 5;
 
-  return process.env.VERCEL && process.env.NEXT_RUNTIME ? 1 : 5;
+  // Serverless: four, not one. See above.
+  return process.env.VERCEL && process.env.NEXT_RUNTIME ? 4 : 5;
 };
 
 export default buildConfig({
