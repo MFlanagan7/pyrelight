@@ -1,7 +1,27 @@
 import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
+/**
+ * The schema is created here, by hand, and everything below depends on it.
+ *
+ * Drizzle generated this migration by diffing a database whose `payload` schema
+ * already existed — created by `push: true` back when development still used it
+ * — so the schema was never part of the diff and never made it into the file.
+ * That left a migration set that could only ever be applied to a database that
+ * had already been through push, which nobody noticed until the first genuinely
+ * empty database: staging.
+ *
+ * The failure is quiet in the worst way. Payload checks for its migrations
+ * table with to_regclass, which returns NULL for a missing schema instead of
+ * raising, so migrate concludes there is simply nothing applied yet and runs
+ * the whole set. The first statement then dies with 3F000, schema does not
+ * exist, several hundred lines into an error whose cause is off the end of it.
+ *
+ * IF NOT EXISTS because production has long had this schema and has already
+ * recorded this migration as applied. This line is for the next empty database.
+ */
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
+   CREATE SCHEMA IF NOT EXISTS "payload";
    CREATE TYPE "payload"."enum_pages_blocks_hero_actions_variant" AS ENUM('primary', 'ghost');
   CREATE TYPE "payload"."enum_pages_blocks_section_intro_align" AS ENUM('left', 'center');
   CREATE TYPE "payload"."enum_pages_blocks_callout_tone" AS ENUM('lore', 'gm', 'rule', 'note');
