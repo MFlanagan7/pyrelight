@@ -9,12 +9,12 @@ import { siteUrl } from "@/lib/site";
  * security measure — robots.txt is advisory, and access control is what
  * actually protects those routes.
  *
- * Staging is disallowed OUTRIGHT. Once staging.starfall.pyrelightpress.com is a
- * real domain it is as crawlable as production, and an indexed staging site
- * competes with the live one for the same terms while showing unfinished drafts
- * to the public. next.config.ts also sends X-Robots-Tag: noindex there, which is
- * the stronger of the two — robots.txt stops a crawl, but a URL linked from
- * elsewhere can still be listed without one.
+ * Staging is disallowed OUTRIGHT. Its URL is unguessable rather than protected,
+ * and an indexed staging site competes with the live one for the same terms
+ * while showing unfinished drafts to the public. next.config.ts also sends
+ * X-Robots-Tag: noindex there, which is the stronger of the two — robots.txt
+ * stops a crawl, but a URL linked from elsewhere can still be listed without
+ * one.
  */
 export default function robots(): MetadataRoute.Robots {
   /**

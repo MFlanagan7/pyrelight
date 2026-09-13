@@ -51,8 +51,16 @@ it reads git directly, and a missing git is not an error.
 5. Add the domain `starfall.pyrelightpress.com`, then add the CNAME Vercel gives
    you to `pyrelightpress.com`'s DNS.
 6. Production Branch: `main`.
-7. Add a second domain — `staging.starfall.pyrelightpress.com` — assigned to the
-   `staging` branch, so staging has a stable URL rather than a per-deploy one.
+7. Staging deliberately gets **no custom domain**. It uses Vercel's branch
+   alias, `<project>-git-staging-<scope>.vercel.app`, which is stable across
+   deploys but not something a person would guess or stumble onto. A
+   `staging.starfall.pyrelightpress.com` would publish the existence of a
+   staging site to anyone reading DNS, for no benefit we need.
+
+   The alias is not a secret and must not be treated as one. Obscurity is a
+   convenience; the `noindex` header and `Disallow: /` are what actually keep it
+   out of search. For real access control, turn on Vercel Authentication for
+   Preview deployments, which requires a Vercel login to view.
 8. Scope the variables listed under "Which variables differ" separately for
    Production and Preview. The rest are shared.
 
@@ -196,7 +204,7 @@ preview — which is what we want, since they share one database.
 | `DATABASE_URI` | **Separate** | The whole point. Staging migrates; sharing means staging reshapes production |
 | `S3_ENDPOINT`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY` | **Separate** | Keys are per-project. Shared ones would leave staging rows pointing at production files |
 | `PAYLOAD_SECRET` | **Separate** | A leaked staging secret must not forge a production admin session |
-| `NEXT_PUBLIC_SITE_URL` | **Separate** | So staging tests its own email and download links rather than sending testers to the live site |
+| `NEXT_PUBLIC_SITE_URL` | **Separate** | So staging tests its own email and download links rather than sending testers to the live site. Use the branch alias, **not** `<project>.vercel.app`, which is production |
 | `DATABASE_CA_CERT` | **Separate** | Per-project certificate |
 | `S3_BUCKET`, `S3_DOWNLOADS_BUCKET`, `S3_PUBLIC_BUCKET` | Shared | Same names, different projects |
 | `RESEND_API_KEY`, `EMAIL_FROM_*` | Shared | One verified sending domain |
