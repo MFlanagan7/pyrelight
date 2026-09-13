@@ -232,6 +232,62 @@ production's functions beside production's database, where the latency actually
 costs money, and makes staging the pessimistic one — which is the safe direction
 for a rehearsal environment to be wrong in.
 
+### Pointing local development at staging
+
+Local shares staging's database, so it must share **everything that database
+references**. Changing `DATABASE_URI` alone leaves rows pointing at files only
+production can see.
+
+| Variable | Local value |
+| --- | --- |
+| `DATABASE_URI` | Staging's, including staging's **password** |
+| `S3_ENDPOINT`, `S3_REGION` | Staging's |
+| `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY` | Staging's |
+| `PAYLOAD_SECRET` | Staging's |
+| `NEXT_PUBLIC_SITE_URL` | `http://localhost:3000` — **not** staging's URL |
+| `S3_BUCKET`, `S3_DOWNLOADS_BUCKET` | Unchanged, the names are the same |
+| `RESEND_API_KEY`, `EMAIL_FROM_*` | Unchanged, one sending domain |
+
+`NEXT_PUBLIC_SITE_URL` is the one people get backwards. It is the address *this*
+copy of the site is served from, and it feeds canonical tags, the sitemap and
+links inside emails. Set it to staging's URL locally and a password reset
+generated on your machine sends you to staging.
+
+`PAYLOAD_SECRET` does not strictly have to match — password hashes are salted per
+user and do not depend on it, so logins work either way. Match it anyway. Local
+and staging are now one environment sharing one database, and the first field
+that gets encrypted with that secret will make a mismatch expensive.
+
+### Copying production down to staging
+
+Staging is only a useful rehearsal while it resembles production. Run
+`pnpm sync:from-production` to replace staging's content and files with
+production's. It defaults to a dry run; `--yes` commits.
+
+**It replaces rather than merges, including the admin user and Site Settings.**
+That is the intent, not a side effect. A half-copied database is a third
+environment resembling neither of the other two. Afterwards you sign into staging
+with your **production** credentials, since the password hash travels with the
+row.
+
+It copies in one direction and refuses every other, aborting if both sides
+resolve to the same Supabase project. There is no reverse mode and there should
+not be.
+
+Two things to know:
+
+- **Storage is copied through your machine.** The buckets belong to different
+  Supabase projects, so there is no server-side copy. Objects are skipped when
+  the target already holds the same key at the same size.
+- **Staging ends up at production's schema version**, `payload_migrations`
+  included. If staging was testing a migration production does not have, it is
+  gone. Run `pnpm migrate` afterwards to reapply it.
+
+It needs `pg_dump` and `psql` on PATH. On Windows the EDB installer can install
+Command Line Tools alone, without a server. A bespoke row copier was considered
+and rejected: this is precisely the job those tools exist for, and reimplementing
+foreign-key ordering and sequence resets badly is not a saving.
+
 ### Which variables differ
 
 Vercel scopes variables to Production, Preview and Development. Staging is a

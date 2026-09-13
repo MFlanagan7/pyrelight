@@ -134,6 +134,63 @@ const describeCertificate = (raw) => {
   return `${value.length} chars, ${shape}, escaped-newlines=${escapedNewlines}, real-newlines=${realNewlines}`;
 };
 
+/**
+ * Storage, checked against the database it is paired with.
+ *
+ * A wrong DATABASE_URI announces itself immediately. Wrong storage credentials
+ * do not: the app boots, pages render, and the only symptom is uploads landing
+ * in one project while the rows describing them live in another. That surfaces
+ * weeks later as images that 404 for no visible reason.
+ *
+ * Both halves carry the Supabase project reference, so they can be compared.
+ */
+const checkStorage = async (databaseRef) => {
+  const endpoint = process.env.S3_ENDPOINT;
+  if (!endpoint) {
+    console.log("[preflight] s3: S3_ENDPOINT not set — uploads go to local disk");
+    return;
+  }
+
+  let storageRef;
+  try {
+    storageRef = new URL(endpoint).hostname.split(".")[0];
+  } catch {
+    console.log(`[preflight] s3: S3_ENDPOINT is not a URL (${endpoint})`);
+    return;
+  }
+
+  if (databaseRef && storageRef !== databaseRef) {
+    console.log(
+      `[preflight] s3: WARNING storage project is ${storageRef} but the database is ` +
+        `${databaseRef}. Uploads would be written to one project and recorded in the other.`,
+    );
+  } else {
+    console.log(`[preflight] s3: project ${storageRef}, matches the database`);
+  }
+
+  const { S3Client, ListObjectsV2Command } = await import("@aws-sdk/client-s3");
+  const client = new S3Client({
+    endpoint,
+    region: process.env.S3_REGION,
+    forcePathStyle: true,
+    credentials: {
+      accessKeyId: process.env.S3_ACCESS_KEY_ID || "",
+      secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || "",
+    },
+  });
+
+  for (const bucket of [process.env.S3_BUCKET, process.env.S3_DOWNLOADS_BUCKET].filter(Boolean)) {
+    try {
+      const listed = await client.send(
+        new ListObjectsV2Command({ Bucket: bucket, MaxKeys: 1 }),
+      );
+      console.log(`[preflight] s3 ${bucket}: OK, ${listed.KeyCount ?? 0} object(s) visible`);
+    } catch (err) {
+      console.log(`[preflight] s3 ${bucket}: FAILED — ${err.name} ${err.message}`);
+    }
+  }
+};
+
 const main = async () => {
   const uri = process.env.DATABASE_URI;
   if (!uri) {
@@ -214,6 +271,10 @@ const main = async () => {
   if (rawCa) {
     await connectProbe("encrypted, verified against DATABASE_CA_CERT", uri, sslFromRaw(rawCa));
   }
+
+  // The project reference lives in the pooler username, not the host.
+  const user = decodeURIComponent(url.username);
+  await checkStorage(user.includes(".") ? user.split(".")[1] : null);
 };
 
 await main().catch((err) => console.log(`[preflight] unexpected: ${err.message}`));

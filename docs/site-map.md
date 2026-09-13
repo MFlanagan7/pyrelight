@@ -157,22 +157,13 @@ calling something "the Lantern" throughout is unreachable by a search for
 
 ---
 
-## What to author next, in order
+## What to author next
 
-Nothing here needs a developer. All of it is admin work.
+**The ordered list lives in `roadmap.md`**, alongside the infrastructure work it
+competes with for your time. Keeping two lists means keeping neither.
 
-1. **Save Site Settings.** Nav, footer columns, social links, and the newsletter
-   heading and body. Until this is saved the site runs on a fallback nav of four
-   items; the footer has no columns, no socials, and no signup form, because the
-   signup only renders when the newsletter setting is enabled.
-2. **Create `/about`** as a Page.
-3. **Fill in the home page's remaining blocks.** It publishes a Hero and nothing
-   else. Twelve block types are available.
-4. **Write the three legal documents properly.** All three are published with
-   placeholder prose. The licence notices already render from code.
-5. **Retitle `/world`** if "What is Starfall?" is not the heading you want.
-6. **First product and first dispatch.** Both indexes show empty states.
-7. **Replace the eleven placeholder social glyphs** before launch —
-   `apps/web/src/assets/social-paths.ts`.
+This document stays the inventory: what each route is, how it is served, and
+whether anything fills it. Update the status column as routes land, and take the
+priorities from the roadmap.
 
 Completed: the `/world` slug rename.

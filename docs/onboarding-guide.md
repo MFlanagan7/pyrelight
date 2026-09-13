@@ -1,8 +1,28 @@
-# Onboarding guide — PLANNED, written at launch
+# Onboarding guide — PLANNED
 
-**Status: not started. Write this after all phases ship and production is
-live.** It is listed here so the outline can grow as we build, rather than
-being reconstructed from memory at the end.
+**Status: not started.** Listed here so the outline can grow as we build, rather
+than being reconstructed from memory at the end.
+
+## When to write it
+
+**In the gap between "content is authored" and "the domain goes live."** Not
+after launch, which was the original plan and is wrong.
+
+Three reasons that window is the right one. The procedures have stopped changing
+by then, so the guide will not be obsolete on arrival. You still have slack,
+which you will not once the site is public. And writing it *is* the launch
+rehearsal: a procedure nobody has followed is not a procedure, and the way you
+find out is by writing it down and discovering the step you cannot describe.
+
+Two parts do not wait for that window:
+
+- **Decisions and their reasons** are being lost continuously, right now. Every
+  reversal on this project — Strapi to Payload, push to migrations, the pool
+  sizing we got wrong three times — is currently recorded only in commit
+  messages and code comments. Harvest them as they happen.
+- **Operations** should be drafted the first time each procedure is run for real,
+  while the surprises are still fresh. A runbook written from memory records the
+  happy path, which is the one nobody needs help with.
 
 ## Who it is for
 
