@@ -193,6 +193,45 @@ production from a developer machine.
 9. Point your local `.env` at the same staging project, so development stops
    touching production.
 
+### Access: staging is behind Vercel Authentication
+
+Deployment Protection is enabled for Preview deployments, so every request to
+staging redirects to Vercel SSO first and only an account member gets through.
+This is real access control rather than the obscurity of an unguessable URL, and
+it is worth keeping.
+
+It has one consequence that will bite the first time you test the download gate:
+**you cannot browse staging as an anonymous visitor.** Any flow that depends on
+not being logged in needs one of three things, all under Project Settings then
+Deployment Protection.
+
+| Want | Use |
+| --- | --- |
+| To test a flow logged out, by hand | A Shareable Link, which bypasses SSO on one URL |
+| A script or uptime check to reach staging | Protection Bypass for Automation, which issues a token |
+| A prolonged session of anonymous testing | Turn protection off, then back on afterwards |
+
+A symptom worth recognising: an authenticated request that hangs and then shows
+"a server error occurred" is past the SSO check, so it is the application
+failing, not the protection.
+
+### Regions: staging and production are not in the same place
+
+| | Database | Distance from the functions |
+| --- | --- | --- |
+| Production | `aws-0-us-west-2` (Oregon) | Cross-country from `iad1` |
+| Staging | `aws-0-us-east-1` (Virginia) | Co-located with `iad1` |
+
+Vercel runs functions in one region for the whole project, `iad1` by default,
+which leaves **production's queries crossing the country while staging's do
+not**. Payload issues several queries per request, so that round trip is paid
+repeatedly, and staging currently flatters production rather than rehearsing it.
+
+Setting the project's function region to `pdx1` (Portland) inverts this. It puts
+production's functions beside production's database, where the latency actually
+costs money, and makes staging the pessimistic one — which is the safe direction
+for a rehearsal environment to be wrong in.
+
 ### Which variables differ
 
 Vercel scopes variables to Production, Preview and Development. Staging is a
