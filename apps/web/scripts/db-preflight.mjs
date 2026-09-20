@@ -91,6 +91,46 @@ const sslFromRaw = (raw) => {
   return ca ? { ca, rejectUnauthorized: true } : { rejectUnauthorized: false };
 };
 
+/**
+ * A paused or restoring Supabase project, named as such.
+ *
+ * Free-tier projects pause after seven days without activity, and nothing says
+ * so in words. The pooler reports the tenant as not existing, which reads like a
+ * typo in the username. Storage returns an HTML error page, which the AWS SDK
+ * reports as an XML parse failure, which reads like a bug in the SDK. Neither
+ * mentions pausing, and both are fixed by one click in a dashboard.
+ *
+ * Restoring is worth separating from paused, because the remedy is the opposite:
+ * wait rather than act. A restore takes minutes, and the two halves come back at
+ * different times — storage starts answering with real API errors while the
+ * pooler still has not re-registered the tenant. Seeing DatabaseTimeout from
+ * storage while Postgres still says "not found" means it is on its way up, and
+ * redeploying now just fails again a little differently.
+ */
+const supabaseStateHint = (message) => {
+  // Storage answering properly but its database is not ready: mid-restore.
+  if (/DatabaseTimeout/i.test(message) || /connection to the database timed out/i.test(message)) {
+    return (
+      "\n           ^ the project is RESTORING, not paused. Wait for the Supabase " +
+      "dashboard to show it active, then redeploy. Restores take a few minutes."
+    );
+  }
+
+  if (
+    /tenant.*not found/i.test(message) ||
+    /XML parse error/i.test(message) ||
+    /Deserialization error/i.test(message)
+  ) {
+    return (
+      "\n           ^ this usually means the Supabase project is PAUSED. Free-tier " +
+      "projects pause after 7 days idle. Restore it from the dashboard, wait for it " +
+      "to report active, then redeploy."
+    );
+  }
+
+  return "";
+};
+
 /** A real Postgres connection, with the error reported rather than swallowed. */
 const connectProbe = async (label, connectionString, ssl) => {
   const client = new pg.Client({ connectionString, ssl, connectionTimeoutMillis: TIMEOUT });
@@ -102,7 +142,8 @@ const connectProbe = async (label, connectionString, ssl) => {
     await client.end();
   } catch (err) {
     console.log(
-      `[preflight] connect (${label}): FAILED in ${Date.now() - started}ms — ${err.code ?? err.name ?? ""} ${err.message}`,
+      `[preflight] connect (${label}): FAILED in ${Date.now() - started}ms — ${err.code ?? err.name ?? ""} ${err.message}` +
+        supabaseStateHint(err.message),
     );
     try {
       await client.end();
@@ -186,7 +227,10 @@ const checkStorage = async (databaseRef) => {
       );
       console.log(`[preflight] s3 ${bucket}: OK, ${listed.KeyCount ?? 0} object(s) visible`);
     } catch (err) {
-      console.log(`[preflight] s3 ${bucket}: FAILED — ${err.name} ${err.message}`);
+      console.log(
+        `[preflight] s3 ${bucket}: FAILED — ${err.name} ${err.message}` +
+          supabaseStateHint(`${err.name} ${err.message}`),
+      );
     }
   }
 };

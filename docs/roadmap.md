@@ -47,6 +47,34 @@ it is still the right one.
    because the root maps to a Page with slug `home` and there isn't one. It does
    not need real content, only enough to exercise the layout.
 
+### A decision the free tier forces
+
+**Supabase pauses a free project after seven days without activity, and
+production paused on 2026-09-20.** Postgres and Storage both stopped, the site
+kept serving its prerendered home page as though nothing was wrong, and `/admin`
+and every dynamic route returned 500. A deploy failed with the pooler claiming
+the tenant did not exist.
+
+What caused the idleness is worth noticing: pointing local development at
+staging, six days earlier. That change was right, and it removed the only thing
+keeping production's database warm. Nothing else touches it until the site has
+visitors.
+
+So this is a launch blocker, not an annoyance:
+
+| Option | Consequence |
+| --- | --- |
+| Stay on free | The site goes down after any quiet week. Recovery is manual and takes minutes. A visitor arriving during it sees errors |
+| Supabase Pro on production only | No pausing. Staging can stay free, since staging going quiet costs nothing |
+
+Real traffic would keep it awake, but "we will have enough visitors" is not a
+plan, and the gap between launching and being found is exactly when a week of
+quiet is most likely.
+
+**Decide before pointing a domain at it.** A paused database on an unlaunched
+site is a nuisance. The same thing on a launched one loses the readers arriving
+from itch.io, who will not come back to check whether it was temporary.
+
 ### Before the domain goes live
 
 4. **Write the three legal documents properly.** All three are published with
