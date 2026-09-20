@@ -16,17 +16,26 @@
  *   pnpm sync:from-production --yes        # do it
  *   pnpm sync:from-production --db --yes   # database only
  *
- * AFTERWARDS: staging is now at production's schema version, including its
- * payload_migrations table. If staging was testing a migration production does
- * not have yet, that migration is gone. Run `pnpm migrate` to put it back.
+ * SCHEMA DOES NOT TRAVEL. Only rows do. Structure moves in one direction only,
+ * forward through migrations, local to staging to production, so that every
+ * change to it is a reviewable file in git. An earlier version of this script
+ * copied the whole schema and would have quietly reverted whatever staging was
+ * testing; `payload_migrations` is now excluded outright, because copying it is
+ * worse still — the target would report production's migration state while its
+ * tables were actually ahead, and the next migrate would find nothing to do.
  *
- * Requires pg_dump and psql on PATH (PostgreSQL client tools). They are the
- * right tool for this and a bespoke row copier would be a worse one.
+ * It refuses to run when the target is BEHIND production, since rows cannot be
+ * written into a schema that predates them. Ahead is normal and expected.
+ *
+ * Requires pg_dump and psql on PATH (PostgreSQL client tools). `npx supabase db
+ * dump` bundles the same binaries if you would rather not install them.
  */
 import { spawnSync } from "node:child_process";
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
+
+import pg from "pg";
 
 import {
   GetObjectCommand,
@@ -94,35 +103,95 @@ const requireTool = (tool) => {
   }
 };
 
-const syncDatabase = () => {
+/**
+ * Schema only ever moves forward, through migrations. This copies DATA.
+ *
+ * Copying schema backwards would undo the thing migrations exist to guarantee.
+ * Staging is frequently AHEAD of production — that is what staging is for — and
+ * restoring production's structure over it silently reverts whatever was being
+ * tested, including the payload_migrations rows that would otherwise reveal it.
+ *
+ * So `payload_migrations` is excluded outright. Copying it is worse than
+ * copying schema: staging would report itself at production's migration state
+ * while its tables were still ahead, and the next `pnpm migrate` would believe
+ * there was nothing to do.
+ */
+const migrationNames = async (uri) => {
+  const client = new pg.Client({
+    connectionString: uri,
+    ssl: { rejectUnauthorized: false },
+    connectionTimeoutMillis: 15_000,
+  });
+  await client.connect();
+  try {
+    const { rows } = await client.query(`select name from "payload"."payload_migrations"`);
+    return new Set(rows.map((r) => r.name));
+  } finally {
+    await client.end();
+  }
+};
+
+/**
+ * Refuses to copy production's rows into a schema too old to hold them.
+ *
+ * Staging ahead of production is normal and fine. Staging BEHIND production
+ * means a column exists in the data that does not exist in the target, and the
+ * restore fails partway, leaving a half-populated database that looks merely
+ * odd rather than broken.
+ */
+const checkSchemaOrder = async () => {
+  const [ahead, behind] = await Promise.all([migrationNames(source), migrationNames(target)]);
+
+  const missing = [...ahead].filter((name) => !behind.has(name));
+  const extra = [...behind].filter((name) => !ahead.has(name));
+
+  if (missing.length) {
+    fail(
+      `the target is BEHIND production by ${missing.length} migration(s):\n` +
+        missing.map((n) => `    ${n}`).join("\n") +
+        "\n  Deploy or run `pnpm migrate` against the target first. Data cannot be " +
+        "copied into a schema that predates it.",
+    );
+  }
+
+  console.log(
+    extra.length
+      ? `[sync] target is ahead by ${extra.length} migration(s) — fine, its schema is kept`
+      : "[sync] schemas match",
+  );
+};
+
+const syncDatabase = async () => {
   console.log("\n[sync] === database ===");
   requireTool("pg_dump");
   requireTool("psql");
 
+  await checkSchemaOrder();
+
   if (!commit) {
-    console.log("[sync] would dump schema \"payload\" from production and restore it over the target");
-    console.log("[sync] would DROP and recreate every table, replacing all content, users and settings");
+    console.log("[sync] would copy DATA only — every table's rows, schema untouched");
+    console.log("[sync] would exclude payload_migrations, so the target keeps its own state");
+    console.log("[sync] would first empty the target's tables, including its admin user");
     return;
   }
 
   const dir = mkdtempSync(path.join(tmpdir(), "pyrelight-sync-"));
-  const dump = path.join(dir, "payload.sql");
+  const dump = path.join(dir, "payload-data.sql");
 
   try {
-    console.log("[sync] dumping...");
+    console.log("[sync] dumping data...");
     const dumped = spawnSync(
       "pg_dump",
       [
         `"${toSessionPooler(source)}"`,
         "--schema=payload",
+        "--data-only",
+        // The one table that must not travel. See above.
+        "--exclude-table-data=payload.payload_migrations",
         // The target's roles differ from production's, and restoring ownership
         // it cannot grant turns a working copy into a pile of permission errors.
         "--no-owner",
         "--no-privileges",
-        // Drop what is there first, so this is a replacement and not a merge
-        // that silently keeps rows production deleted.
-        "--clean",
-        "--if-exists",
         "-f",
         `"${dump}"`,
       ],
@@ -130,7 +199,35 @@ const syncDatabase = () => {
     );
     if (dumped.status !== 0) fail("pg_dump failed");
 
-    console.log("[sync] restoring...");
+    /**
+     * --data-only appends, so the target has to be emptied first or every row
+     * collides on its primary key. One TRUNCATE across all tables at once,
+     * because doing them individually would fail on foreign keys no matter what
+     * order they were attempted in.
+     */
+    console.log("[sync] emptying the target...");
+    const truncate = `
+      DO $$
+      DECLARE tables text;
+      BEGIN
+        SELECT string_agg(format('%I.%I', schemaname, tablename), ', ')
+          INTO tables
+          FROM pg_tables
+         WHERE schemaname = 'payload'
+           AND tablename <> 'payload_migrations';
+        IF tables IS NOT NULL THEN
+          EXECUTE 'TRUNCATE TABLE ' || tables || ' RESTART IDENTITY CASCADE';
+        END IF;
+      END $$;`;
+
+    const emptied = spawnSync(
+      "psql",
+      [`"${toSessionPooler(target)}"`, "-v", "ON_ERROR_STOP=1", "-c", `"${truncate.replace(/\s+/g, " ").trim()}"`],
+      { shell: true, stdio: "inherit" },
+    );
+    if (emptied.status !== 0) fail("could not empty the target");
+
+    console.log("[sync] restoring data...");
     const restored = spawnSync(
       "psql",
       [`"${toSessionPooler(target)}"`, "-v", "ON_ERROR_STOP=1", "-f", `"${dump}"`],
@@ -138,7 +235,7 @@ const syncDatabase = () => {
     );
     if (restored.status !== 0) fail("psql restore failed — the target may be half-written");
 
-    console.log("[sync] database replaced");
+    console.log("[sync] data replaced; the target keeps its own schema and migration state");
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
@@ -246,7 +343,7 @@ const syncStorage = async () => {
   }
 };
 
-if (doDb) syncDatabase();
+if (doDb) await syncDatabase();
 if (doStorage) await syncStorage();
 
 console.log(
