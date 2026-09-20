@@ -123,3 +123,28 @@ procedure, and launch day is a bad time to discover that.
 
 Production keeps serving the last successful deployment while a new one fails, so
 a failed build is not an outage.
+
+### Locally: restart `pnpm dev` before believing anything
+
+A dev server left running for days stops being able to reach the database, while
+a fresh process reaches it fine. The symptom is `INFO: Reconnecting to postgres`
+every sixteen seconds in the terminal, pages failing with **the same connect
+timeout every other problem produces**, and the occasional request succeeding in
+under a second between failures.
+
+That last detail is the tell. A genuinely unreachable database does not serve one
+request in 651ms and fail the next for thirty seconds.
+
+Turbopack reloads modules on every edit, and connection pools do not always go
+with them, so a long session accumulates pools nobody is holding and nothing is
+closing. Restarting costs five seconds and rules it out. Do it before changing
+any configuration, and certainly before changing anything in `.env`.
+
+Confirm from outside the dev server rather than trusting it:
+
+```bash
+node --env-file=.env scripts/db-preflight.mjs
+```
+
+A clean preflight alongside a failing dev server means the problem is the dev
+server.
