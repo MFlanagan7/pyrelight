@@ -92,10 +92,13 @@ from itch.io, who will not come back to check whether it was temporary.
    heading you want.
 
 8. **Replace the eleven placeholder social glyphs** in
-   `apps/web/src/assets/social-paths.ts`.
+   `apps/web/src/assets/social-paths.ts`. *Code, deferred by choice — parked so
+   authoring can proceed uninterrupted. Neither this nor the next item touches
+   anything being authored.*
 
 9. **Extend the sitemap** to include wiki entries, resources and tags. It names
-   collections explicitly, so new ones do not appear on their own.
+   collections explicitly, so new ones do not appear on their own. *Code,
+   deferred alongside the glyphs.*
 
 10. **Point `starfall.pyrelightpress.com` at production**, and set
     `NEXT_PUBLIC_SITE_URL` to match.
