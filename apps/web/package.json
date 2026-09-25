@@ -16,7 +16,9 @@
     "migrate:status": "payload migrate:status",
     "vercel-build": "node scripts/vercel-build.mjs",
     "sync:from-production": "node --env-file=.env scripts/sync-from-production.mjs",
-    "seed:taxonomy": "tsx scripts/seed-taxonomy.ts"
+    "seed:taxonomy": "tsx scripts/seed-taxonomy.ts",
+    "check:access": "tsx --env-file=.env scripts/check-access.ts",
+    "check:rate-limit": "tsx scripts/check-rate-limit.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1129.0",

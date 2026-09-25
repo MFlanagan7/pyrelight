@@ -55,10 +55,22 @@ const supabaseHost = (): string | null => {
 const host = supabaseHost();
 
 const nextConfig: NextConfig = {
+  /**
+   * Inlined into the browser bundle, so only what the browser needs.
+   *
+   * The badge is the only consumer and it never renders in production, yet the
+   * branch name and commit hash were being compiled into the production bundle
+   * regardless — readable by anyone, useful to nobody. It is minor as
+   * disclosures go, and it is also free to not do.
+   *
+   * The environment name stays in every build: the badge has to know it is
+   * production in order to render nothing, and "production" is not a secret.
+   */
   env: {
     NEXT_PUBLIC_ENVIRONMENT: environment,
-    NEXT_PUBLIC_GIT_BRANCH: branch,
-    NEXT_PUBLIC_GIT_SHA: sha,
+    ...(environment === "production"
+      ? {}
+      : { NEXT_PUBLIC_GIT_BRANCH: branch, NEXT_PUBLIC_GIT_SHA: sha }),
   },
 
   /**

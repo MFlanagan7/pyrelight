@@ -76,4 +76,11 @@ if (isProduction || isStaging) {
   );
 }
 
+/**
+ * Refuses to build if a drafts collection would serve drafts to the public, or
+ * if any collection accepts anonymous writes. Runs on every deploy, previews
+ * included, because the mistake it catches is invisible from the site itself.
+ */
+run("pnpm", ["exec", "tsx", "scripts/check-access.ts"]);
+
 run("pnpm", ["run", "build"]);

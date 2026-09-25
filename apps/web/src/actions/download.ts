@@ -1,6 +1,7 @@
 "use server";
 
 import { createSignedDownloadUrl } from "@/lib/downloads";
+import { rateLimit } from "@/lib/rate-limit";
 import { getPayloadClient } from "@/lib/payload";
 
 export type DownloadState = {
@@ -29,6 +30,14 @@ export async function requestDownload(
   _prev: DownloadState,
   formData: FormData,
 ): Promise<DownloadState> {
+  // Issuing a signed URL costs a database read and an S3 signature, so the
+  // brake goes before both. Slightly more generous than the newsletter: a
+  // reader may legitimately fetch several files in one sitting.
+  const limit = await rateLimit("download", 15, 600);
+  if (!limit.ok) {
+    return { status: "error", message: "Too many requests. Try again in a few minutes." };
+  }
+
   const resourceId = Number(formData.get("resourceId"));
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const subscribe = formData.get("subscribe") === "on";

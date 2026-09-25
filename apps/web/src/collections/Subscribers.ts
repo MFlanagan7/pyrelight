@@ -15,9 +15,22 @@ export const Subscribers: CollectionConfig = {
     group: "Settings",
   },
   access: {
-    // Written only through the server action, never read publicly.
+    /**
+     * Written only through the server actions, never read publicly.
+     *
+     * `create: () => true` was the previous rule and contradicted that comment:
+     * it let anyone POST to /api/subscribers directly, skipping the action
+     * entirely. That matters more than an open endpoint usually would, because
+     * the action is where GDPR consent is enforced — it is the code that keeps
+     * a download address separate from a marketing opt-in. Posting past it
+     * meant setting `confirmed` and `consentedAt` to anything you liked, which
+     * turns a consent record into an unreliable one.
+     *
+     * Closing it costs nothing: both actions write with overrideAccess, because
+     * the visitor is anonymous by definition.
+     */
     read: ({ req }) => Boolean(req.user),
-    create: () => true,
+    create: ({ req }) => Boolean(req.user),
     update: ({ req }) => Boolean(req.user),
     delete: ({ req }) => Boolean(req.user),
   },

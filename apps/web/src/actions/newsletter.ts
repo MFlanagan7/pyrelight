@@ -1,6 +1,7 @@
 "use server";
 
 import { getPayloadClient } from "@/lib/payload";
+import { rateLimit } from "@/lib/rate-limit";
 
 export type SubscribeState = { status: "idle" | "ok" | "error"; message: string };
 
@@ -13,6 +14,16 @@ export async function subscribe(
   _prev: SubscribeState,
   formData: FormData,
 ): Promise<SubscribeState> {
+  // Before any work, and before touching the database: a signup form is one of
+  // the two things a stranger can reach on this site.
+  const limit = await rateLimit("newsletter", 5, 600);
+  if (!limit.ok) {
+    return {
+      status: "error",
+      message: "Too many attempts. Try again in a few minutes.",
+    };
+  }
+
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const source = String(formData.get("source") ?? "");
 
