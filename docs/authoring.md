@@ -79,13 +79,27 @@ died on a published row. Local shares staging's database, so a recent sync means
 you develop against realistic content and discover that locally, which is the
 cheapest place to discover anything.
 
-**Know what staging does and does not prove for migrations.** Running
-`pnpm migrate` locally applies it to staging's database, so by the time you push,
-the staging deploy has nothing left to apply. Staging therefore proves the *code*
-works against the migrated schema. It does not rehearse the migration itself —
-production is the first deploy-time run. That is acceptable because the SQL is
-reviewable and already ran once against an identical Postgres with production-like
-data, but it is worth knowing rather than assuming.
+**Let staging run the migration, rather than running it yourself.** This is the
+whole difference between staging rehearsing a schema change and merely watching
+one that already happened.
+
+`pnpm migrate:create` does not touch a database at all — it diffs against a
+snapshot in the migrations folder and writes SQL. Only `pnpm migrate` applies
+anything. So:
+
+```bash
+pnpm migrate:create <name>   # writes the SQL, connects to nothing
+# commit it, push staging, and let the deploy apply it
+```
+
+The staging deploy then performs the migration for real, against a database
+holding production's data. Production becomes the *second* place it runs rather
+than the first. Local picks up the new schema for free, since local and staging
+share a database.
+
+Run `pnpm migrate` locally only when you need the schema immediately and accept
+that staging will have nothing left to prove. The cost of the better path is a
+few minutes where local code expects a column that has not landed yet.
 
 **A new field is empty on every existing row.** Design for that. Render something
 sensible when it is absent, because every piece of content that already exists

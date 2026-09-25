@@ -45,14 +45,23 @@ work locally  →  push to staging  →  look at it  →  merge to main  →  li
 **1. Work locally.** `pnpm dev`. You are pointed at staging's database, so
 create, break and delete freely.
 
-**2. If you changed a collection, create a migration.**
+**2. If you changed a collection, create a migration — and do not apply it.**
 
 ```bash
-pnpm migrate:create <short-name>   # writes reviewable SQL
-pnpm migrate                       # applies it to staging's database
+pnpm migrate:create <short-name>   # writes reviewable SQL, touches no database
 ```
 
-Commit that migration file together with the code that needs it. They belong in
+`migrate:create` never connects to a database; it diffs against a snapshot in the
+migrations folder. Leaving it unapplied is deliberate, and it is what makes step
+3 a rehearsal rather than a formality: the staging deploy runs the migration for
+real, against a database holding production's data, so production becomes the
+second place it runs rather than the first. Local picks up the new schema for
+free once staging has deployed, since they share a database.
+
+Run `pnpm migrate` yourself only when you need the schema immediately, and know
+that you have spent staging's rehearsal to get it.
+
+Commit the migration file together with the code that needs it. They belong in
 one commit because they are one change. A deploy that has the code but not the
 migration fails, and the reverse silently reshapes a database for no reason.
 
