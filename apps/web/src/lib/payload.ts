@@ -13,6 +13,31 @@ export const getPayloadClient = async () => getPayload({ config: configPromise }
 /** Published entries only. Drafts must never leak onto the public site. */
 export const publishedOnly = { _status: { equals: "published" } } as const;
 
+/**
+ * How a detail route should query, given whether the reader is previewing.
+ *
+ * Returned as one object rather than two separate flags because the two parts
+ * must agree and it is easy to set one and forget the other. `draft: true` tells
+ * Payload to return the newest version of a document; leaving the `_status`
+ * filter in place would then discard exactly the drafts it just fetched, and the
+ * page would 404 while looking correctly configured.
+ *
+ * Reading `isEnabled` does not force dynamic rendering — Next allows it inside a
+ * caching scope specifically so that published pages stay static and only a
+ * request carrying the draft cookie bypasses the cache.
+ */
+export const previewQuery = async () => {
+  const { draftMode } = await import("next/headers");
+  const { isEnabled } = await draftMode();
+
+  return {
+    draft: isEnabled,
+    /** Spread into `where`. Empty while previewing, so drafts are visible. */
+    status: isEnabled ? {} : publishedOnly,
+    isPreview: isEnabled,
+  };
+};
+
 /** Fetch a legal document by its fixed slug. Returns null if not yet authored. */
 export const getLegalDocument = async (slug: string) => {
   const payload = await getPayloadClient();

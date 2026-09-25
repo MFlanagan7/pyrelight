@@ -1,5 +1,5 @@
 import type { Resource } from "@/payload-types";
-import { getPayloadClient, publishedOnly } from "./payload";
+import { getPayloadClient, previewQuery, publishedOnly } from "./payload";
 
 /** Library sections, in the order the IA lists them. Also the URL segments. */
 export const RESOURCE_SECTIONS = [
@@ -31,11 +31,13 @@ export const findResource = async (
   slug: string,
 ): Promise<Resource | null> => {
   const payload = await getPayloadClient();
+  const { draft, status } = await previewQuery();
   const { docs } = await payload.find({
     collection: "resources",
     // Section is matched as well as slug so a resource cannot be reached from
     // the wrong section's URL, which would be two URLs for one page.
-    where: { ...publishedOnly, section: { equals: section }, slug: { equals: slug } },
+    where: { ...status, section: { equals: section }, slug: { equals: slug } },
+    draft,
     limit: 1,
     depth: 2,
   });

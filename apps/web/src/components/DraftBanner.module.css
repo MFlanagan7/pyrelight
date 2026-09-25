@@ -1,0 +1,55 @@
+/*
+ * Deliberately unlike the site.
+ *
+ * This is scaffolding, not chrome, and it has to be impossible to mistake for
+ * part of the design at a glance — the whole job is to interrupt. It sits above
+ * the environment strip in stacking order for the same reason.
+ */
+.banner {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sf-space-4, 1rem);
+  flex-wrap: wrap;
+
+  padding: var(--sf-space-2, 0.5rem) var(--sf-space-4, 1rem);
+
+  background: #f5a623;
+  color: #1a1206;
+
+  font-family: var(--sf-font-ui, system-ui, sans-serif);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.text strong {
+  font-weight: 700;
+}
+
+.exit {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid currentColor;
+  border-radius: var(--sf-radius-sm, 3px);
+
+  background: transparent;
+  color: inherit;
+
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.exit:hover {
+  background: #1a1206;
+  color: #f5a623;
+}
+
+.exit:focus-visible {
+  outline: 2px solid #1a1206;
+  outline-offset: 2px;
+}

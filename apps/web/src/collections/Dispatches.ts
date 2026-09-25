@@ -1,4 +1,6 @@
 import type { CollectionConfig } from "payload";
+import { draftsWithAutosave } from "./versions";
+import { previewUrl } from "../lib/preview";
 import { revalidateCollection, revalidateTagPages } from "../hooks/revalidate";
 import { searchTextField } from "../fields/searchText";
 import { tagsField } from "../fields/tags";
@@ -15,10 +17,10 @@ export const Dispatches: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     defaultColumns: ["title", "publishedAt", "_status"],
-    livePreview: { url: ({ data }) => `/dispatches/${data?.slug ?? ""}` },
+    livePreview: { url: ({ data }) => previewUrl(`/dispatches/${data?.slug ?? ""}`) },
   },
   access: { read: () => true },
-  versions: { drafts: true },
+  versions: draftsWithAutosave,
   hooks: {
     // Two concerns: this collection's own pages, and the tag pages that
     // aggregate it. Arrays are concatenated so neither replaces the other.

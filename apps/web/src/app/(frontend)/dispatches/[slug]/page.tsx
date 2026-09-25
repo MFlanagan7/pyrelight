@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ImageFrame } from "@/components/core";
 import { RichText } from "@/components/RichText";
-import { getPayloadClient, publishedOnly } from "@/lib/payload";
+import { getPayloadClient, previewQuery, publishedOnly } from "@/lib/payload";
 import styles from "./page.module.css";
 
 const dateFormat = new Intl.DateTimeFormat("en-GB", {
@@ -15,9 +15,11 @@ const dateFormat = new Intl.DateTimeFormat("en-GB", {
 
 const findBySlug = async (slug: string) => {
   const payload = await getPayloadClient();
+  const { draft, status } = await previewQuery();
   const { docs } = await payload.find({
     collection: "dispatches",
-    where: { ...publishedOnly, slug: { equals: slug } },
+    where: { ...status, slug: { equals: slug } },
+    draft,
     limit: 1,
     depth: 1,
   });

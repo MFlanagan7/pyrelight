@@ -1,4 +1,6 @@
 import type { CollectionConfig } from "payload";
+import { draftsWithAutosave } from "./versions";
+import { resourcePreviewUrl } from "../lib/preview";
 import { licensingFields, validateLicensing } from "../fields/licensing";
 import { searchTextField } from "../fields/searchText";
 import { seoField } from "../fields/seo";
@@ -30,11 +32,11 @@ export const Resources: CollectionConfig = {
     defaultColumns: ["title", "section", "delivery", "_status"],
     group: "Content",
     livePreview: {
-      url: ({ data }) => `/resources/${data?.section ?? ""}/${data?.slug ?? ""}`,
+      url: ({ data }) => resourcePreviewUrl(data?.section, data?.slug),
     },
   },
   access: { read: () => true },
-  versions: { drafts: true },
+  versions: draftsWithAutosave,
   hooks: {
     beforeValidate: [
       ({ data }) => {

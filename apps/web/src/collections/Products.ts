@@ -1,4 +1,6 @@
 import type { CollectionConfig } from "payload";
+import { draftsWithAutosave } from "./versions";
+import { previewUrl } from "../lib/preview";
 import { licensingFields, validateLicensing } from "../fields/licensing";
 import { revalidateCollection, revalidateTagPages } from "../hooks/revalidate";
 import { searchTextField } from "../fields/searchText";
@@ -17,10 +19,10 @@ export const Products: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     defaultColumns: ["title", "tier", "gameSystem", "_status"],
-    livePreview: { url: ({ data }) => `/products/${data?.slug ?? ""}` },
+    livePreview: { url: ({ data }) => previewUrl(`/products/${data?.slug ?? ""}`) },
   },
   access: { read: () => true },
-  versions: { drafts: true },
+  versions: draftsWithAutosave,
   fields: [
     { name: "title", type: "text", required: true },
     slugField(),

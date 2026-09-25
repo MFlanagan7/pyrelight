@@ -9,6 +9,7 @@ import * as migration_20260911_122416_wiki_pillars from './20260911_122416_wiki_
 import * as migration_20260911_124540_search_text_content from './20260911_124540_search_text_content';
 import * as migration_20260911_140000_search_indexes from './20260911_140000_search_indexes';
 import * as migration_20260925_020843_schema_review from './20260925_020843_schema_review';
+import * as migration_20260925_124016_autosave_drafts from './20260925_124016_autosave_drafts';
 
 export const migrations = [
   {
@@ -64,6 +65,11 @@ export const migrations = [
   {
     up: migration_20260925_020843_schema_review.up,
     down: migration_20260925_020843_schema_review.down,
-    name: '20260925_020843_schema_review'
+    name: '20260925_020843_schema_review',
+  },
+  {
+    up: migration_20260925_124016_autosave_drafts.up,
+    down: migration_20260925_124016_autosave_drafts.down,
+    name: '20260925_124016_autosave_drafts'
   },
 ];

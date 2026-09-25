@@ -1,5 +1,5 @@
 import type { Category } from "@/payload-types";
-import { getPayloadClient, publishedOnly } from "./payload";
+import { getPayloadClient, previewQuery, publishedOnly } from "./payload";
 import { WIKI_COLLECTION_SLUGS, type WikiCollectionSlug } from "./wiki";
 
 /**
@@ -126,11 +126,14 @@ export const countEntriesByPillar = async (): Promise<Record<number, number>> =>
  */
 export const findWikiEntry = async (slug: string) => {
   const payload = await getPayloadClient();
+  // Drafts are visible only to an editor who went through /preview.
+  const { draft, status } = await previewQuery();
 
   for (const source of WIKI_COLLECTIONS) {
     const { docs } = await payload.find({
       collection: source.collection,
-      where: { ...publishedOnly, slug: { equals: slug } },
+      where: { ...status, slug: { equals: slug } },
+      draft,
       limit: 1,
       depth: 2,
     });

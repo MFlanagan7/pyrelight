@@ -1,4 +1,6 @@
 import type { CollectionConfig } from "payload";
+import { draftsWithAutosave } from "../versions";
+import { previewUrl } from "../../lib/preview";
 import { licensingFields, validateLicensing } from "../../fields/licensing";
 import { searchTextField } from "../../fields/searchText";
 import { tagsField } from "../../fields/tags";
@@ -17,10 +19,10 @@ export const WikiGods: CollectionConfig = {
     useAsTitle: "title",
     defaultColumns: ["title", "epithet", "divineStatus", "_status"],
     group: "Wiki",
-    livePreview: { url: ({ data }) => `/wiki/${data?.slug ?? ""}` },
+    livePreview: { url: ({ data }) => previewUrl(`/wiki/${data?.slug ?? ""}`) },
   },
   access: { read: () => true },
-  versions: { drafts: true },
+  versions: draftsWithAutosave,
   fields: [
     { name: "title", type: "text", required: true, label: "Name" },
     // Pillars live at /wiki/<pillar> and entries at /wiki/<slug>, so an entry

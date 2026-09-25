@@ -1,4 +1,6 @@
 import type { CollectionConfig } from "payload";
+import { draftsWithAutosave } from "./versions";
+import { previewUrl } from "../lib/preview";
 import { pageBlocks } from "../blocks";
 import { revalidatePages } from "../hooks/revalidate";
 import { seoField } from "../fields/seo";
@@ -15,11 +17,12 @@ export const Pages: CollectionConfig = {
     useAsTitle: "title",
     defaultColumns: ["title", "slug", "_status", "updatedAt"],
     livePreview: {
-      url: ({ data }) => `/${data?.slug === "home" ? "" : (data?.slug ?? "")}`,
+      // "home" lives at "/" rather than "/home", so it cannot use the slug.
+      url: ({ data }) => previewUrl(`/${data?.slug === "home" ? "" : (data?.slug ?? "")}`),
     },
   },
   access: { read: () => true },
-  versions: { drafts: true },
+  versions: draftsWithAutosave,
   hooks: revalidatePages(),
   fields: [
     { name: "title", type: "text", required: true },

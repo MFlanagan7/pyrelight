@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { RenderBlocks } from "@/components/blocks/RenderBlocks";
-import { getPayloadClient, publishedOnly } from "@/lib/payload";
+import { getPayloadClient, previewQuery, publishedOnly } from "@/lib/payload";
 
 /** "/" maps to the page with slug "home". */
 const slugFrom = (segments?: string[]) =>
@@ -9,9 +9,11 @@ const slugFrom = (segments?: string[]) =>
 
 const findPage = async (slug: string) => {
   const payload = await getPayloadClient();
+  const { draft, status } = await previewQuery();
   const { docs } = await payload.find({
     collection: "pages",
-    where: { ...publishedOnly, slug: { equals: slug } },
+    where: { ...status, slug: { equals: slug } },
+    draft,
     limit: 1,
     // Deep enough to populate uploads inside blocks and products in a grid.
     depth: 2,

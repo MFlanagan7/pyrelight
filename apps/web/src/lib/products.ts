@@ -1,5 +1,5 @@
 import type { Product } from "@/payload-types";
-import { getPayloadClient, publishedOnly } from "./payload";
+import { getPayloadClient, previewQuery, publishedOnly } from "./payload";
 
 /** Tier labels. No prices on this site — they go stale during sales. */
 export const TIER_LABEL: Record<string, string> = {
@@ -37,9 +37,11 @@ export const findProducts = async () => {
 
 export const findProductBySlug = async (slug: string): Promise<Product | null> => {
   const payload = await getPayloadClient();
+  const { draft, status } = await previewQuery();
   const { docs } = await payload.find({
     collection: "products",
-    where: { ...publishedOnly, slug: { equals: slug } },
+    where: { ...status, slug: { equals: slug } },
+    draft,
     limit: 1,
     depth: 1,
   });
