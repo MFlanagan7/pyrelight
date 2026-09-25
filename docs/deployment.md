@@ -279,9 +279,21 @@ Two things to know:
 - **Storage is copied through your machine.** The buckets belong to different
   Supabase projects, so there is no server-side copy. Objects are skipped when
   the target already holds the same key at the same size.
-- **Staging ends up at production's schema version**, `payload_migrations`
-  included. If staging was testing a migration production does not have, it is
-  gone. Run `pnpm migrate` afterwards to reapply it.
+- **Schema does not travel; only rows do.** Structure moves one way, forward
+  through migrations, so every change to it stays a reviewable file in git.
+  `payload_migrations` is excluded outright, and the script refuses to run when
+  the target is *behind* production, since rows cannot be written into a schema
+  that predates them. Ahead is normal.
+- **Redeploy the target afterwards.** Its public pages will keep serving cached
+  renders from before the sync, while its `/admin` shows the new content
+  immediately — which looks exactly like a broken deployment and is not.
+
+The cache one deserves explaining, because the symptom is so convincing.
+Invalidation runs through Payload's `afterChange` hooks, which call
+`revalidatePath` in-process (`src/hooks/revalidate.ts`). That works because
+Payload runs inside the Next app. This script does not — it writes to Postgres
+directly — so no hook fires and nothing purges. Editing through the CMS is
+unaffected and always has been.
 
 It needs `pg_dump` and `psql` on PATH. On Windows the EDB installer can install
 Command Line Tools alone, without a server. A bespoke row copier was considered

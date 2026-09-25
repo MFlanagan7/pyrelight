@@ -31,7 +31,7 @@
  * dump` bundles the same binaries if you would rather not install them.
  */
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, rmSync } from "node:fs";
+import { existsSync, mkdtempSync, readdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 
@@ -93,14 +93,53 @@ console.log(`[sync] from ${sourceRef} (production)`);
 console.log(`[sync]   to ${targetRef} (target)`);
 console.log(`[sync] mode: ${commit ? "COMMIT — this will overwrite" : "dry run"}`);
 
-const requireTool = (tool) => {
-  const probe = spawnSync(tool, ["--version"], { shell: true, stdio: "pipe" });
-  if (probe.status !== 0) {
-    fail(
-      `${tool} is not on PATH. Install the PostgreSQL client tools — on Windows, ` +
-        "the EDB installer can install Command Line Tools alone, without a server.",
-    );
+/**
+ * Finds pg_dump and psql, whether or not anyone put them on PATH.
+ *
+ * Windows installers routinely do not, and the resulting "not found" sends
+ * people off editing environment variables to fix a thing that is already
+ * installed and sitting in a predictable place. So look there before giving up.
+ *
+ * Highest version wins, because pg_dump must be at least as new as the server
+ * it dumps. Older refuses outright; newer is fine.
+ *
+ * PG_BIN overrides all of it, for an install somewhere unusual.
+ */
+const resolveTool = (tool) => {
+  const onPath = spawnSync(tool, ["--version"], { shell: true, stdio: "pipe" });
+  if (onPath.status === 0) return tool;
+
+  const roots = [
+    process.env.PG_BIN,
+    ...["C:/Program Files/PostgreSQL", "C:/Program Files (x86)/PostgreSQL"].flatMap((base) => {
+      try {
+        return readdirSync(base)
+          .filter((name) => /^\d+$/.test(name))
+          .sort((a, b) => Number(b) - Number(a))
+          .map((version) => path.join(base, version, "bin"));
+      } catch {
+        return [];
+      }
+    }),
+    "/usr/local/bin",
+    "/opt/homebrew/bin",
+  ].filter(Boolean);
+
+  for (const dir of roots) {
+    for (const name of [`${tool}.exe`, tool]) {
+      const candidate = path.join(dir, name);
+      if (existsSync(candidate)) {
+        console.log(`[sync] using ${candidate}`);
+        return candidate;
+      }
+    }
   }
+
+  fail(
+    `${tool} could not be found, on PATH or in the usual install locations. ` +
+      "Install the PostgreSQL client tools — on Windows the EDB installer can install " +
+      "Command Line Tools alone, without a server — or set PG_BIN to the folder holding them.",
+  );
 };
 
 /**
@@ -163,8 +202,8 @@ const checkSchemaOrder = async () => {
 
 const syncDatabase = async () => {
   console.log("\n[sync] === database ===");
-  requireTool("pg_dump");
-  requireTool("psql");
+  const pgDump = resolveTool("pg_dump");
+  const psql = resolveTool("psql");
 
   await checkSchemaOrder();
 
@@ -181,7 +220,7 @@ const syncDatabase = async () => {
   try {
     console.log("[sync] dumping data...");
     const dumped = spawnSync(
-      "pg_dump",
+      `"${pgDump}"`,
       [
         `"${toSessionPooler(source)}"`,
         "--schema=payload",
@@ -221,7 +260,7 @@ const syncDatabase = async () => {
       END $$;`;
 
     const emptied = spawnSync(
-      "psql",
+      `"${psql}"`,
       [`"${toSessionPooler(target)}"`, "-v", "ON_ERROR_STOP=1", "-c", `"${truncate.replace(/\s+/g, " ").trim()}"`],
       { shell: true, stdio: "inherit" },
     );
@@ -229,7 +268,7 @@ const syncDatabase = async () => {
 
     console.log("[sync] restoring data...");
     const restored = spawnSync(
-      "psql",
+      `"${psql}"`,
       [`"${toSessionPooler(target)}"`, "-v", "ON_ERROR_STOP=1", "-f", `"${dump}"`],
       { shell: true, stdio: "inherit" },
     );
@@ -272,7 +311,10 @@ const syncBucket = async (from, to, bucket) => {
         const existing = await to.send(
           new HeadObjectCommand({ Bucket: bucket, Key: object.Key }),
         );
-        if (existing.ContentLength === object.Size) {
+        // Coerced, because a zero-byte object comes back with ContentLength
+        // absent rather than 0, and `undefined === 0` is false — which quietly
+        // re-copied Supabase's folder placeholder on every run.
+        if ((existing.ContentLength ?? 0) === (object.Size ?? 0)) {
           skipped += 1;
           continue;
         }
@@ -346,8 +388,31 @@ const syncStorage = async () => {
 if (doDb) await syncDatabase();
 if (doStorage) await syncStorage();
 
-console.log(
-  commit
-    ? "\n[sync] done. Run `pnpm migrate` if staging had migrations production does not.\n"
-    : "\n[sync] dry run only. Re-run with --yes to apply.\n",
-);
+if (!commit) {
+  console.log("\n[sync] dry run only. Re-run with --yes to apply.\n");
+} else {
+  /**
+   * The deployed site will not show any of this until it is rebuilt, and the
+   * reason is worth stating rather than leaving to be rediscovered.
+   *
+   * Cache invalidation on this site runs through Payload's afterChange hooks,
+   * which call revalidatePath in-process — see src/hooks/revalidate.ts. That
+   * works precisely because Payload runs inside the Next app. This script does
+   * not: it writes to Postgres directly, so no hook fires and nothing purges.
+   *
+   * The symptom is convincing and misleading. The target's /admin shows the new
+   * content immediately, because the admin always queries live, while its public
+   * pages keep serving renders from before the sync. That looks like a broken
+   * deployment and is only a warm cache.
+   *
+   * Triggering a purge from here would mean reaching the deployment over HTTP,
+   * past the Vercel Authentication in front of it, with a bypass token to
+   * maintain. A rebuild is one click and needs none of that.
+   */
+  console.log("\n[sync] done.");
+  console.log("[sync] NOW REDEPLOY THE TARGET. Its public pages still serve cached renders");
+  console.log("[sync]   from before this ran — /admin will look right while they do not.");
+  console.log("[sync]   Nothing purged the cache because this wrote to Postgres directly,");
+  console.log("[sync]   bypassing the Payload hooks that normally do it.");
+  console.log("[sync] Run `pnpm migrate` too, if the target had migrations production lacks.\n");
+}
