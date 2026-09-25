@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { contentRead } from "../access/contentRead";
 import { slugField } from "../fields/slug";
 
 /**
@@ -22,7 +23,7 @@ export const Categories: CollectionConfig = {
     description:
       "Two different things in one collection, told apart by Kind. A wiki pillar is one of the seven sections at /wiki/<pillar>. A dispatch category is one of the blog's four. Each picker only offers the kind it needs, so pick Kind correctly and the rest follows.",
   },
-  access: { read: () => true },
+  access: { read: contentRead },
   fields: [
     { name: "title", type: "text", required: true },
     slugField(),

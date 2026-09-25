@@ -141,6 +141,37 @@ deployed and holds content worth keeping.
 
 ---
 
+## Circle back when accounts exist
+
+Three things are parked on auth, which is itself parked until the shop ships.
+Grouped here so they are found together rather than rediscovered separately.
+
+**Test the download action properly.** It has never been exercised end to end —
+no resource has a hosted file yet, and the email-gated path matters legally, not
+just functionally. Worth a deliberate pass: gated and ungated delivery, the
+consent checkbox writing what it claims, and a signed URL actually expiring
+after ten minutes rather than merely being configured to.
+
+**Test authentication properly.** Login, lockout after five failed attempts,
+password reset arriving by email, and an editor seeing exactly what their role
+allows.
+
+**Rework the download rate limit, which is wrong for paying customers.** It
+currently allows fifteen downloads per address per ten minutes and applies to
+everyone, because today everyone is anonymous. The moment someone has bought
+things, that limit punishes the legitimate case Michael raised: a customer who
+lost a drive and wants their whole library back is indistinguishable from a
+scraper, by IP address alone.
+
+Two changes, and the second is the better one:
+
+- Key the limit on the **account** rather than the address once there is an
+  account, and raise or remove it for anyone with entitlements.
+- Offer **one archive** instead of many files. A customer re-downloading a
+  library wants a single action, not fifteen; it is fewer signed URLs, fewer
+  invocations, and it removes the reason to hit the limit at all. The rate
+  limit then only ever sees the case it was written for.
+
 ## Deferred, with reasons
 
 | Thing | Why it is waiting |

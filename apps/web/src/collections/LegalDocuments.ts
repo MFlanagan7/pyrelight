@@ -1,5 +1,5 @@
 import type { CollectionConfig } from "payload";
-import { publishedOrEditor } from "../access/publishedOrEditor";
+import { contentRead } from "../access/contentRead";
 import { draftsWithAutosave } from "./versions";
 import { revalidateLegal } from "../hooks/revalidate";
 import { seoField } from "../fields/seo";
@@ -24,7 +24,7 @@ export const LegalDocuments: CollectionConfig = {
     defaultColumns: ["title", "slug", "lastReviewed", "_status"],
     group: "Settings",
   },
-  access: { read: publishedOrEditor },
+  access: { read: contentRead },
   versions: draftsWithAutosave,
   hooks: revalidateLegal(),
   fields: [

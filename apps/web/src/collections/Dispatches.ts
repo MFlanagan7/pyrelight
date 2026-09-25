@@ -1,5 +1,5 @@
 import type { CollectionConfig } from "payload";
-import { publishedOrEditor } from "../access/publishedOrEditor";
+import { contentRead } from "../access/contentRead";
 import { draftsWithAutosave } from "./versions";
 import { previewUrl } from "../lib/preview";
 import { revalidateCollection, revalidateTagPages } from "../hooks/revalidate";
@@ -20,7 +20,7 @@ export const Dispatches: CollectionConfig = {
     defaultColumns: ["title", "publishedAt", "_status"],
     livePreview: { url: ({ data }) => previewUrl(`/dispatches/${data?.slug ?? ""}`) },
   },
-  access: { read: publishedOrEditor },
+  access: { read: contentRead },
   versions: draftsWithAutosave,
   hooks: {
     // Two concerns: this collection's own pages, and the tag pages that

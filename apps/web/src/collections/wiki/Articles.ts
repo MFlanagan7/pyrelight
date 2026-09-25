@@ -1,5 +1,5 @@
 import type { CollectionConfig } from "payload";
-import { publishedOrEditor } from "../../access/publishedOrEditor";
+import { contentRead } from "../../access/contentRead";
 import { draftsWithAutosave } from "../versions";
 import { previewUrl } from "../../lib/preview";
 import { articleBlocks } from "../../blocks";
@@ -26,7 +26,7 @@ export const WikiArticles: CollectionConfig = {
     group: "Wiki",
     livePreview: { url: ({ data }) => previewUrl(`/wiki/${data?.slug ?? ""}`) },
   },
-  access: { read: publishedOrEditor },
+  access: { read: contentRead },
   versions: draftsWithAutosave,
   fields: [
     { name: "title", type: "text", required: true },

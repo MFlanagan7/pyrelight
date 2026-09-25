@@ -2,6 +2,18 @@ import type { CollectionConfig } from "payload";
 
 export const Media: CollectionConfig = {
   slug: "media",
+  /**
+   * The one collection left open over HTTP, deliberately.
+   *
+   * When S3_PUBLIC_BUCKET is true these files serve from Supabase's CDN and
+   * Payload's own file route goes unused. When it is not — a fresh clone, or
+   * local disk storage — images ARE served through /api/media/file/..., and
+   * restricting read would break every image on the site with a 403 that looks
+   * nothing like a configuration problem.
+   *
+   * Nothing is lost by leaving it: these are images already published on the
+   * public site and already downloadable from a CDN without asking us.
+   */
   access: { read: () => true },
   upload: {
     /**
