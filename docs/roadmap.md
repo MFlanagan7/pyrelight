@@ -75,6 +75,37 @@ quiet is most likely.
 site is a nuisance. The same thing on a launched one loses the readers arriving
 from itch.io, who will not come back to check whether it was temporary.
 
+### Model the content before committing to its shape
+
+**Agreed sequence**, before real authoring starts:
+
+1. Reread `starfall-site-ia.md` to refresh the proposed structure. Deliberately
+   *not* a survey of other wikis: most are organised around published D&D canon,
+   which is a different problem, and importing someone else's structure is the
+   main risk of that research.
+2. Research the **tag vocabulary** specifically, which is worth outside input
+   because it is the connective tissue across all three areas and the single
+   most miserable thing to retrofit across finished entries. Each term needs a
+   facet, a one-line definition of what belongs under it, and known aliases.
+   Start small — roughly twenty to forty — and grow as the writing demands.
+3. Apply the tags, and any IA updates.
+4. **Write a stress-test seed script**, then throw its output away.
+
+That last step is the one that earns the rest. A schema looks fine empty and
+fails on the first awkward entry, so the seed should generate the hard cases
+rather than the easy ones: an entry spanning two pillars, one that is lore and
+crunch at once, a spoilered god, and one unit that is simultaneously a product,
+a wiki entry and a resource — the "compounding habit" from the IA, traced all
+the way through.
+
+Safe to do destructively now: local and staging share a disposable database, and
+`pnpm sync:from-production` restores a clean copy whenever the mess stops being
+useful.
+
+**Sequencing note.** Tags are data and can land directly. IA changes are schema,
+so seed BEFORE committing to them — otherwise the model changes on theory and
+the practical problems surface separately, later, with content already in it.
+
 ### Review the Resources section names before writing into them
 
 **Open, deliberately.** The five sections are `maps`, `adventures`, `tools`,
