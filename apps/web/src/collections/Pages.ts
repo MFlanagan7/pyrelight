@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { publishedOrEditor } from "../access/publishedOrEditor";
 import { draftsWithAutosave } from "./versions";
 import { previewUrl } from "../lib/preview";
 import { pageBlocks } from "../blocks";
@@ -21,7 +22,7 @@ export const Pages: CollectionConfig = {
       url: ({ data }) => previewUrl(`/${data?.slug === "home" ? "" : (data?.slug ?? "")}`),
     },
   },
-  access: { read: () => true },
+  access: { read: publishedOrEditor },
   versions: draftsWithAutosave,
   hooks: revalidatePages(),
   fields: [

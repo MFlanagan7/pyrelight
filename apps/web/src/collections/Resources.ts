@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { publishedOrEditor } from "../access/publishedOrEditor";
 import { draftsWithAutosave } from "./versions";
 import { resourcePreviewUrl } from "../lib/preview";
 import { licensingFields, validateLicensing } from "../fields/licensing";
@@ -35,7 +36,7 @@ export const Resources: CollectionConfig = {
       url: ({ data }) => resourcePreviewUrl(data?.section, data?.slug),
     },
   },
-  access: { read: () => true },
+  access: { read: publishedOrEditor },
   versions: draftsWithAutosave,
   hooks: {
     beforeValidate: [

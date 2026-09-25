@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { publishedOrEditor } from "../access/publishedOrEditor";
 import { draftsWithAutosave } from "./versions";
 import { previewUrl } from "../lib/preview";
 import { licensingFields, validateLicensing } from "../fields/licensing";
@@ -21,7 +22,7 @@ export const Products: CollectionConfig = {
     defaultColumns: ["title", "tier", "gameSystem", "_status"],
     livePreview: { url: ({ data }) => previewUrl(`/products/${data?.slug ?? ""}`) },
   },
-  access: { read: () => true },
+  access: { read: publishedOrEditor },
   versions: draftsWithAutosave,
   fields: [
     { name: "title", type: "text", required: true },
