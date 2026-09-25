@@ -32,3 +32,22 @@ export const RESERVED_WIKI_SLUGS: string[] = [
   "tags",
   "tag",
 ];
+
+/**
+ * The collections sharing the flat /wiki namespace.
+ *
+ * Listed here, with no imports above, because the collections themselves need
+ * it — to check a slug is not already taken in a sibling — and anything reached
+ * through lib/payload would import the config that imports them.
+ *
+ * lib/wiki-content.ts derives its own list from this one, so the two cannot
+ * drift.
+ */
+export const WIKI_COLLECTION_SLUGS = [
+  "wiki-articles",
+  "wiki-gods",
+  "wiki-factions",
+  "wiki-regions",
+] as const;
+
+export type WikiCollectionSlug = (typeof WIKI_COLLECTION_SLUGS)[number];

@@ -7,6 +7,7 @@ import { revalidateCollection, revalidateTagPages } from "../../hooks/revalidate
 import { seoField } from "../../fields/seo";
 import { RESERVED_WIKI_SLUGS } from "../../lib/wiki";
 import { slugField } from "../../fields/slug";
+import { uniqueWikiSlug } from "../../hooks/uniqueWikiSlug";
 
 /** The pantheon. Status matters to the setting: divinity fell and got stranded. */
 export const WikiGods: CollectionConfig = {
@@ -16,7 +17,7 @@ export const WikiGods: CollectionConfig = {
     useAsTitle: "title",
     defaultColumns: ["title", "epithet", "divineStatus", "_status"],
     group: "Wiki",
-    livePreview: { url: ({ data }) => `/wiki/gods/${data?.slug ?? ""}` },
+    livePreview: { url: ({ data }) => `/wiki/${data?.slug ?? ""}` },
   },
   access: { read: () => true },
   versions: { drafts: true },
@@ -51,13 +52,23 @@ export const WikiGods: CollectionConfig = {
     { name: "body", type: "richText" },
     { name: "worshippedIn", type: "relationship", relationTo: "wiki-regions", hasMany: true, admin: { position: "sidebar" } },
     { name: "related", type: "relationship", relationTo: ["wiki-articles", "wiki-factions", "wiki-gods", "wiki-regions"], hasMany: true, admin: { position: "sidebar" } },
+    {
+      name: "spoiler",
+      type: "checkbox",
+      defaultValue: false,
+      admin: { position: "sidebar", description: "Renders behind a spoiler block." },
+    },
     searchTextField({ text: ["title", "epithet", "summary"], rich: ["body"], arrays: [{ name: "domains", fields: ["domain"] }] }),
     tagsField(),
     ...licensingFields,
     seoField,
   ],
   hooks: {
-    beforeValidate: [({ data }) => { const r = validateLicensing(data ?? {}); if (r !== true) throw new Error(r); return data; }],
+    beforeValidate: [
+      ({ data }) => { const r = validateLicensing(data ?? {}); if (r !== true) throw new Error(r); return data; },
+      // Slugs must be unique across the flat /wiki namespace, not just here.
+      uniqueWikiSlug("wiki-gods"),
+    ],
     // Entries share the flat /wiki namespace, and their pillar page lists them.
     afterChange: [
       ...revalidateCollection("/wiki", "/wiki").afterChange,

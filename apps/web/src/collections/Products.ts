@@ -50,6 +50,26 @@ export const Products: CollectionConfig = {
       },
     },
     {
+      /**
+       * When this was released, as opposed to when the entry was created.
+       *
+       * Not derivable from createdAt: a product page is usually drafted before
+       * release and sometimes written long after, so the two dates agree only
+       * by accident. Without a real one there is no honest "newest first" and
+       * nothing to print on the page.
+       *
+       * Added while the catalogue is empty. The same field after a dozen
+       * products means looking up a dozen release dates by hand.
+       */
+      name: "releasedAt",
+      type: "date",
+      admin: {
+        position: "sidebar",
+        date: { pickerAppearance: "dayOnly" },
+        description: "Release date. Drives ordering; leave blank for unreleased.",
+      },
+    },
+    {
       name: "featured",
       type: "checkbox",
       defaultValue: false,

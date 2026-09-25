@@ -8,6 +8,7 @@ import * as migration_20260911_121436_resources from './20260911_121436_resource
 import * as migration_20260911_122416_wiki_pillars from './20260911_122416_wiki_pillars';
 import * as migration_20260911_124540_search_text_content from './20260911_124540_search_text_content';
 import * as migration_20260911_140000_search_indexes from './20260911_140000_search_indexes';
+import * as migration_20260925_020843_schema_review from './20260925_020843_schema_review';
 
 export const migrations = [
   {
@@ -58,6 +59,11 @@ export const migrations = [
   {
     up: migration_20260911_140000_search_indexes.up,
     down: migration_20260911_140000_search_indexes.down,
-    name: '20260911_140000_search_indexes'
+    name: '20260911_140000_search_indexes',
+  },
+  {
+    up: migration_20260925_020843_schema_review.up,
+    down: migration_20260925_020843_schema_review.down,
+    name: '20260925_020843_schema_review'
   },
 ];

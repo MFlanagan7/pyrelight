@@ -11,7 +11,17 @@ import { slugField } from "../fields/slug";
  */
 export const Categories: CollectionConfig = {
   slug: "categories",
-  admin: { useAsTitle: "title", defaultColumns: ["title", "kind", "slug"] },
+  admin: {
+    useAsTitle: "title",
+    // Kind first: the list mixes seven pillars with four blog categories, and
+    // which is which matters more than the slug when scanning.
+    defaultColumns: ["kind", "title", "slug"],
+    // Beside Tags, since an editor deciding between them is choosing between
+    // these two collections and nothing else.
+    group: "Taxonomy",
+    description:
+      "Two different things in one collection, told apart by Kind. A wiki pillar is one of the seven sections at /wiki/<pillar>. A dispatch category is one of the blog's four. Each picker only offers the kind it needs, so pick Kind correctly and the rest follows.",
+  },
   access: { read: () => true },
   fields: [
     { name: "title", type: "text", required: true },

@@ -411,6 +411,10 @@ export interface Product {
    * No prices on this site — they go stale during sales. The store page is the source of truth.
    */
   tier: 'free' | 'pwyw' | 'premium';
+  /**
+   * Release date. Drives ordering; leave blank for unreleased.
+   */
+  releasedAt?: string | null;
   featured?: boolean | null;
   /**
    * Where a visitor can actually buy or download this.
@@ -684,6 +688,9 @@ export interface Dispatch {
     [k: string]: unknown;
   };
   publishedAt: string;
+  /**
+   * Design Notes, Worldbuilding, GM Advice or Studio.
+   */
   category?: (number | null) | Category;
   /**
    * What this is about. Pick from the list; if nothing fits, add the tag rather than a near-duplicate.
@@ -716,6 +723,8 @@ export interface Dispatch {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Two different things in one collection, told apart by Kind. A wiki pillar is one of the seven sections at /wiki/<pillar>. A dispatch category is one of the blog's four. Each picker only offers the kind it needs, so pick Kind correctly and the rest follows.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories".
  */
@@ -1117,6 +1126,10 @@ export interface WikiFaction {
       )[]
     | null;
   /**
+   * Renders behind a spoiler block.
+   */
+  spoiler?: boolean | null;
+  /**
    * Generated from the entry's text on save. Not edited directly.
    */
   searchText?: string | null;
@@ -1220,6 +1233,10 @@ export interface WikiRegion {
       )[]
     | null;
   /**
+   * Renders behind a spoiler block.
+   */
+  spoiler?: boolean | null;
+  /**
    * Generated from the entry's text on save. Not edited directly.
    */
   searchText?: string | null;
@@ -1322,6 +1339,10 @@ export interface WikiGod {
           }
       )[]
     | null;
+  /**
+   * Renders behind a spoiler block.
+   */
+  spoiler?: boolean | null;
   /**
    * Generated from the entry's text on save. Not edited directly.
    */
@@ -1734,6 +1755,7 @@ export interface ProductsSelect<T extends boolean = true> {
       };
   description?: T;
   tier?: T;
+  releasedAt?: T;
   featured?: T;
   storeLinks?:
     | T
@@ -2023,6 +2045,7 @@ export interface WikiRegionsSelect<T extends boolean = true> {
       };
   factions?: T;
   related?: T;
+  spoiler?: T;
   searchText?: T;
   tags?: T;
   contentKind?: T;
@@ -2056,6 +2079,7 @@ export interface WikiFactionsSelect<T extends boolean = true> {
   summary?: T;
   body?: T;
   related?: T;
+  spoiler?: T;
   searchText?: T;
   tags?: T;
   contentKind?: T;
@@ -2094,6 +2118,7 @@ export interface WikiGodsSelect<T extends boolean = true> {
   body?: T;
   worshippedIn?: T;
   related?: T;
+  spoiler?: T;
   searchText?: T;
   tags?: T;
   contentKind?: T;

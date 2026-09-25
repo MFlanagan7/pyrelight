@@ -42,6 +42,42 @@ export const Resources: CollectionConfig = {
         if (result !== true) throw new Error(result);
         return data;
       },
+      /**
+       * Slugs are unique per SECTION here, not per collection.
+       *
+       * The URL is /resources/<section>/<slug>, so a map and a handout may both
+       * be called "tavern" and still be two distinct pages. A collection-wide
+       * constraint would refuse the second with an error naming a conflict the
+       * editor cannot see, on a URL that was never taken.
+       *
+       * Enforced here because this is the only layer that knows the scope. The
+       * cost is that it is a check rather than a database guarantee, so a race
+       * between two simultaneous saves could slip through — acceptable for a
+       * collection one person writes.
+       */
+      async ({ data, req, originalDoc }) => {
+        const { slug, section } = data ?? {};
+        if (!slug || !section) return data;
+        if (originalDoc?.slug === slug && originalDoc?.section === section) return data;
+
+        const { totalDocs } = await req.payload.count({
+          collection: "resources",
+          where: {
+            slug: { equals: slug },
+            section: { equals: section },
+            ...(originalDoc?.id ? { id: { not_equals: originalDoc.id } } : {}),
+          },
+          req,
+        });
+
+        if (totalDocs > 0) {
+          throw new Error(
+            `Another resource in the "${section}" section already uses the slug "${slug}". ` +
+              "Slugs only need to be unique within a section.",
+          );
+        }
+        return data;
+      },
     ],
     afterChange: [
       ...revalidateCollection("/resources").afterChange,
@@ -54,7 +90,7 @@ export const Resources: CollectionConfig = {
   },
   fields: [
     { name: "title", type: "text", required: true },
-    slugField(),
+    slugField("title", [], { unique: false }),
     {
       name: "section",
       type: "select",

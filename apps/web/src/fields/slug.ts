@@ -12,11 +12,25 @@ const toSlug = (value: string): string =>
  * Kept editable because a published URL should not silently change when someone
  * fixes a typo in a title.
  */
-export const slugField = (from = "title", reserved: string[] = []): Field => ({
+export const slugField = (
+  from = "title",
+  reserved: string[] = [],
+  /**
+   * Set `unique: false` where the URL is not the slug alone.
+   *
+   * A database-wide unique slug is right when the slug IS the path, and wrong
+   * when something else scopes it. Resources live at /resources/<section>/<slug>,
+   * so a map and a handout may both be called "tavern" without colliding — and
+   * a collection-wide constraint would refuse the second for no reason a
+   * reader could see. Uniqueness within the scope is enforced by the
+   * collection instead, which is the only place that knows what the scope is.
+   */
+  { unique = true }: { unique?: boolean } = {},
+): Field => ({
   name: "slug",
   type: "text",
   required: true,
-  unique: true,
+  unique,
   index: true,
   admin: {
     position: "sidebar",

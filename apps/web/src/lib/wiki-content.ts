@@ -1,5 +1,6 @@
 import type { Category } from "@/payload-types";
 import { getPayloadClient, publishedOnly } from "./payload";
+import { WIKI_COLLECTION_SLUGS, type WikiCollectionSlug } from "./wiki";
 
 /**
  * Queries across the four wiki collections.
@@ -12,14 +13,27 @@ import { getPayloadClient, publishedOnly } from "./payload";
  * domains, a region has keyed locations — but they are all wiki entries with a
  * title, a summary, a body, a pillar and tags.
  */
-export const WIKI_COLLECTIONS = [
-  { collection: "wiki-articles" as const, label: "Article" },
-  { collection: "wiki-gods" as const, label: "God" },
-  { collection: "wiki-factions" as const, label: "Faction" },
-  { collection: "wiki-regions" as const, label: "Region" },
-];
+const LABELS: Record<WikiCollectionSlug, string> = {
+  "wiki-articles": "Article",
+  "wiki-gods": "God",
+  "wiki-factions": "Faction",
+  "wiki-regions": "Region",
+};
 
-export type WikiCollectionSlug = (typeof WIKI_COLLECTIONS)[number]["collection"];
+/**
+ * Derived from lib/wiki.ts rather than repeated, because the collections
+ * themselves need the same list to check a slug is not already taken in a
+ * sibling — and two hand-maintained copies of "which collections are wiki
+ * collections" would eventually disagree about a fifth one.
+ *
+ * Order is resolution order: findWikiEntry returns the first match.
+ */
+export const WIKI_COLLECTIONS = WIKI_COLLECTION_SLUGS.map((collection) => ({
+  collection,
+  label: LABELS[collection],
+}));
+
+export type { WikiCollectionSlug };
 
 export type WikiEntryRef = {
   id: number;

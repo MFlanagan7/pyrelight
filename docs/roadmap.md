@@ -75,6 +75,24 @@ quiet is most likely.
 site is a nuisance. The same thing on a launched one loses the readers arriving
 from itch.io, who will not come back to check whether it was temporary.
 
+### Review the Resources section names before writing into them
+
+**Open, deliberately.** The five sections are `maps`, `adventures`, `tools`,
+`guides`, `templates`, and each one is a URL segment: `/resources/<section>/<slug>`.
+
+Adding a section later is free. **Renaming one breaks every published link
+underneath it**, and there is no redirect layer on this site to soften that. So
+the names are cheap to change now and expensive the moment anything is filed
+under them.
+
+Michael is researching how comparable RPG sites divide their libraries before
+settling these. Until then, avoid publishing resources — a draft costs nothing
+to re-file, a published URL does not.
+
+Worth checking against the research: whether "tools" and "templates" are really
+distinct to a reader, whether "guides" overlaps with Dispatches, and whether
+anything obvious is missing (handouts, soundscapes, character options).
+
 ### Before the domain goes live
 
 4. **Write the three legal documents properly.** All three are published with

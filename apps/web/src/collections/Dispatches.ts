@@ -58,7 +58,15 @@ export const Dispatches: CollectionConfig = {
       name: "category",
       type: "relationship",
       relationTo: "categories",
-      admin: { position: "sidebar" },
+      // Categories holds both kinds, told apart only by `kind`. Without this
+      // filter a wiki pillar can be assigned to a blog post, which no view
+      // would show as wrong — it would simply list the dispatch nowhere and
+      // leave the pillar page counting an entry that is not a wiki entry.
+      filterOptions: () => ({ kind: { equals: "dispatch" } }),
+      admin: {
+        position: "sidebar",
+        description: "Design Notes, Worldbuilding, GM Advice or Studio.",
+      },
     },
     tagsField(),
     searchTextField({ text: ["title", "excerpt"], rich: ["body"] }),
