@@ -37,3 +37,31 @@
      rendering form controls and scrollbars in a light scheme. */
   color-scheme: dark;
 }
+
+/*
+ * Draft preview banner offset.
+ *
+ * The banner is fixed at the viewport top, and so is the site nav, so without
+ * this they occupy the same space and the banner wins on z-index — hiding the
+ * navigation. Everything shifts down by one variable instead: the banner takes
+ * exactly this height, the nav starts below it, and the body gains matching
+ * padding so page content moves with the nav rather than sliding under it.
+ *
+ * Set on <html> by the layout, only in draft mode. The fallback of 0 elsewhere
+ * is what keeps this invisible to visitors — no class, no offset, no change.
+ *
+ * Larger on narrow screens because the message wraps to two lines there.
+ */
+html.sf-draft {
+  --sf-draft-offset: 2.5rem;
+}
+
+@media (max-width: 40rem) {
+  html.sf-draft {
+    --sf-draft-offset: 4rem;
+  }
+}
+
+html.sf-draft body {
+  padding-top: var(--sf-draft-offset);
+}

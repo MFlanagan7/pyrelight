@@ -6,9 +6,17 @@
  * the environment strip in stacking order for the same reason.
  */
 .banner {
-  position: sticky;
-  top: 0;
+  /*
+   * Fixed, above the nav, which is itself fixed at the viewport top with
+   * z-index 60. Sitting on top of it hid the navigation entirely, so the nav is
+   * pushed down instead by --sf-draft-offset (globals.css), and this element
+   * takes exactly that height. One variable drives both, because a banner and a
+   * gap that disagree is worse than either problem alone.
+   */
+  position: fixed;
+  inset: 0 0 auto 0;
   z-index: 100;
+  height: var(--sf-draft-offset, 2.5rem);
 
   display: flex;
   align-items: center;
@@ -16,7 +24,7 @@
   gap: var(--sf-space-4, 1rem);
   flex-wrap: wrap;
 
-  padding: var(--sf-space-2, 0.5rem) var(--sf-space-4, 1rem);
+  padding: 0 var(--sf-space-4, 1rem);
 
   background: #f5a623;
   color: #1a1206;

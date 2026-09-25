@@ -1,6 +1,5 @@
 import { draftMode } from "next/headers";
 import { RefreshOnSave } from "./RefreshOnSave";
-import { siteUrl } from "@/lib/site";
 import styles from "./DraftBanner.module.css";
 
 /**
@@ -25,7 +24,7 @@ export async function DraftBanner() {
   return (
     <>
       {/* Only mounted here, so the listener never reaches a visitor. */}
-      <RefreshOnSave serverURL={siteUrl()} />
+      <RefreshOnSave />
       <div className={styles.banner} role="status">
         <span className={styles.text}>
           <strong>Draft preview.</strong> You are seeing unpublished content. Visitors are not.

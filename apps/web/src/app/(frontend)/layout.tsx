@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Alegreya_Sans_SC, Spectral } from "next/font/google";
+import { draftMode } from "next/headers";
 import { DraftBanner } from "@/components/DraftBanner";
 import { EnvBadge } from "@/components/EnvBadge";
 import { SiteFooter, SiteNav } from "@/components/site";
@@ -84,10 +85,14 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       label: s.platform,
     })) ?? [];
 
+  // Drives --sf-draft-offset in globals.css, which moves the fixed nav and the
+  // page below the banner instead of letting the banner cover them.
+  const { isEnabled: isDraft } = await draftMode();
+
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${alegreya.variable} ${spectral.variable}`}
+      className={`${cormorant.variable} ${alegreya.variable} ${spectral.variable}${isDraft ? " sf-draft" : ""}`}
     >
       <body>
         {/* Above the nav: it must be the first thing seen, not found. */}
